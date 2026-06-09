@@ -1,0 +1,7 @@
+node_modules/
+dist/
+build/
+.env
+seed-db.js
+.DS_Store
+*.log

@@ -1,0 +1,56 @@
+﻿
+> client@1.0.1 build
+> vite build
+
+[36mvite v8.0.11 [32mbuilding client environment for production...[36m[39m
+[2K
+transforming...Γ£ô 924 modules transformed.
+rendering chunks...
+computing gzip size...
+dist/index.html                           1.21 kB Γöé gzip:   0.55 kB
+dist/assets/logo-full-CG1OYFvO.svg        4.78 kB Γöé gzip:   2.30 kB
+dist/assets/fahhh-Dmp4WVP7.mp3           45.60 kB
+dist/assets/index-B1UuwBzO.css           50.45 kB Γöé gzip:   9.17 kB
+dist/assets/EmptyState-BtK8p7RR.js        0.42 kB Γöé gzip:   0.30 kB
+dist/assets/jsx-runtime-DSvPLito.js       0.42 kB Γöé gzip:   0.29 kB
+dist/assets/preload-helper-DSXbuxSR.js    1.19 kB Γöé gzip:   0.68 kB
+dist/assets/NotFound-DSJcsBA8.js          1.24 kB Γöé gzip:   0.61 kB
+dist/assets/Preview-i1TlsOPP.js           1.49 kB Γöé gzip:   0.81 kB
+dist/assets/Support-BYalg4Io.js           1.95 kB Γöé gzip:   0.81 kB
+dist/assets/dist-B6Vx93ni.js              2.05 kB Γöé gzip:   0.67 kB
+dist/assets/SeedData-5lBlTlaF.js          2.08 kB Γöé gzip:   1.13 kB
+dist/assets/Search-Du4t3j2f.js            2.16 kB Γöé gzip:   0.97 kB
+dist/assets/avatars-CFhu8G4I.js           2.33 kB Γöé gzip:   0.89 kB
+dist/assets/Notifications-CTpI3nhR.js     2.65 kB Γöé gzip:   1.18 kB
+dist/assets/ManageProfiles-BPubXE_j.js    2.67 kB Γöé gzip:   0.98 kB
+dist/assets/Profiles-BGVX_Am0.js          2.90 kB Γöé gzip:   1.14 kB
+dist/assets/SkeletonCard-DN0o9Rux.js      3.18 kB Γöé gzip:   1.22 kB
+dist/assets/Library-BaM6cZC3.js           3.47 kB Γöé gzip:   1.58 kB
+dist/assets/Login-Bp5meCDf.js             4.44 kB Γöé gzip:   1.43 kB
+dist/assets/Calendar-DeORFsBp.js          4.62 kB Γöé gzip:   1.57 kB
+dist/assets/react-DFMyBDy_.js             5.31 kB Γöé gzip:   2.50 kB
+dist/assets/EditProfile-Bt4cQI0K.js       5.80 kB Γöé gzip:   1.91 kB
+dist/assets/NewsDetail-CyLkeHCx.js        6.02 kB Γöé gzip:   2.09 kB
+dist/assets/react-DKm6uw9G.js             6.47 kB Γöé gzip:   2.72 kB
+dist/assets/Account-Dh3artpV.js           6.53 kB Γöé gzip:   1.69 kB
+dist/assets/react-CgTdUG0R.js             7.28 kB Γöé gzip:   3.01 kB
+dist/assets/react-DJRNLaeR.js             7.84 kB Γöé gzip:   2.99 kB
+dist/assets/react-DC5jstkq.js             8.29 kB Γöé gzip:   3.20 kB
+dist/assets/AnimeDetail-IsVkqmxj.js       8.95 kB Γöé gzip:   2.82 kB
+dist/assets/react-BA8h07AP.js             9.29 kB Γöé gzip:   3.55 kB
+dist/assets/react-CXuLNNX4.js             9.48 kB Γöé gzip:   3.65 kB
+dist/assets/react-CeFNjYY7.js            11.99 kB Γöé gzip:   4.40 kB
+dist/assets/Watch-t0m165na.js            13.37 kB Γöé gzip:   4.50 kB
+dist/assets/dist-1ogZcAru.js             15.39 kB Γöé gzip:   3.89 kB
+dist/assets/Home-GZLkQ0aX.js             26.76 kB Γöé gzip:   7.97 kB
+dist/assets/Reel-Dy3HIfok.js             33.97 kB Γöé gzip:   8.34 kB
+dist/assets/react-Dh-g8FnH.js            49.38 kB Γöé gzip:  14.94 kB
+dist/assets/Admin-JtrcAFan.js            58.53 kB Γöé gzip:  11.54 kB
+dist/assets/proxy-BdMT3ATz.js           120.60 kB Γöé gzip:  39.14 kB
+dist/assets/index-BIrcm2w8.js           301.79 kB Γöé gzip:  94.86 kB
+dist/assets/config-tZAC84Hc.js          453.08 kB Γöé gzip: 136.65 kB
+dist/assets/hls-BMN9P1QD.js             508.77 kB Γöé gzip: 157.29 kB
+dist/assets/dist-BWBXCOe6.js            516.36 kB Γöé gzip: 133.24 kB
+dist/assets/dash.all.min-i9jdzJ51.js    961.67 kB Γöé gzip: 291.05 kB
+
+[32mΓ£ô built in 3.38s[39m

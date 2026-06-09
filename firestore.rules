@@ -1,0 +1,106 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    
+    // Helper function to check if the user is an admin
+    // Admins are defined by having their UID in the 'admins' collection.
+    function isAdmin() {
+      return request.auth != null && exists(/databases/$(database)/documents/admins/$(request.auth.uid));
+    }
+    
+    // Helper function to check if the user is authenticated
+    function isAuth() {
+      return request.auth != null;
+    }
+
+    // Helper function to ensure user is not banned
+    function isNotBanned() {
+      return isAuth() && get(/databases/$(database)/documents/users/$(request.auth.uid)).data.get('isBanned', false) == false;
+    }
+
+    // --- USERS COLLECTION ---
+    // Users can only read, create, and update their OWN data.
+    match /users/{userId} {
+      allow read: if true;
+      allow create, delete: if (isAuth() && request.auth.uid == userId) || isAdmin();
+      allow update: if (isAuth() && request.auth.uid == userId) || isAdmin() || (isAuth() && request.resource.data.diff(resource.data).affectedKeys().hasOnly(['followers']));
+    }
+
+    // --- PUBLIC CONTENT (ANIME, EPISODES, NEWS, SCHEDULES, SITECONFIG) ---
+    // Anyone can read content. Only Admins can modify it.
+    match /anime/{animeId} {
+      allow read: if true;
+      // Allow public users to strictly only update the viewCount field for trending tracking and likes/dislikes
+      allow update: if isAdmin() || (isNotBanned() && request.resource.data.diff(resource.data).affectedKeys().hasOnly(['viewCount', 'likes', 'dislikes', 'likedBy', 'dislikedBy'])) || (request.resource.data.diff(resource.data).affectedKeys().hasOnly(['viewCount']));
+      allow write: if isAdmin();
+    }
+    
+    match /episodes/{episodeId} {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
+
+    match /news/{newsId} {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
+
+    match /schedules/{scheduleId} {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
+
+    match /siteConfig/{configId} {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
+
+    match /avatars/{avatarId} {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
+
+    match /featured/{featuredId} {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
+
+    // --- REELS & COMMENTS ---
+    // Anyone can read reels. Authenticated users can create reels and comments.
+    // Users can only update reels (like adding likes) if they are authenticated.
+    match /reels/{reelId} {
+      allow read: if true;
+      // Allow creation if authenticated. Allow update (e.g. for likes/views) if authenticated. 
+      // Strictly speaking, we should validate the update payload, but for now we allow auth users to interact.
+      allow create, update: if isNotBanned();
+      allow delete: if isAdmin() || (isAuth() && request.auth.uid == resource.data.userId);
+      
+      match /comments/{commentId} {
+        allow read: if true;
+        allow create, update: if isNotBanned();
+        allow delete: if isAdmin() || (isAuth() && request.auth.uid == resource.data.userId);
+      }
+    }
+
+    // --- NOTIFICATIONS ---
+    // Users can only read and manage their own notifications
+    match /notifications/{notifId} {
+      allow read: if isAuth() && (request.auth.uid == resource.data.recipientId || resource.data.recipientId == 'all') || isAdmin();
+      allow delete: if (isAuth() && request.auth.uid == resource.data.recipientId) || isAdmin();
+      allow update: if (isAuth() && (request.auth.uid == resource.data.recipientId || resource.data.recipientId == 'all')) || isAdmin();
+      allow create: if isAuth();
+    }
+    
+    // --- ACTIVE STREAMS (CONCURRENT PLAYBACK LIMIT) ---
+    match /activeStreams/{profileId} {
+      allow read, write: if isAuth() || isAdmin();
+    }
+    
+    // --- ADMINS COLLECTION ---
+    // Only existing admins can add other admins, but no one can read it directly from client (only via rules function).
+    match /admins/{adminId} {
+      allow read, write: if isAdmin();
+    }
+
+  }
+}
