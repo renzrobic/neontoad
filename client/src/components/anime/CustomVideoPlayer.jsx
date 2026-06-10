@@ -55,6 +55,19 @@ const CustomVideoPlayer = React.forwardRef(({ src, onTimeUpdate, onEnded, onLoad
     }
   };
 
+  const handleContainerTap = (e) => {
+    // If clicking directly on the container (not a button inside it)
+    if (e.target === containerRef.current || e.target === videoRef.current || e.target.id === 'controls-overlay' || e.target.id === 'center-play-area') {
+      if (showControls) {
+        setShowControls(false);
+        if (hideControlsTimeout.current) clearTimeout(hideControlsTimeout.current);
+      } else {
+        setShowControls(true);
+        startHideTimer();
+      }
+    }
+  };
+
   // Video Events
   const handlePlayPause = (e) => {
     if (e) e.stopPropagation();
@@ -89,15 +102,7 @@ const CustomVideoPlayer = React.forwardRef(({ src, onTimeUpdate, onEnded, onLoad
   };
 
   const handleProgressClick = (e) => {
-    e.stopPropagation();
-    if (progressRef.current && videoRef.current) {
-      const rect = progressRef.current.getBoundingClientRect();
-      const pos = (e.clientX - rect.left) / rect.width;
-      const newTime = pos * videoRef.current.duration;
-      videoRef.current.currentTime = newTime;
-      setCurrentTime(newTime);
-      setProgress((newTime / videoRef.current.duration) * 100);
-    }
+    // Legacy onClick handled by input range now
   };
 
   const toggleMute = (e) => {
@@ -173,7 +178,7 @@ const CustomVideoPlayer = React.forwardRef(({ src, onTimeUpdate, onEnded, onLoad
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
       onTouchStart={handleMouseMove}
-      onClick={handlePlayPause}
+      onClick={handleContainerTap}
       onDoubleClick={handleDoubleClick}
     >
       <video
@@ -210,11 +215,22 @@ const CustomVideoPlayer = React.forwardRef(({ src, onTimeUpdate, onEnded, onLoad
 
       {/* Controls Overlay */}
       <div 
-        className={`absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent bg-gradient-to-b transition-opacity duration-500 flex flex-col justify-between z-[50] ${showControls || !isPlaying ? 'opacity-100' : 'opacity-0 cursor-none'}`}
+        id="controls-overlay"
+        className={`absolute inset-0 bg-black/40 transition-opacity duration-300 flex flex-col justify-between z-[50] ${showControls || !isPlaying ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}
       >
         {/* Top Controls Area */}
-        <div className="w-full" onClick={(e) => e.stopPropagation()}>
+        <div className="w-full bg-gradient-to-b from-black/80 to-transparent p-4" onClick={(e) => e.stopPropagation()}>
           {topControls}
+        </div>
+
+        {/* Center Play/Pause Button */}
+        <div id="center-play-area" className="absolute inset-0 flex items-center justify-center pointer-events-none">
+          <button 
+            onClick={(e) => { e.stopPropagation(); handlePlayPause(e); }}
+            className="pointer-events-auto w-20 h-20 md:w-24 md:h-24 bg-black/40 hover:bg-black/60 backdrop-blur-md rounded-full flex items-center justify-center text-white transition-transform active:scale-90"
+          >
+            {isPlaying ? <BoxyPause size={48} fill="currentColor" /> : <BoxyPlay size={48} fill="currentColor" className="ml-2" />}
+          </button>
         </div>
 
         {/* External Overlays (Skip Intro, Up Next) synced with UI visibility */}
@@ -223,22 +239,33 @@ const CustomVideoPlayer = React.forwardRef(({ src, onTimeUpdate, onEnded, onLoad
         </div>
 
         {/* Bottom Controls Area */}
-        <div className="px-4 pb-4 md:px-6 md:pb-6 flex flex-col gap-2 w-full" onClick={(e) => e.stopPropagation()}>
+        <div className="px-4 pb-4 md:px-6 md:pb-6 flex flex-col gap-2 w-full bg-gradient-to-t from-black/80 to-transparent pt-12" onClick={(e) => e.stopPropagation()}>
           
           {/* Progress Bar (YouTube Style) */}
           <div 
             ref={progressRef}
             className="w-full h-1 md:h-1.5 bg-white/30 cursor-pointer relative group/progress"
-            onClick={handleProgressClick}
           >
             <div 
-              className="absolute top-0 left-0 h-full bg-primary z-10" 
+              className="absolute top-0 left-0 h-full bg-primary z-10 pointer-events-none" 
               style={{ width: `${progress}%` }}
             />
             {/* Scrubber knob */}
             <div 
-              className="absolute top-1/2 -translate-y-1/2 w-3 h-3 md:w-4 md:h-4 bg-primary rounded-full z-20 shadow-lg scale-0 group-hover/progress:scale-100 transition-transform origin-center"
+              className="absolute top-1/2 -translate-y-1/2 w-3 h-3 md:w-4 md:h-4 bg-primary rounded-full z-20 shadow-lg scale-0 group-hover/progress:scale-100 transition-transform origin-center pointer-events-none"
               style={{ left: `calc(${progress}% - 6px)` }}
+            />
+            <input
+              type="range" min="0" max={duration || 100} step="0.01" value={currentTime}
+              onChange={(e) => {
+                const newTime = parseFloat(e.target.value);
+                if (videoRef.current) {
+                  videoRef.current.currentTime = newTime;
+                  setCurrentTime(newTime);
+                  setProgress((newTime / videoRef.current.duration) * 100);
+                }
+              }}
+              className="absolute inset-0 w-full h-8 -translate-y-1/2 top-1/2 opacity-0 cursor-pointer z-30"
             />
           </div>
 
@@ -257,27 +284,27 @@ const CustomVideoPlayer = React.forwardRef(({ src, onTimeUpdate, onEnded, onLoad
                   <div 
                     ref={volumeRef}
                     className="w-full h-1 bg-white/30 cursor-pointer relative group/volbar"
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      if (volumeRef.current) {
-                        const rect = volumeRef.current.getBoundingClientRect();
-                        const pos = Math.max(0, Math.min(1, (e.clientX - rect.left) / rect.width));
+                  >
+                    <div 
+                      className="absolute top-0 left-0 h-full bg-white z-10 pointer-events-none" 
+                      style={{ width: `${volume * 100}%` }}
+                    />
+                    <div 
+                      className="absolute top-1/2 -translate-y-1/2 w-2.5 h-2.5 bg-white rounded-full z-20 shadow-lg scale-0 group-hover/volbar:scale-100 transition-transform origin-center pointer-events-none"
+                      style={{ left: `calc(${volume * 100}% - 5px)` }}
+                    />
+                    <input
+                      type="range" min="0" max="1" step="0.01" value={volume}
+                      onChange={(e) => {
+                        const pos = parseFloat(e.target.value);
                         setVolume(pos);
                         if (videoRef.current) {
                           videoRef.current.volume = pos;
                           videoRef.current.muted = pos === 0;
                           setIsMuted(pos === 0);
                         }
-                      }
-                    }}
-                  >
-                    <div 
-                      className="absolute top-0 left-0 h-full bg-white z-10" 
-                      style={{ width: `${volume * 100}%` }}
-                    />
-                    <div 
-                      className="absolute top-1/2 -translate-y-1/2 w-2.5 h-2.5 bg-white rounded-full z-20 shadow-lg scale-0 group-hover/volbar:scale-100 transition-transform origin-center"
-                      style={{ left: `calc(${volume * 100}% - 5px)` }}
+                      }}
+                      className="absolute inset-0 w-full h-8 -translate-y-1/2 top-1/2 opacity-0 cursor-pointer z-30"
                     />
                   </div>
                 </div>

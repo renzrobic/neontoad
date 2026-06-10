@@ -38,7 +38,7 @@ const SkeletonDetails = () => {
  <div className="max-w-full mt-4 md:mt-8 mx-auto px-4 md:px-16 pb-16 relative z-20">
  <div className="flex flex-col lg:flex-row gap-10 lg:-mt-16">
  {/* Left: Poster Column */}
- <div className="w-[200px] mx-auto lg:mx-0 lg:w-60 flex-shrink-0 relative z-30 space-y-6">
+ <div className="w-[160px] md:w-[200px] mx-auto lg:mx-0 lg:w-60 flex-shrink-0 relative z-30 space-y-6">
  <div className="rounded-none overflow-hidden shadow-2xl aspect-[2/3] bg-surface w-full" />
  <div className="glass-panel p-5 rounded-none space-y-6 w-full">
  <div className="flex justify-between items-center py-2">
@@ -67,7 +67,7 @@ const SkeletonDetails = () => {
  <div className="grid grid-cols-1 gap-6 pt-4">
  {[...Array(3)].map((_, i) => (
  <div key={i} className="flex flex-col md:flex-row gap-4 md:gap-8 group">
- <div className="relative w-full md:w-72 flex-shrink-0 aspect-video bg-surface rounded-none overflow-hidden shadow-2xl" />
+ <div className="relative w-full md:w-48 lg:w-56 flex-shrink-0 aspect-video bg-surface rounded-none overflow-hidden shadow-2xl" />
  <div className="flex flex-col justify-center gap-3 flex-grow">
  <div className="h-3 w-24 bg-neutral-900" />
  <div className="h-5 w-3/4 bg-neutral-800" />

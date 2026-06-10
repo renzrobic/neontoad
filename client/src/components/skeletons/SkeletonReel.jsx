@@ -66,8 +66,8 @@ const SkeletonReel = () => (
  {/* Gradient overlay */}
  <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-transparent to-black/25 z-10" />
 
- {/* Right action column ghost (bottom-6 baseline) */}
- <div className="absolute right-3 bottom-6 z-30 flex flex-col items-center gap-5">
+ {/* Right action column ghost (bottom-[80px] baseline) */}
+ <div className="absolute right-3 bottom-[80px] z-30 flex flex-col items-center gap-5">
  {[...Array(3)].map((_, i) => (
  <div key={i} className="flex flex-col items-center gap-1">
  <div className="w-7 h-7 bg-white/12 rounded" />
@@ -77,8 +77,8 @@ const SkeletonReel = () => (
  <div className="w-7 h-7 bg-white/8 rounded mt-1" />
  </div>
 
- {/* Bottom metadata ghost (bottom-[50px] baseline) */}
- <div className="absolute left-0 right-[72px] bottom-[50px] z-30 px-4 flex flex-col gap-2">
+ {/* Bottom metadata ghost (bottom-[55px] baseline) */}
+ <div className="absolute left-0 right-[72px] bottom-[55px] z-30 px-4 flex flex-col gap-2">
  <div className="flex items-center gap-2">
  <div className="w-9 h-9 rounded-full bg-white/15 flex-shrink-0" />
  <div className="h-3.5 w-20 bg-white/15 rounded" />

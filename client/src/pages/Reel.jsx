@@ -615,6 +615,7 @@ const ReelCard = React.memo(({ video, isActive, isAdjacent, onUploadClick, isMut
  {/* 9:16 video player */}
  <div
  onClick={handleVideoTap}
+ onMouseMove={showControlsTemporarily}
  className="relative h-[96vh] aspect-[9/16] bg-black shadow-2xl cursor-pointer overflow-hidden flex-shrink-0"
  >
  {isAdjacent ? (
@@ -641,7 +642,7 @@ const ReelCard = React.memo(({ video, isActive, isAdjacent, onUploadClick, isMut
  {renderDesktopTopControls()}
 
  {/* Bottom metadata */}
- <div className="absolute bottom-0 left-0 right-0 z-20 px-4 pt-4 pb-10 bg-gradient-to-t from-black/80 via-black/40 to-transparent">
+ <div className={`absolute bottom-0 left-0 right-0 z-20 px-4 pt-4 pb-10 bg-gradient-to-t from-black/80 via-black/40 to-transparent transition-opacity duration-300 ${showControls ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'}`}>
  {/* Author row */}
  <div className="flex items-center gap-2 mb-2">
  <img loading="lazy" src={displayAvatar} className="w-9 h-9 rounded-full object-cover border-2 flex-shrink-0" alt="" />
@@ -668,13 +669,7 @@ const ReelCard = React.memo(({ video, isActive, isAdjacent, onUploadClick, isMut
  </div>
 
  {/* Seekbar (tap-to-show) */}
- <AnimatePresence>
- {showControls && (
- <motion.div
- initial={{ opacity: 0, y: 4 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: 4 }}
- className="absolute bottom-0 left-0 right-0 z-30 px-4 pb-4 pointer-events-auto"
- onClick={e => e.stopPropagation()}
- >
+ <div className={`absolute bottom-0 left-0 right-0 z-30 px-4 pb-4 transition-all duration-300 ${showControls ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'}`} onClick={e => e.stopPropagation()}>
  <div className="flex items-center gap-2 mb-2">
  <span className="text-[11px] font-bold text-white drop-shadow-md">{formatTime(currentTime)}</span>
  <span className="text-[11px] font-bold text-white/90 drop-shadow-md">/ {formatTime(duration)}</span>
@@ -689,13 +684,18 @@ const ReelCard = React.memo(({ video, isActive, isAdjacent, onUploadClick, isMut
  className="absolute inset-0 w-full h-8 -translate-y-1/2 top-1/2 opacity-0 cursor-pointer z-10"
  />
  </div>
- </motion.div>
- )}
- </AnimatePresence>
+ </div>
+
+ {/* Center Play/Pause button for desktop */}
+ <div className={`absolute inset-0 z-10 flex items-center justify-center pointer-events-none transition-opacity duration-300 ${showControls ? 'opacity-100' : 'opacity-0'}`}>
+ <button onClick={(e) => { e.stopPropagation(); handlePlayPause(e); }} className="pointer-events-auto w-[68px] h-[68px] rounded-full bg-black/65 backdrop-blur-sm flex items-center justify-center text-white active:scale-90 transition-transform shadow-2xl">
+ {isPaused ? <BoxyPlay size={30} fill="currentColor" className="ml-1" /> : <BoxyPause size={30} fill="currentColor" />}
+ </button>
+ </div>
  </div>
 
  {/* Right action column */}
- <div className="flex flex-col items-center justify-end h-[96vh] pb-10">
+ <div className={`flex flex-col items-center justify-end h-[96vh] pb-10 transition-opacity duration-300 ${showControls ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'}`}>
  {renderActionColumn(true)}
  </div>
  </motion.div>
@@ -739,7 +739,7 @@ const ReelCard = React.memo(({ video, isActive, isAdjacent, onUploadClick, isMut
  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-black/30 pointer-events-none z-10" />
 
  {/* ── TOP NAV HEADER ── */}
- <div className="absolute top-0 left-0 right-0 z-40 h-[90px] px-4 pt-10 pb-4 bg-gradient-to-b from-black/80 via-black/40 to-transparent pointer-events-none flex items-center justify-center">
+ <div className={`absolute top-0 left-0 right-0 z-40 h-[90px] px-4 pt-10 pb-4 bg-gradient-to-b from-black/80 via-black/40 to-transparent flex items-center justify-center transition-opacity duration-300 ${showControls ? 'opacity-100 pointer-events-none' : 'opacity-0 pointer-events-none'}`}>
  {/* Left: Back */}
  <div className="absolute left-4 pointer-events-auto">
  <button onClick={() => navigate(-1)} className="w-10 h-10 flex items-center justify-center text-white drop-shadow-md">
@@ -782,13 +782,13 @@ const ReelCard = React.memo(({ video, isActive, isAdjacent, onUploadClick, isMut
  </AnimatePresence>
 
  {/* ── RIGHT ACTION COLUMN ── */}
- <div className={`absolute right-3 z-30 flex flex-col items-center gap-5 pointer-events-auto transition-all duration-300 ease-out ${showControls ? 'bottom-[120px]' : 'bottom-[50px]'}`}
+ <div className={`absolute right-3 z-30 flex flex-col items-center gap-5 transition-all duration-300 ease-out bottom-[80px] ${showControls ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none translate-x-4'}`}
  onClick={e => e.stopPropagation()}>
  {renderActionColumn(false)}
  </div>
 
  {/* ── BOTTOM METADATA ── */}
- <div className={`absolute left-0 right-[72px] z-30 px-4 pointer-events-auto transition-all duration-300 ease-out ${showControls ? 'bottom-[85px]' : 'bottom-6'}`}
+ <div className={`absolute left-0 right-[72px] z-30 px-4 transition-all duration-300 ease-out bottom-[55px] ${showControls ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none translate-y-4'}`}
  onClick={e => e.stopPropagation()}>
  {/* Author row */}
  <div className="flex items-center gap-2 mb-1.5 flex-wrap">
@@ -816,13 +816,8 @@ const ReelCard = React.memo(({ video, isActive, isAdjacent, onUploadClick, isMut
  </div>
 
  {/* ── BOTTOM CONTROLS & SEEKBAR ── */}
- <div className="absolute bottom-0 left-0 right-0 z-40 pointer-events-auto flex flex-col justify-end" style={{ paddingBottom: 'env(safe-area-inset-bottom)' }} onClick={e => e.stopPropagation()}>
- <AnimatePresence>
- {showControls && (
- <motion.div
- initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: 10 }}
- className="px-4 mb-4 flex flex-col gap-3"
- >
+ <div className={`absolute bottom-0 left-0 right-0 z-40 flex flex-col justify-end transition-opacity duration-300 ${showControls ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'}`} style={{ paddingBottom: 'env(safe-area-inset-bottom)' }} onClick={e => e.stopPropagation()}>
+ <div className="px-4 mb-4 flex flex-col gap-3">
  <div className="flex items-center justify-between">
  <div className="flex items-center gap-4">
  {/* Play/Pause */}
@@ -853,15 +848,13 @@ const ReelCard = React.memo(({ video, isActive, isAdjacent, onUploadClick, isMut
  </div>
  <span className="text-[12px] font-bold text-white drop-shadow-md">{formatTime(currentTime)} <span className="text-white/90">/ {formatTime(duration)}</span></span>
  </div>
- </motion.div>
- )}
- </AnimatePresence>
+ </div>
 
  {/* Seekbar */}
- <div className={`px-4 ${showControls ? 'mb-4' : 'mb-0'} transition-all duration-300`}>
- <div className={`relative w-full ${showControls ? 'h-1.5' : 'h-0.5'} bg-neutral-700 rounded-full flex items-center transition-all duration-300`}>
+ <div className="px-4 mb-4 transition-all duration-300">
+ <div className="relative w-full h-1.5 bg-neutral-700 rounded-full flex items-center transition-all duration-300">
  <div className="absolute left-0 h-full bg-white rounded-full pointer-events-none" style={{ width: `${progressPct}%` }} />
- <div className={`absolute w-3.5 h-3.5 bg-white rounded-full shadow-md pointer-events-none -ml-[7px] transition-opacity duration-300 ${showControls ? 'opacity-100' : 'opacity-0'}`} style={{ left: `${progressPct}%` }} />
+ <div className="absolute w-3.5 h-3.5 bg-white rounded-full shadow-md pointer-events-none -ml-[7px]" style={{ left: `${progressPct}%` }} />
  <input
  type="range" min="0" max={duration || 100} step="0.01" value={currentTime}
  onChange={handleSliderChange} onMouseDown={() => setIsDragging(true)} onMouseUp={() => setIsDragging(false)}

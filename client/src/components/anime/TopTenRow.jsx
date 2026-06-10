@@ -52,7 +52,7 @@ const TopTenRow = React.memo(({ title ="Top 10 Trending", data = [], loading = f
 
  <div
  ref={rowRef}
- className="flex overflow-x-auto scroll-smooth snap-x snap-mandatory hide-scroll px-4 md:px-16 pt-4 pb-6 md:pb-10"
+ className="flex overflow-x-auto scroll-smooth snap-x snap-mandatory hide-scroll pr-4 md:pr-16 pl-0 pt-4 pb-6 md:pb-10"
  >
  <AnimatePresence mode="wait">
  {loading ? (
@@ -63,11 +63,43 @@ const TopTenRow = React.memo(({ title ="Top 10 Trending", data = [], loading = f
  exit={{ opacity: 0 }}
  className="flex gap-4 w-full flex-shrink-0"
  >
- {[...Array(5)].map((_, i) => (
- <div key={i} className="w-[calc((100vw-50px)/2.5)] md:w-[calc((100vw-216px)/5.5)] lg:w-[calc((100vw-216px)/6.5)] flex-shrink-0 relative">
- <SkeletonCard />
- </div>
- ))}
+                {[...Array(10)].map((_, index) => {
+                  const number = index + 1;
+                  const isFirst = index === 0;
+                  const isTen = index === 9;
+                  
+                  let marginClass = 'ml-14 md:ml-24 lg:ml-28';
+                  let scrollClass = 'scroll-ml-4 md:scroll-ml-16';
+          
+                  if (isFirst) {
+                    marginClass = 'ml-14 md:ml-32 lg:ml-40';
+                    scrollClass = 'scroll-ml-14 md:scroll-ml-32 lg:scroll-ml-40';
+                  } else if (isTen) {
+                    marginClass = 'ml-20 md:ml-36 lg:ml-44';
+                  }
+
+                  return (
+                    <div key={index} className={`relative flex-shrink-0 ${marginClass} mr-2 md:mr-4 lg:mr-6 snap-start ${scrollClass}`}>
+                      {/* Giant Number Ghost */}
+                      <div className="absolute -left-12 md:-left-24 lg:-left-32 bottom-[-10px] md:bottom-[-20px] lg:bottom-[-30px] z-0 select-none pointer-events-none">
+                        <span 
+                          className="text-[100px] md:text-[180px] lg:text-[220px] font-black leading-none"
+                          style={{
+                            WebkitTextStroke: '3px rgba(255,255,255,0.1)',
+                            color: 'transparent',
+                            fontFamily: 'Impact, sans-serif'
+                          }}
+                        >
+                          {number}
+                        </span>
+                      </div>
+                      
+                      <div className="relative z-10 w-[calc((100vw-50px)/2.5)] md:w-[calc((100vw-216px)/5.5)] lg:w-[calc((100vw-216px)/6.5)] aspect-[2/3] overflow-hidden transition-transform duration-300 bg-neutral-900 border-none">
+                        <SkeletonCard />
+                      </div>
+                    </div>
+                  );
+                })}
  </motion.div>
  ) : (
  <motion.div
@@ -87,18 +119,29 @@ const TopTenRow = React.memo(({ title ="Top 10 Trending", data = [], loading = f
  isNewEpisode = diffDays <= 14;
  }
 
+ const isFirst = index === 0;
  const isTen = index === 9;
  const textSize = 'text-[120px] md:text-[200px] lg:text-[260px]';
  const letterSpacing = isTen ? '-8px' : '-5px';
  const positioning = isTen
- ? 'right-[calc(100%-60px)] md:right-[calc(100%-90px)] lg:right-[calc(100%-130px)]'
- : 'right-[calc(100%-20px)] md:right-[calc(100%-35px)] lg:right-[calc(100%-45px)]';
+   ? 'right-[calc(100%-60px)] md:right-[calc(100%-90px)] lg:right-[calc(100%-130px)]'
+   : 'right-[calc(100%-20px)] md:right-[calc(100%-35px)] lg:right-[calc(100%-45px)]';
+
+ let marginClass = 'ml-14 md:ml-24 lg:ml-28';
+ let scrollClass = 'scroll-ml-4 md:scroll-ml-16';
+
+ if (isFirst) {
+   marginClass = 'ml-14 md:ml-32 lg:ml-40';
+   scrollClass = 'scroll-ml-14 md:scroll-ml-32 lg:scroll-ml-40';
+ } else if (isTen) {
+   marginClass = 'ml-20 md:ml-36 lg:ml-44';
+ }
 
  return (
  <motion.div
  key={anime.id}
  variants={itemVariants}
- className={`relative flex-shrink-0 group cursor-pointer ${isTen ? 'ml-20 md:ml-36 lg:ml-44' : 'ml-14 md:ml-24 lg:ml-28'} mr-2 md:mr-4 lg:mr-6 snap-start scroll-ml-4 md:scroll-ml-16`}
+ className={`relative flex-shrink-0 group cursor-pointer ${marginClass} mr-2 md:mr-4 lg:mr-6 snap-start ${scrollClass}`}
  onClick={() => {
  if (isNavigating) return;
  setIsNavigating(anime.id);
@@ -121,7 +164,9 @@ const TopTenRow = React.memo(({ title ="Top 10 Trending", data = [], loading = f
  </div>
 
  {/* Fade shadow between number and card */}
- <div className="absolute inset-y-[-10px] left-0 w-16 md:w-24 bg-gradient-to-r from-transparent to-black/90 -translate-x-full z-[5] pointer-events-none blur-sm" />
+ {!isFirst && (
+   <div className="absolute inset-y-[-10px] left-0 w-16 md:w-24 bg-gradient-to-r from-transparent to-black/90 -translate-x-full z-[5] pointer-events-none blur-sm" />
+ )}
 
  {/* The Anime Poster */}
  <div className="relative z-10 w-[calc((100vw-50px)/2.5)] md:w-[calc((100vw-216px)/5.5)] lg:w-[calc((100vw-216px)/6.5)] aspect-[2/3] overflow-hidden transition-transform duration-300 bg-neutral-900 border-none shadow-[-20px_0_30px_rgba(0,0,0,0.9)]">

@@ -2,7 +2,7 @@ import React from 'react';
 
 const SkeletonHero = () => {
  return (
- <div className="relative min-h-[70vh] md:min-h-[85vh] h-auto w-full bg-background animate-pulse overflow-hidden flex flex-col justify-end pt-[env(safe-area-inset-top)]">
+ <div className="relative min-h-[85vh] md:min-h-[95vh] h-auto w-full bg-background animate-pulse overflow-hidden flex flex-col justify-end pt-[env(safe-area-inset-top)]">
  <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/5 to-transparent -translate-x-full animate-[shimmer_2s_infinite]" />
 
  {/* Content Ghost - Aligned with AnimeRow */}

@@ -424,7 +424,7 @@ const Watch = () => {
  );
  }
 
- if (loading) return <PageLoader />;
+ if (loading) return <SkeletonWatch />;
 
  if (!episode) {
  return (
