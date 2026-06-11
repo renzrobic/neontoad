@@ -4,380 +4,282 @@ import SkeletonWatch from '../components/skeletons/SkeletonWatch';
 import VideoEmbed from '../components/VideoEmbed';
 import { BoxyPlay, BoxyInfo, BoxyMessage, BoxyChevron, BoxyList, BoxyShare, BoxyAlert, BoxyMaximize, BoxyMinimize, BoxyX, BoxyTV } from '../components/ui/BoxyIcons';
 import { motion, AnimatePresence } from 'framer-motion';
-import { doc, getDoc, collection, query, where, getDocs, updateDoc, increment, setDoc, deleteDoc, serverTimestamp } from 'firebase/firestore';
+import { doc, getDoc, setDoc, deleteDoc, serverTimestamp } from 'firebase/firestore';
 import { db } from '../firebase/config';
 import { Helmet } from 'react-helmet-async';
 import toast from 'react-hot-toast';
 import EmptyState from '../components/ui/EmptyState';
 import PageLoader from '../components/ui/PageLoader';
 import { useAuth } from '../context/AuthContext';
+import { useWatchData } from '../hooks/useWatchData.jsx';
+
+const EpisodesWheel = ({ episodes, initialIndex, onClose, onSelect, anime }) => {
+  const [selectedIndex, setSelectedIndex] = useState(Math.max(0, initialIndex));
+  
+  const handleWheel = (e) => {
+    if (e.deltaY > 0) {
+      setSelectedIndex(prev => Math.min(episodes.length - 1, prev + 1));
+    } else if (e.deltaY < 0) {
+      setSelectedIndex(prev => Math.max(0, prev - 1));
+    }
+  };
+
+  useEffect(() => {
+    const handleKeyDown = (e) => {
+      if (e.key === 'ArrowDown') {
+        e.preventDefault();
+        setSelectedIndex(prev => Math.min(episodes.length - 1, prev + 1));
+      } else if (e.key === 'ArrowUp') {
+        e.preventDefault();
+        setSelectedIndex(prev => Math.max(0, prev - 1));
+      } else if (e.key === 'Enter') {
+        e.preventDefault();
+        onSelect(episodes[selectedIndex]);
+      } else if (e.key === 'Escape') {
+        e.preventDefault();
+        onClose();
+      }
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [selectedIndex, episodes, onSelect, onClose]);
+
+  const [touchStart, setTouchStart] = useState(0);
+  const handleTouchStart = (e) => setTouchStart(e.targetTouches[0].clientY);
+  const handleTouchMove = (e) => {
+    if (!touchStart) return;
+    const touchEnd = e.targetTouches[0].clientY;
+    if (touchStart - touchEnd > 50) {
+      setSelectedIndex(prev => Math.min(episodes.length - 1, prev + 1));
+      setTouchStart(touchEnd);
+    } else if (touchStart - touchEnd < -50) {
+      setSelectedIndex(prev => Math.max(0, prev - 1));
+      setTouchStart(touchEnd);
+    }
+  };
+
+  return (
+    <>
+      {/* Background click catcher - extremely subtle dimming */}
+      <motion.div 
+        initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
+        onClick={onClose}
+        className="absolute inset-0 bg-black/10 z-[105]"
+      />
+
+      <motion.div 
+        initial={{ x: '100%' }} animate={{ x: 0 }} exit={{ x: '100%' }}
+        transition={{ type: 'spring', damping: 25, stiffness: 200 }}
+        className="absolute top-0 right-0 w-full md:w-[500px] h-full flex items-center justify-center z-[110]"
+        onWheel={handleWheel}
+        onTouchStart={handleTouchStart}
+        onTouchMove={handleTouchMove}
+      >
+        {/* Close Button Only */}
+        <div className="absolute top-8 right-8 z-[120]">
+           <button onClick={onClose} className="w-10 h-10 rounded-full bg-white/5 backdrop-blur-md flex items-center justify-center text-white/80 hover:text-white hover:bg-white/10 transition-all border border-white/10">
+             <BoxyX size={24} />
+           </button>
+        </div>
+
+        {/* 3D Wheel Container with Fade Mask */}
+        <div className="relative w-full h-[85vh] flex items-center justify-center" 
+             style={{ 
+               perspective: '1200px',
+               maskImage: 'linear-gradient(to bottom, transparent 0%, black 15%, black 85%, transparent 100%)',
+               WebkitMaskImage: 'linear-gradient(to bottom, transparent 0%, black 15%, black 85%, transparent 100%)' 
+             }}>
+          <AnimatePresence mode="popLayout">
+            {episodes.map((ep, i) => {
+              const distance = i - selectedIndex;
+              if (Math.abs(distance) > 6) return null;
+
+              const yOffset = distance * 115; 
+              // Curve logic: Front card sticks out left, back cards sweep to the right
+              const xOffset = distance === 0 ? -40 : Math.abs(distance) * 25 - 10;
+              const scale = 1 - Math.abs(distance) * 0.15;
+              const zIndex = 50 - Math.abs(distance);
+              const opacity = distance === 0 ? 1 : 1 - Math.abs(distance) * 0.15;
+              const rotateX = distance * -8; 
+
+              return (
+                <motion.div
+                  key={ep.id}
+                  layout
+                  initial={false}
+                  animate={{
+                    y: yOffset,
+                    x: xOffset,
+                    scale: scale,
+                    zIndex: zIndex,
+                    opacity: opacity,
+                    rotateX: rotateX,
+                  }}
+                  transition={{ type: "spring", stiffness: 300, damping: 30 }}
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    if (distance === 0) {
+                      onSelect(ep);
+                    } else {
+                      setSelectedIndex(i);
+                    }
+                  }}
+                  className={`absolute w-[85%] md:w-[340px] aspect-video rounded-none overflow-hidden shadow-[0_25px_50px_rgba(0,0,0,0.8)] border-[2px] ${distance === 0 ? 'border-white/80 cursor-pointer shadow-[0_0_40px_rgba(255,255,255,0.15)]' : 'border-white/10 cursor-pointer'}`}
+                >
+                  <img src={ep.thumbnail || anime?.image || '/placeholder.jpg'} alt="" className="w-full h-full object-cover" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/95 via-black/30 to-transparent flex flex-col justify-end p-5 md:p-6">
+                    <div className="flex justify-between items-end gap-3">
+                      <div className="min-w-0">
+                        <h3 className="text-white text-xl md:text-2xl font-bold tracking-tight mb-1 truncate drop-shadow-md">Ep {ep.episodeNumber}</h3>
+                        <p className="text-white/80 text-xs md:text-sm line-clamp-1 drop-shadow-md">{ep.title}</p>
+                      </div>
+                      {distance === 0 && (
+                        <motion.div initial={{ scale: 0 }} animate={{ scale: 1 }} className="w-12 h-12 bg-white rounded-full flex items-center justify-center text-black mb-1 flex-shrink-0 shadow-xl">
+                          <BoxyPlay size={24} fill="currentColor" className="ml-1" />
+                        </motion.div>
+                      )}
+                    </div>
+                  </div>
+                </motion.div>
+              );
+            })}
+          </AnimatePresence>
+        </div>
+        
+        <div className="absolute bottom-8 text-white/50 text-xs font-medium pointer-events-none z-[120] text-center w-full px-4 drop-shadow-md">
+          Scroll or swipe to browse • Click to play
+        </div>
+      </motion.div>
+    </>
+  );
+};
 
 const Watch = () => {
- const { episodeId } = useParams(); // This could be an Episode ID or an Anime ID
- const navigate = useNavigate();
- const location = useLocation();
- const searchParams = new URLSearchParams(location.search);
- const initialTime = parseFloat(searchParams.get('t')) || 0;
- const [episode, setEpisode] = useState(null);
- const [anime, setAnime] = useState(null);
- const [otherEpisodes, setOtherEpisodes] = useState([]);
- const [loading, setLoading] = useState(true);
- const [showDrawer, setShowDrawer] = useState(false);
- const [isFauxFullscreen, setIsFauxFullscreen] = useState(false);
- const [isIOS, setIsIOS] = useState(false);
- const [isMobile, setIsMobile] = useState(false);
- const { updateWatchProgress, activeProfile, user } = useAuth();
- const [streamBlocked, setStreamBlocked] = useState(false);
- const [skipTimes, setSkipTimes] = useState(null);
- const progressRef = React.useRef({ time: 0, duration: 0 });
+  const { episodeId } = useParams();
+  const navigate = useNavigate();
+  const location = useLocation();
+  const searchParams = new URLSearchParams(location.search);
+  const initialTime = parseFloat(searchParams.get('t')) || 0;
+  
+  const { episode, anime, otherEpisodes, loading, skipTimes, progressRef } = useWatchData(episodeId);
+  
+  const [showDrawer, setShowDrawer] = useState(false);
+  const [isFauxFullscreen, setIsFauxFullscreen] = useState(false);
+  const [isIOS, setIsIOS] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
+  const { updateWatchProgress, activeProfile, user } = useAuth();
+  const [streamBlocked, setStreamBlocked] = useState(false);
 
- useEffect(() => {
- const userAgent = navigator.userAgent;
- const isIOSDevice = /iPad|iPhone|iPod/.test(userAgent) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
- const isMobileDevice = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(userAgent) || isIOSDevice;
- 
- setIsIOS(isIOSDevice);
- setIsMobile(isMobileDevice);
- }, []);
+  useEffect(() => {
+    const userAgent = navigator.userAgent;
+    const isIOSDevice = /iPad|iPhone|iPod/.test(userAgent) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+    const isMobileDevice = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(userAgent) || isIOSDevice;
+    setIsIOS(isIOSDevice);
+    setIsMobile(isMobileDevice);
+  }, []);
 
- useEffect(() => {
- const handleFullscreenChange = () => {
- if (!document.fullscreenElement && !document.webkitFullscreenElement) {
- setIsFauxFullscreen(false);
- if (window.screen && window.screen.orientation && window.screen.orientation.unlock) {
- window.screen.orientation.unlock();
- }
- } else {
- setIsFauxFullscreen(true);
- }
- };
+  useEffect(() => {
+    const handleFullscreenChange = () => {
+      if (!document.fullscreenElement && !document.webkitFullscreenElement) {
+        setIsFauxFullscreen(false);
+        if (window.screen && window.screen.orientation && window.screen.orientation.unlock) {
+          window.screen.orientation.unlock();
+        }
+      } else {
+        setIsFauxFullscreen(true);
+      }
+    };
+    document.addEventListener('fullscreenchange', handleFullscreenChange);
+    document.addEventListener('webkitfullscreenchange', handleFullscreenChange);
+    return () => {
+      document.removeEventListener('fullscreenchange', handleFullscreenChange);
+      document.removeEventListener('webkitfullscreenchange', handleFullscreenChange);
+    };
+  }, []);
 
- document.addEventListener('fullscreenchange', handleFullscreenChange);
- document.addEventListener('webkitfullscreenchange', handleFullscreenChange);
+  useEffect(() => {
+    if (!activeProfile || !user) return;
+    let intervalId;
+    let isComponentMounted = true;
+    const deviceId = localStorage.getItem('deviceId');
+    if (!deviceId) return;
+    const profileIdentifier = activeProfile.id || activeProfile.name || 'default';
+    const streamRef = doc(db, 'activeStreams', profileIdentifier);
 
- return () => {
- document.removeEventListener('fullscreenchange', handleFullscreenChange);
- document.removeEventListener('webkitfullscreenchange', handleFullscreenChange);
- };
- }, []);
+    const checkAndClaimStream = async () => {
+      try {
+        const streamSnap = await getDoc(streamRef);
+        if (streamSnap.exists()) {
+          const data = streamSnap.data();
+          const lastPingTime = data.lastPing?.toMillis() || 0;
+          const timeSinceLastPing = Date.now() - lastPingTime;
+          if (data.deviceId !== deviceId && timeSinceLastPing < 20000) {
+            if (isComponentMounted) setStreamBlocked(true);
+            return;
+          }
+        }
+        await setDoc(streamRef, { deviceId, lastPing: serverTimestamp() });
+        intervalId = setInterval(async () => {
+          try { await setDoc(streamRef, { deviceId, lastPing: serverTimestamp() }); } catch (e) {}
+        }, 10000);
+      } catch (err) {}
+    };
 
- // Concurrent Stream Tracking
- useEffect(() => {
- if (!activeProfile || !user) return;
- 
- let intervalId;
- let isComponentMounted = true;
- const deviceId = localStorage.getItem('deviceId');
- if (!deviceId) return;
+    checkAndClaimStream();
+    return () => {
+      isComponentMounted = false;
+      if (intervalId) clearInterval(intervalId);
+      getDoc(streamRef).then((snap) => {
+        if (snap.exists() && snap.data().deviceId === deviceId) {
+          deleteDoc(streamRef);
+        }
+      });
+    };
+  }, [activeProfile, user]);
 
- const profileIdentifier = activeProfile.id || activeProfile.name || 'default';
- const streamRef = doc(db, 'activeStreams', profileIdentifier);
+  const toggleFullscreen = async () => {
+    try {
+      const elem = document.documentElement;
+      const isNativeSupported = !!(elem.requestFullscreen || elem.webkitRequestFullscreen || elem.msRequestFullscreen);
+      if (isNativeSupported) {
+        if (!document.fullscreenElement) {
+          if (elem.requestFullscreen) await elem.requestFullscreen();
+          else if (elem.webkitRequestFullscreen) await elem.webkitRequestFullscreen();
+          else if (elem.msRequestFullscreen) await elem.msRequestFullscreen();
+          
+          if (window.screen && window.screen.orientation && window.screen.orientation.lock) {
+            try { await window.screen.orientation.lock('landscape'); } catch (e) {}
+          }
+          setIsFauxFullscreen(true);
+        } else {
+          if (document.exitFullscreen) await document.exitFullscreen();
+          else if (document.webkitExitFullscreen) await document.webkitExitFullscreen();
+          else if (document.msExitFullscreen) await document.msExitFullscreen();
+          
+          if (window.screen && window.screen.orientation && window.screen.orientation.unlock) {
+            window.screen.orientation.unlock();
+          }
+          setIsFauxFullscreen(false);
+        }
+      } else {
+        const videoElem = document.querySelector('video');
+        if (videoElem && videoElem.webkitEnterFullscreen) videoElem.webkitEnterFullscreen();
+        else setIsFauxFullscreen(!isFauxFullscreen);
+      }
+    } catch (err) {
+      const videoElem = document.querySelector('video');
+      if (videoElem && videoElem.webkitEnterFullscreen) videoElem.webkitEnterFullscreen();
+      else setIsFauxFullscreen(!isFauxFullscreen);
+    }
+  };
 
- const checkAndClaimStream = async () => {
- try {
- const streamSnap = await getDoc(streamRef);
- 
- if (streamSnap.exists()) {
- const data = streamSnap.data();
- const lastPingTime = data.lastPing?.toMillis() || 0;
- const timeSinceLastPing = Date.now() - lastPingTime;
- 
- // If the profile is active on another device and pinged within the last 20 seconds
- if (data.deviceId !== deviceId && timeSinceLastPing < 20000) {
- if (isComponentMounted) setStreamBlocked(true);
- return;
- }
- }
- 
- // Claim the stream
- await setDoc(streamRef, {
- deviceId,
- lastPing: serverTimestamp()
- });
- 
- // Start heartbeat
- intervalId = setInterval(async () => {
- try {
- await setDoc(streamRef, {
- deviceId,
- lastPing: serverTimestamp()
- });
- } catch (e) {
- console.error("Failed to update heartbeat:", e);
- }
- }, 10000);
- 
- } catch (err) {
- console.error("Stream tracking error:", err);
- }
- };
-
- checkAndClaimStream();
-
- return () => {
- isComponentMounted = false;
- if (intervalId) clearInterval(intervalId);
- // Clean up stream claim if this device is the one holding it
- getDoc(streamRef).then((snap) => {
- if (snap.exists() && snap.data().deviceId === deviceId) {
- deleteDoc(streamRef);
- }
- });
- };
- }, [activeProfile, user]);
-
- const toggleFullscreen = async () => {
- try {
- const elem = document.documentElement;
- const isNativeSupported = !!(elem.requestFullscreen || elem.webkitRequestFullscreen || elem.msRequestFullscreen);
-
- if (isNativeSupported) {
- if (!document.fullscreenElement) {
- if (elem.requestFullscreen) {
- await elem.requestFullscreen();
- } else if (elem.webkitRequestFullscreen) { /* Safari */
- await elem.webkitRequestFullscreen();
- } else if (elem.msRequestFullscreen) { /* IE11 */
- await elem.msRequestFullscreen();
- }
- 
- // Try to lock orientation to landscape
- if (window.screen && window.screen.orientation && window.screen.orientation.lock) {
- try {
- await window.screen.orientation.lock('landscape');
- } catch (e) {
- // Silently fail if not supported
- }
- }
- setIsFauxFullscreen(true);
- } else {
- if (document.exitFullscreen) {
- await document.exitFullscreen();
- } else if (document.webkitExitFullscreen) { /* Safari */
- await document.webkitExitFullscreen();
- } else if (document.msExitFullscreen) { /* IE11 */
- await document.msExitFullscreen();
- }
- 
- if (window.screen && window.screen.orientation && window.screen.orientation.unlock) {
- window.screen.orientation.unlock();
- }
- setIsFauxFullscreen(false);
- }
- } else {
- // Fallback for iOS iPhone where document fullscreen is not supported
- const videoElem = document.querySelector('video');
- if (videoElem && videoElem.webkitEnterFullscreen) {
- videoElem.webkitEnterFullscreen();
- } else {
- // Absolute fallback
- setIsFauxFullscreen(!isFauxFullscreen);
- }
- }
- } catch (err) {
- console.error("Fullscreen error:", err);
- // Fallback if native throws an error
- const videoElem = document.querySelector('video');
- if (videoElem && videoElem.webkitEnterFullscreen) {
- videoElem.webkitEnterFullscreen();
- } else {
- setIsFauxFullscreen(!isFauxFullscreen);
- }
- }
- };
-
- // Save progress on unmount or episode change
- useEffect(() => {
- return () => {
- if (progressRef.current.time > 5 && episode && anime) {
- updateWatchProgress(anime, episode, progressRef.current.time, progressRef.current.duration);
- }
- };
- }, [episode, anime, updateWatchProgress]);
-
- useEffect(() => {
- if (!anime || !episode) {
- setSkipTimes(null);
- return;
- }
- const fetchSkipData = async () => {
- try {
- const res = await fetch(`https://api.aniskip.com/v2/skip-times/${anime.id}/${episode.episodeNumber}?types=op&types=ed&episodeLength=0`);
- const data = await res.json();
- if (data.found && data.results) {
- const skipData = {};
- data.results.forEach(result => {
- skipData[result.skipType] = result.interval;
- });
- setSkipTimes(skipData);
- } else {
- setSkipTimes(null);
- }
- } catch (err) {
- console.error("Failed to fetch skip times:", err);
- setSkipTimes(null);
- }
- };
- fetchSkipData();
- }, [anime, episode]);
-
- useEffect(() => {
- let isRedirecting = false;
- const fetchData = async () => {
-
- // OPTIMIZATION: Seamless transition. If the next episode is already in our list, skip DB fetch!
- const foundEp = otherEpisodes.find(ep => String(ep.id) === String(episodeId));
- if (foundEp && anime) {
- setEpisode(foundEp);
- progressRef.current = { time: 0, duration: 0 };
- window.scrollTo(0, 0);
- // Seamless transition. If the next episode is already in our list, skip DB fetch!
- return;
- }
-
- setLoading(true);
- progressRef.current = { time: 0, duration: 0 }; // Reset progress for the new episode
- try {
- // 1. Try to find if this ID is an Anime first (common for"Watch Now" buttons)
- const animeDoc = await getDoc(doc(db, 'anime', episodeId));
- let targetAnimeId = episodeId;
- let currentEpisodeData = null;
- let fetchedAnimeData = null;
-
- if (animeDoc.exists()) {
- const animeData = { id: animeDoc.id, ...animeDoc.data() };
- fetchedAnimeData = animeData;
- setAnime(animeData);
- targetAnimeId = animeData.id;
-
- // 1a. Check if there is watch history for this anime
- const historyItem = activeProfile?.watchHistory?.find(
- (h) => String(h.animeId) === String(targetAnimeId)
- );
-
- if (historyItem && String(historyItem.episodeId) !== String(episodeId) && !location.state?.fromReel) {
- const historyEpDoc = await getDoc(doc(db, 'episodes', String(historyItem.episodeId)));
- if (historyEpDoc.exists()) {
- isRedirecting = true;
- navigate(`/watch/${historyItem.episodeId}?t=${Math.floor(historyItem.time)}`, { replace: true });
- return;
- }
- }
-
- // 1b. Fetch all actual episodes for this anime to play Episode 1
- let q = query(collection(db, 'episodes'), where('animeId', '==', targetAnimeId));
- let querySnapshot = await getDocs(q);
- 
- if (querySnapshot.empty && !isNaN(Number(targetAnimeId))) {
- q = query(collection(db, 'episodes'), where('animeId', '==', Number(targetAnimeId)));
- querySnapshot = await getDocs(q);
- }
-
- const rawEps = querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
- const now = new Date();
- const eps = rawEps.filter(ep => {
- if (ep.status !== 'queued') return true;
- if (!ep.releaseDate) return false;
- return ep.releaseDate.toDate() <= now;
- });
- eps.sort((a, b) => (a.episodeNumber || 0) - (b.episodeNumber || 0));
- 
- if (eps.length > 0) {
- if (String(eps[0].id) !== String(episodeId)) {
- isRedirecting = true;
- navigate(`/watch/${eps[0].id}`, { replace: true });
- return;
- } else {
- currentEpisodeData = eps[0];
- }
- } else {
- // If there are absolutely no episodes, and we came from a reel, take them to the anime details page
- if (location.state?.fromReel) {
- isRedirecting = true;
- navigate(`/anime/${targetAnimeId}`, { replace: true });
- return;
- }
-
- // Fallback to default mock Episode 1 only if there are absolutely no episodes in the database
- currentEpisodeData = {
- id: `default-${targetAnimeId}`,
- animeId: targetAnimeId,
- episodeNumber: 1,
- title: 'Episode 1',
- embedUrl: '',
- thumbnail: animeData.image
- };
- }
- 
- // Set other episodes right here from our first query
- setOtherEpisodes(eps);
- 
- } else {
- // 2. If not an anime, try to find it as an Episode
- const epDoc = await getDoc(doc(db, 'episodes', episodeId));
- if (epDoc.exists()) {
- currentEpisodeData = { id: epDoc.id, ...epDoc.data() };
- targetAnimeId = String(currentEpisodeData.animeId);
-
- const aDoc = await getDoc(doc(db, 'anime', targetAnimeId));
- if (aDoc.exists()) {
- fetchedAnimeData = { id: aDoc.id, ...aDoc.data() };
- setAnime(fetchedAnimeData);
- }
- }
- }
-
- // Final fallback if nothing found
- if (!currentEpisodeData) {
- setEpisode(null);
- } else {
- setEpisode(currentEpisodeData);
-
- // Track a view for this anime
- try {
- await updateDoc(doc(db, 'anime', String(targetAnimeId)), {
- viewCount: increment(1)
- });
- } catch (err) {
- console.warn("Could not increment view tracking:", err);
- }
- }
-
- // If we didn't fetch episodes in step 1, fetch them now
- if (!otherEpisodes.length && targetAnimeId) {
- let q = query(collection(db, 'episodes'), where('animeId', '==', targetAnimeId));
- let querySnapshot = await getDocs(q);
- 
- if (querySnapshot.empty && !isNaN(Number(targetAnimeId))) {
- q = query(collection(db, 'episodes'), where('animeId', '==', Number(targetAnimeId)));
- querySnapshot = await getDocs(q);
- }
- 
- const rawAllEps = querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
- const now = new Date();
- const allEps = rawAllEps.filter(ep => {
- if (ep.status !== 'queued') return true;
- if (!ep.releaseDate) return false;
- return ep.releaseDate.toDate() <= now;
- });
- allEps.sort((a, b) => (a.episodeNumber || 0) - (b.episodeNumber || 0));
- 
- setOtherEpisodes(allEps);
- }
- 
-
- } catch (err) {
- console.error("Watch Page Error:", err);
- } finally {
- if (!isRedirecting) {
- setLoading(false);
- }
- }
- };
-
- fetchData();
- window.scrollTo(0, 0);
- }, [episodeId, navigate]);
+  useEffect(() => {
+    return () => {
+      if (progressRef.current.time > 5 && episode && anime) {
+        updateWatchProgress(anime, episode, progressRef.current.time, progressRef.current.duration);
+      }
+    };
+  }, [episode, anime, updateWatchProgress]);
 
  if (streamBlocked) {
  return (
@@ -438,7 +340,7 @@ const Watch = () => {
 
 
  return (
- <div className={`h-screen w-full bg-black overflow-hidden relative flex flex-col ${isFauxFullscreen ? 'faux-fullscreen-mobile' : ''}`}>
+ <div className={`h-screen w-full bg-transparent overflow-hidden relative flex flex-col ${isFauxFullscreen ? 'faux-fullscreen-mobile' : ''}`}>
  <Helmet>
  <title>{`${anime?.title || 'Watch'} - Episode ${episode.episodeNumber} | NeonToad`}</title>
  </Helmet>
@@ -520,83 +422,56 @@ const Watch = () => {
   <>
   {/* 2. FULLSCREEN PLAYER CONTAINER */}
   <div className="flex-grow w-full h-full relative z-10 bg-darkerSurface">
-  <VideoEmbed 
-  sourceUrl={episode.videoUrl || episode.embedUrl} 
-  isFullscreen={true} 
-  nextEpisode={nextEpisode}
-  onPlayNext={() => nextEpisode && navigate(`/watch/${nextEpisode.id}`)}
-  onProgress={(t, d) => { progressRef.current = { time: t, duration: d }; }}
-  initialTime={initialTime}
-  skipTimes={skipTimes}
-  topControls={topControls}
-  />
+              <VideoEmbed 
+                sourceUrl={episode.videoUrl || episode.embedUrl} 
+                isFullscreen={true} 
+                nextEpisode={nextEpisode}
+                onPlayNext={() => nextEpisode && navigate(`/watch/${nextEpisode.id}`)}
+                onProgress={(time, dur) => {
+                  progressRef.current = { time, duration: dur };
+                }}
+                initialTime={initialTime}
+                skipTimes={skipTimes}
+                anime={anime}
+                episode={episode}
+                onBack={() => navigate(-1)}
+                onEpisodesClick={() => setShowDrawer(!showDrawer)}
+                onToggleFullscreen={toggleFullscreen}
+                topControls={
+                  <div className="p-4 md:p-8 flex items-center justify-between w-full pointer-events-none">
+                    <button 
+                      onClick={() => navigate(-1)}
+                      className="w-10 h-10 flex items-center justify-center hover:scale-110 transition-all pointer-events-auto group drop-shadow-lg"
+                    >
+                      <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="group-hover:stroke-white/80 transition-colors">
+                        <line x1="19" y1="12" x2="5" y2="12"></line>
+                        <polyline points="12 19 5 12 12 5"></polyline>
+                      </svg>
+                    </button>
+
+                    <div className="flex items-center pointer-events-auto">
+                      <span className="text-white font-medium text-sm md:text-lg drop-shadow-lg tracking-wide">
+                        S{anime?.season || 1}:E{episode.episodeNumber} {episode.title}
+                      </span>
+                    </div>
+                  </div>
+                }
+              />
  </div>
 
- {/* 3. NEXT EPISODE SIDE DRAWER */}
+ {/* 3. NEXT EPISODE WHEEL */}
  <AnimatePresence>
  {showDrawer && (
- <>
- <motion.div 
- initial={{ opacity: 0 }}
- animate={{ opacity: 1 }}
- exit={{ opacity: 0 }}
- onClick={() => setShowDrawer(false)}
- className="absolute inset-0 bg-black/60 backdrop-blur-sm z-[110]"
- />
- <motion.div 
- initial={{ x: '100%' }}
- animate={{ x: 0 }}
- exit={{ x: '100%' }}
- transition={{ type: 'spring', damping: 25, stiffness: 200 }}
- className="absolute top-0 right-0 w-full md:w-[450px] h-full bg-black/60 backdrop-blur-3xl z-[120] shadow-2xl p-8 md:p-12 flex flex-col"
- >
- <div className="flex items-center justify-between mb-8">
- <h2 className="text-h4 font-semibold text-white tracking-tighter">Up next</h2>
- <button onClick={() => setShowDrawer(false)} className="text-white/90 hover:text-white transition-colors"><BoxyX size={20} /></button>
- </div>
-
- {episode.description && (
- <div className="mb-8 p-4 bg-neutral-900 rounded-none flex-shrink-0">
- <h3 className="text-[10px] font-bold text-white/90 tracking-widest uppercase mb-2">Synopsis</h3>
- <div className="max-h-40 overflow-y-auto pr-2 custom-scrollbar">
- <p className="text-micro text-white/90 leading-relaxed font-medium">{episode.description}</p>
- </div>
- </div>
- )}
-
- <div className="flex-grow overflow-y-auto pr-2 no-scrollbar space-y-8">
- {otherEpisodes.length > 0 ? otherEpisodes.map((ep) => (
- <div 
- key={ep.id}
- onClick={() => { navigate(`/watch/${ep.id}`); setShowDrawer(false); }}
- className={`flex gap-6 group cursor-pointer transition-all ${episodeId === ep.id ? 'opacity-100' : 'opacity-30 hover:opacity-100'}`}
- >
- <div className="relative w-32 h-20 flex-shrink-0 bg-neutral-900 overflow-hidden">
- <img loading="lazy" src={ep.thumbnail || anime?.image || undefined} className="w-full h-full object-cover transition-transform duration-700" alt="" />
- <div className={`absolute inset-0 bg-black/40 flex items-center justify-center ${episodeId === ep.id ? 'opacity-100' : 'opacity-0 group-hover:opacity-100'} transition-opacity`}>
- <BoxyPlay size={20} fill="white" />
- </div>
- </div>
- <div className="flex flex-col justify-center gap-1">
- <span className="text-[10px] font-medium text-white/90">Episode {ep.episodeNumber}</span>
- <h4 className={`text-micro md:text-body font-medium tracking-tight leading-snug ${episodeId === ep.id ? 'text-white' : 'text-white/90 group-hover:text-white'} transition-colors`}>{ep.title}</h4>
- </div>
- </div>
- )) : (
- <p className="text-white/90 text-micro font-medium">No more episodes available.</p>
- )}
- </div>
-
- <div className="mt-auto pt-10">
- <button 
- onClick={() => navigate(`/anime/${episode.animeId}`)}
- className="w-full py-4 bg-neutral-900 text-white/90 font-medium text-micro hover:bg-white hover:text-black transition-all tracking-tight"
- >
- View full series
- </button>
- </div>
- </motion.div>
- </>
+  <EpisodesWheel 
+    episodes={otherEpisodes} 
+    anime={anime}
+    initialIndex={currentEpIndex} 
+    onClose={() => setShowDrawer(false)}
+    onSelect={(ep) => {
+      setShowDrawer(false);
+      navigate(`/watch/${ep.id}`);
+    }}
+  />
  )}
  </AnimatePresence>
 

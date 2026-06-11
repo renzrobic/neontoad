@@ -3,8 +3,8 @@ import React from 'react';
 const SkeletonProfile = () => {
  return (
  <div className="flex flex-col items-center gap-5 animate-pulse">
- <div className="w-28 h-28 md:w-36 md:h-36 rounded-none bg-neutral-900" />
- <div className="h-3 bg-neutral-800 rounded-none w-20" />
+ <div className="w-28 h-28 md:w-36 md:h-36 rounded-xl bg-white/5 backdrop-blur-md rounded-xl border border-white/10" />
+ <div className="h-3 bg-white/10 backdrop-blur-md rounded-xl rounded-xl w-20" />
  </div>
  );
 };

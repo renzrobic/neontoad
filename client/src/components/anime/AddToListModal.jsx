@@ -53,7 +53,7 @@ const AddToListModal = ({ isOpen, onClose, anime }) => {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         exit={{ opacity: 0 }}
-        className="fixed inset-0 z-[200] flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm"
+        className="fixed inset-0 z-[200] flex items-center justify-center p-4 bg-neutral-900/80 backdrop-blur-sm"
         onClick={onClose}
       >
         <motion.div
@@ -64,9 +64,8 @@ const AddToListModal = ({ isOpen, onClose, anime }) => {
           className="relative w-full max-w-lg bg-[#232323] shadow-2xl p-6 md:p-8 overflow-hidden"
         >
           {/* Close Button */}
-          <button
-            onClick={onClose}
-            className="absolute top-4 right-4 text-white/50 hover:text-white transition-colors"
+          <button onClick={onClose}
+            className="absolute top-4 right-4 text-white/50 hover:text-white transition-colors rounded-xl"
           >
             <BoxyX size={24} />
           </button>
@@ -84,7 +83,7 @@ const AddToListModal = ({ isOpen, onClose, anime }) => {
                   className="w-full flex items-center justify-between p-4 bg-white/[0.02] hover:bg-white/[0.05] transition-colors text-left group"
                 >
                   <span className="text-white font-medium text-body">{list.name}</span>
-                  <div className={`w-6 h-6 flex items-center justify-center rounded-none transition-colors border ${isAdded ? 'bg-primary border-primary text-black' : 'border-white/20 text-transparent group-hover:border-white/50'}`}>
+                  <div className={`w-6 h-6 flex items-center justify-center rounded-xl transition-colors border ${isAdded ? 'bg-primary border-primary text-black' : 'border-white/20 text-transparent group-hover:ring-white/80/50'}`}>
                     <BoxyCheck size={16} />
                   </div>
                 </button>
@@ -112,16 +111,14 @@ const AddToListModal = ({ isOpen, onClose, anime }) => {
             </div>
             
             <div className="flex items-center gap-4 pt-4">
-              <button
-                onClick={handleCreateList}
+              <button onClick={handleCreateList}
                 disabled={isCreating || !newListName.trim()}
-                className="flex-1 bg-primary text-black font-bold uppercase tracking-widest text-[12px] py-3.5 hover:bg-primary/90 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                className="flex-1 bg-primary text-black font-bold uppercase tracking-widest text-[12px] py-3.5 hover:bg-primary/90 transition-colors disabled:opacity-50 disabled:cursor-not-allowed rounded-xl"
               >
                 Create List
               </button>
-              <button
-                onClick={onClose}
-                className="flex-1 border border-primary text-primary font-bold uppercase tracking-widest text-[12px] py-3.5 hover:bg-primary hover:text-black transition-colors"
+              <button onClick={onClose}
+                className="flex-1 border border-primary text-primary font-bold uppercase tracking-widest text-[12px] py-3.5 hover:bg-primary hover:text-black transition-colors rounded-xl"
               >
                 Cancel
               </button>

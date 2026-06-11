@@ -15,15 +15,15 @@ const SafeImage = ({ src, alt, className, skeletonClass ="" }) => {
  }, [src]);
 
  return (
- <div className={`relative ${className} bg-neutral-900 overflow-hidden flex items-center justify-center`}>
+ <div className={`relative ${className} bg-white/5 backdrop-blur-md rounded-xl border border-white/10 overflow-hidden flex items-center justify-center`}>
  {/* Skeleton / Loading State */}
  {loading && !error && (
- <div className={`absolute inset-0 animate-pulse bg-neutral-800 z-10 ${skeletonClass}`} />
+ <div className={`absolute inset-0 animate-pulse bg-white/10 backdrop-blur-md rounded-xl z-10 ${skeletonClass}`} />
  )}
 
  {/* Error / Fallback State */}
  {error && (
- <div className="absolute inset-0 flex flex-col items-center justify-center bg-black/60 p-2 text-center z-20">
+ <div className="absolute inset-0 flex flex-col items-center justify-center bg-white/10 p-2 text-center z-20">
  <div className="w-6 h-6 mb-1 flex items-center justify-center opacity-20">
  <span className="text-white text-[10px]">?</span>
  </div>

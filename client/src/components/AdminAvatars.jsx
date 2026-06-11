@@ -126,7 +126,7 @@ const AdminAvatars = () => {
  <div className="space-y-4">
  {editingSeries.characters.map((char, index) => (
  <div key={index} className="flex gap-4 items-center bg-white/[0.02] p-4">
- <div className="w-16 h-16 bg-neutral-900 flex-shrink-0 flex items-center justify-center overflow-hidden">
+ <div className="w-16 h-16 bg-white/5 backdrop-blur-md rounded-xl border border-white/10 flex-shrink-0 flex items-center justify-center overflow-hidden">
  {char.image ? (
  <img src={char.image} alt="preview" className="w-full h-full object-cover" />
  ) : (
@@ -173,7 +173,7 @@ const AdminAvatars = () => {
  const chars = editingSeries.characters.filter((_, i) => i !== index);
  setEditingSeries({...editingSeries, characters: chars});
  }}
- className="p-3 text-white/90 hover:text-white hover:bg-neutral-800 transition-all flex-shrink-0"
+ className="p-3 text-white/90 hover:text-white hover:bg-white/10 backdrop-blur-md rounded-xl transition-all flex-shrink-0"
  >
  <BoxyX size={16} />
  </button>
@@ -183,9 +183,8 @@ const AdminAvatars = () => {
  </div>
 
  <div className="pt-8 flex justify-end">
- <button 
- onClick={handleSaveSeries}
- className="bg-white/90 text-black px-10 py-3.5 text-micro font-semibold tracking-tight hover:bg-white transition-all"
+ <button onClick={handleSaveSeries}
+ className="bg-white/90 text-black px-10 py-3.5 text-micro font-semibold tracking-tight hover:bg-white transition-all rounded-xl"
  >
  Save Avatar Series
  </button>
@@ -199,7 +198,7 @@ const AdminAvatars = () => {
  <div className="flex justify-end">
  <button 
  onClick={() => setEditingSeries({ id: '', name: '', characters: [] })}
- className="bg-neutral-900 text-white px-8 py-3 text-micro font-bold tracking-widest uppercase hover:bg-white hover:text-black transition-all flex items-center gap-2"
+ className="bg-white/5 backdrop-blur-md rounded-xl border border-white/10 text-white px-8 py-3 text-micro font-bold tracking-widest uppercase hover:bg-white hover:text-black transition-all flex items-center gap-2"
  >
  <BoxyPlus size={16} /> New Series
  </button>
@@ -229,12 +228,12 @@ const AdminAvatars = () => {
  
  <div className="flex flex-wrap gap-2">
  {series.characters?.slice(0, 5).map(char => (
- <div key={char.id} className="w-10 h-10 rounded-full overflow-hidden bg-black" title={char.name}>
+ <div key={char.id} className="w-10 h-10 rounded-full overflow-hidden bg-transparent" title={char.name}>
  <img src={char.image} alt={char.name} className="w-full h-full object-cover" />
  </div>
  ))}
  {series.characters?.length > 5 && (
- <div className="w-10 h-10 rounded-full bg-neutral-900 flex items-center justify-center text-[10px] font-bold text-white/90">
+ <div className="w-10 h-10 rounded-full bg-white/5 backdrop-blur-md rounded-xl border border-white/10 flex items-center justify-center text-[10px] font-bold text-white/90">
  +{series.characters.length - 5}
  </div>
  )}

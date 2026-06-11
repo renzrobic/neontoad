@@ -18,17 +18,6 @@ export default {
         darkerSurface: "var(--color-darker-surface)",
         almostBlack: "var(--color-almost-black)",
       },
-      borderRadius: {
-        'none': '0',
-        'sm': '0px',
-        'DEFAULT': '0px',
-        'md': '0px',
-        'lg': '0px',
-        'xl': '0px',
-        '2xl': '0px',
-        '3xl': '0px',
-        'full': '9999px',
-      },
       fontSize: {
         'micro': ['13px', { lineHeight: '140%', fontWeight: '500' }],
         'body': ['16px', { lineHeight: '150%', fontWeight: '400' }],

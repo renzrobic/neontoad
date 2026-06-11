@@ -54,7 +54,7 @@ const Profiles = () => {
  className="flex flex-col items-center gap-5 group cursor-pointer"
  onClick={() => handleSelect(profile)}
  >
- <div className="relative w-28 h-28 md:w-36 md:h-36 rounded-none overflow-hidden border-2 border-transparent group-hover:border-white transition-all duration-300">
+ <div className="relative w-28 h-28 md:w-36 md:h-36 rounded-2xl overflow-hidden ring-2 ring-transparent group-hover:ring-white/80 ring-offset-4 ring-offset-background transition-all duration-300 shadow-2xl">
  <SafeImage
  src={profile.avatarUrl || DEFAULT_AVATAR}
  alt={profile.name}
@@ -69,8 +69,8 @@ const Profiles = () => {
 
  {profiles.length < 5 && (
  <Link to="/profiles/create" className="flex flex-col items-center gap-5 group">
- <div className="w-28 h-28 md:w-36 md:h-36 rounded-none flex items-center justify-center transition-all group-hover:bg-neutral-900 border-2 group-hover:border-white">
- <BoxyPlus size={64} className="text-white/90 group-hover:text-white transition-colors" />
+ <div className="w-28 h-28 md:w-36 md:h-36 rounded-2xl flex items-center justify-center transition-all bg-white/5 backdrop-blur-md ring-2 ring-white/10 group-hover:ring-white/80 ring-offset-4 ring-offset-background group-hover:bg-white/10 shadow-2xl">
+ <BoxyPlus size={64} className="text-white/80 group-hover:text-white group-hover:scale-110 transition-all duration-300" />
  </div>
  <span className="text-white/90 group-hover:text-white text-body font-semibold transition-colors tracking-tight mt-2">
  Add Profile

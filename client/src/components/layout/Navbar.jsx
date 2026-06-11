@@ -42,7 +42,7 @@ const Navbar = () => {
  onClick={() => setIsMobileMenuOpen(false)}
  />
  )}
- <div className={`w-full px-4 md:px-16 flex items-center justify-between transition-all duration-500 ${isScrolled ? 'py-1' : 'py-2'}`}>
+ <div className={`w-full px-6 md:px-16 flex items-center justify-between transition-all duration-500 ${isScrolled ? 'py-2 md:py-3' : 'py-4 md:py-6'}`}>
  <div className="flex items-center gap-12">
  <Link
  to="/"
@@ -54,7 +54,7 @@ const Navbar = () => {
  className={`h-[40px] md:h-[64px] w-auto transition-all duration-500 ${isSearchOpen ? 'md:flex' : ''}`}
  />
  </Link>
- <div className="hidden md:flex items-center gap-10 text-body font-semibold tracking-tight text-white/90">
+ <div className="hidden md:flex items-center gap-10 text-sm font-semibold tracking-wide text-white/70">
  <Link to="/" className="hover:text-white transition-colors">Home</Link>
  <Link to="/library" className="hover:text-white transition-colors">Library</Link>
  <Link to="/calendar" className="hover:text-white transition-colors">Calendar</Link>
@@ -87,7 +87,7 @@ const Navbar = () => {
  onBlur={() => {
  if (!searchQuery) setIsSearchOpen(false);
  }}
- className="bg-black/60 backdrop-blur-2xl px-4 py-2 text-body font-medium focus: outline-none w-[160px] md:w-[280px] tracking-tight rounded-none shadow-2xl"
+ className="bg-white/10 backdrop-blur-2xl px-4 py-2 text-body font-medium focus: outline-none w-[160px] md:w-[280px] tracking-tight rounded-xl shadow-2xl"
  />
  </motion.div>
  )}
@@ -135,7 +135,7 @@ const Navbar = () => {
  className="hidden md:block"
  onClick={() => {}}
  >
- <div className={`w-9 h-9 md:w-10 md:h-10 rounded-none overflow-hidden transition-all cursor-pointer border-transparent hover:`}>
+ <div className={`w-9 h-9 md:w-10 md:h-10 rounded-xl overflow-hidden transition-all cursor-pointer border-transparent hover:`}>
  <SafeImage
  src={activeProfile?.avatarUrl ||"https://wallpapers-clan.com/wp-content/uploads/2023/02/jujutsu-kaisen-satoru-gojo-pfp-1.jpg"}
  alt="Profile"
@@ -145,26 +145,26 @@ const Navbar = () => {
  </div>
 
  {/* Desktop Dropdown Menu */}
- <div className="hidden md:block absolute top-full right-0 mt-4 w-64 bg-black/80 backdrop-blur-3xl shadow-2xl opacity-0 invisible group-hover/profile:opacity-100 group-hover/profile:visible transition-all duration-300 z-[110] rounded-none">
+ <div className="hidden md:block absolute top-full right-0 mt-4 w-64 bg-neutral-900/80 backdrop-blur-3xl shadow-2xl opacity-0 invisible group-hover/profile:opacity-100 group-hover/profile:visible transition-all duration-300 z-[110] rounded-xl">
  <div className="p-4">
  <p className="text-body font-bold text-white truncate tracking-tight">{activeProfile?.name || 'User'}</p>
  <p className="text-micro font-medium text-white/90 truncate tracking-tight mt-0.5">{user.email}</p>
  </div>
  <div className="p-2 space-y-1">
  {isAdmin && (
- <Link to="/admin" className="flex items-center gap-3 px-3 py-2 text-body font-medium text-[#86E95C] hover:bg-neutral-900 rounded-none transition-colors tracking-tight">
+ <Link to="/admin" className="flex items-center gap-3 px-3 py-2 text-body font-medium text-[#86E95C] hover:bg-white/5 backdrop-blur-md rounded-xl border border-white/10 rounded-xl transition-colors tracking-tight">
  <BoxyShield size={16} /> Admin Dashboard
  </Link>
  )}
- <Link to="/profiles" className="flex items-center gap-3 px-3 py-2 text-body font-medium hover:bg-neutral-900 rounded-none transition-colors tracking-tight">
+ <Link to="/profiles" className="flex items-center gap-3 px-3 py-2 text-body font-medium hover:bg-white/5 backdrop-blur-md rounded-xl border border-white/10 rounded-xl transition-colors tracking-tight">
  <BoxyUser size={16} /> Switch profile
  </Link>
- <Link to="/account" className="flex items-center gap-3 px-3 py-2 text-body font-medium hover:bg-neutral-900 rounded-none transition-colors tracking-tight">
+ <Link to="/account" className="flex items-center gap-3 px-3 py-2 text-body font-medium hover:bg-white/5 backdrop-blur-md rounded-xl border border-white/10 rounded-xl transition-colors tracking-tight">
  <BoxyShield size={16} /> Account settings
  </Link>
  <button
  onClick={handleLogout}
- className="w-full flex items-center gap-3 px-3 py-2 text-body font-medium text-white/90 hover:text-white hover:bg-neutral-900 rounded-none transition-colors tracking-tight"
+ className="w-full flex items-center gap-3 px-3 py-2 text-body font-medium text-white/90 hover:text-white hover:bg-white/5 backdrop-blur-md rounded-xl border border-white/10 rounded-xl transition-colors tracking-tight"
  >
  <BoxyLogOut size={16} /> Sign out
  </button>
@@ -172,8 +172,7 @@ const Navbar = () => {
  </div>
 
  {/* Mobile hamburger button */}
- <button
- className="md:hidden p-2 text-white/90 hover:text-white transition-colors"
+ <button className="md:hidden p-2 text-white/90 hover:text-white transition-colors rounded-xl"
  onClick={() => {
  const newVal = !isMobileMenuOpen;
  setIsMobileMenuOpen(newVal);
@@ -205,7 +204,7 @@ const Navbar = () => {
  className="md:hidden bg-background overflow-hidden"
  >
  {user && (
- <div className="p-6 bg-neutral-900 flex items-center gap-4">
+ <div className="p-6 bg-white/5 backdrop-blur-md rounded-xl border border-white/10 flex items-center gap-4">
  <div className="w-12 h-12 overflow-hidden">
  <img loading="lazy" src={activeProfile?.avatarUrl} className="w-full h-full object-cover" alt="" />
  </div>
@@ -228,7 +227,7 @@ const Navbar = () => {
  )}
  <Link to="/account" onClick={() => setIsMobileMenuOpen(false)} className="text-h4 font-medium hover:text-white transition-colors tracking-tight">Account settings</Link>
  <Link to="/profiles" onClick={() => setIsMobileMenuOpen(false)} className="text-h4 font-medium hover:text-white transition-colors tracking-tight">Switch profile</Link>
- <button onClick={handleLogout} className="text-left text-h4 font-medium text-white/90 hover:text-white transition-colors tracking-tight">Sign out</button>
+ <button onClick={handleLogout} className="text-left text-h4 font-medium text-white/90 hover:text-white transition-colors tracking-tight rounded-xl">Sign out</button>
  </div>
  ) : (
  <Link to="/login" onClick={() => setIsMobileMenuOpen(false)} className="text-h4 font-medium text-white tracking-tight">Login / register</Link>

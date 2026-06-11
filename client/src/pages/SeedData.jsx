@@ -122,23 +122,22 @@ const SeedData = () => {
  return (
  <div className="min-h-screen bg-transparent flex flex-col items-center justify-center p-8 text-white">
  <h1 className="text-h2 font-medium text-primary mb-8">Data Injection Portal</h1>
- <div className="glass-card bg-neutral-900 p-8 w-full max-w-md text-center">
+ <div className="glass-card bg-white/5 backdrop-blur-md rounded-xl border border-white/10 p-8 w-full max-w-md text-center">
  <p className="mb-4 font-medium text-white/90">Status: <span className="text-primary">{status}</span></p>
- <div className="w-full bg-neutral-900 h-2 mb-8">
+ <div className="w-full bg-white/5 backdrop-blur-md rounded-xl border border-white/10 h-2 mb-8">
  <div
  className="bg-primary h-full transition-all duration-300"
  style={{ width: `${progress}%` }}
  />
  </div>
- <button
- onClick={fetchAndSeed}
- className="bg-primary text-black font-medium px-8 py-3 hover:bg-white transition-all w-full mb-4"
+ <button onClick={fetchAndSeed}
+ className="bg-primary text-black font-medium px-8 py-3 hover:bg-white transition-all w-full mb-4 rounded-xl"
  >
  Reset Library & Inject New Titles
  </button>
  <button
  onClick={seedAvatars}
- className="bg-neutral-800 text-white font-medium px-8 py-3 hover:bg-neutral-700 transition-all w-full mb-4"
+ className="bg-white/10 backdrop-blur-md rounded-xl text-white font-medium px-8 py-3 hover:bg-neutral-700 transition-all w-full mb-4"
  >
  Inject Avatar Series
  </button>

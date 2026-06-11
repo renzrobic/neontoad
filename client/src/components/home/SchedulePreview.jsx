@@ -29,18 +29,18 @@ const SchedulePreview = React.memo(() => {
  }, []);
 
  if (loading) return (
- <div className="px-4 md:px-16 py-12 md:py-20 animate-pulse">
- <div className="h-8 bg-neutral-900 w-48 mb-10" />
+ <div className="px-6 md:px-16 py-12 md:py-20 animate-pulse">
+ <div className="h-8 bg-white/5 backdrop-blur-md rounded-xl border border-white/10 w-48 mb-10" />
  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
- {[1, 2, 3, 4].map(i => <div key={i} className="h-40 bg-neutral-900" />)}
+ {[1, 2, 3, 4].map(i => <div key={i} className="h-40 bg-white/5 backdrop-blur-md rounded-xl border border-white/10" />)}
  </div>
  </div>
  );
 
  return (
- <div className="px-4 md:px-16 py-12 md:py-20">
+ <div className="px-6 md:px-16 py-12 md:py-20">
  <div className="flex items-center gap-4 mb-10">
- <div className="w-1.5 h-6 bg-neutral-800" />
+ <div className="w-1.5 h-6 bg-white/10 backdrop-blur-md rounded-xl" />
  <h2 className="text-h2 md:text-h2 font-medium text-white tracking-tight">Today's schedule</h2>
  </div>
 
@@ -57,7 +57,7 @@ const SchedulePreview = React.memo(() => {
  <div className="flex justify-between items-start mb-4">
  <span className="text-white/90 font-medium text-micro">{item.time}</span>
  {item.status === 'Live now' && (
- <span className="bg-neutral-800 text-white text-[10px] font-medium px-2 py-0.5 animate-pulse tracking-tight">
+ <span className="bg-white/10 backdrop-blur-md rounded-xl text-white text-[10px] font-medium px-2 py-0.5 animate-pulse tracking-tight">
  Live now
  </span>
  )}
@@ -68,8 +68,8 @@ const SchedulePreview = React.memo(() => {
  <p className="text-[11px] font-medium text-white/90 tracking-tight">{item.episode}</p>
 
  <div className="mt-6 flex items-center gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
- <div className="w-full h-px bg-neutral-900" />
- <button className="flex-shrink-0 text-[10px] font-medium text-white/90 hover:text-white transition-colors tracking-tight">Set reminder</button>
+ <div className="w-full h-px bg-white/5 backdrop-blur-md rounded-xl border border-white/10" />
+ <button className="flex-shrink-0 text-[10px] font-medium text-white/90 hover:text-white transition-colors tracking-tight rounded-xl">Set reminder</button>
  </div>
  </motion.div>
  ))}

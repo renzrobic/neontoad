@@ -127,7 +127,7 @@ const Library = () => {
  }, [handleObserver]);
 
  return (
- <div className="pt-24 min-h-screen bg-transparent px-4 md:px-16 pb-20">
+ <div className="pt-24 min-h-screen bg-transparent px-6 md:px-16 pb-20">
  <Helmet>
  <title>{`Full Library - ${activeGenre} | NeonToad`}</title>
  <meta name="description" content="Browse the entire NeonToad anime library." />
@@ -141,9 +141,9 @@ const Library = () => {
  <button
  key={genre}
  onClick={() => setActiveGenre(genre)}
- className={`px-6 py-2.5 text-[13px] font-bold tracking-widest uppercase transition-all flex-shrink-0 backdrop-blur-md ${activeGenre === genre
+ className={`px-6 py-2.5 text-xs md:text-sm font-bold tracking-widest uppercase transition-all flex-shrink-0 rounded-full ${activeGenre === genre
  ? 'bg-white text-black shadow-[0_0_20px_rgba(255,255,255,0.3)] border-white'
- : 'bg-neutral-900 text-white/90 hover:text-white hover:bg-neutral-800 shadow-xl'
+ : 'bg-white/5 backdrop-blur-md border border-white/10 text-white/90 hover:text-white hover:bg-white/10 shadow-xl'
  }`}
  >
  {genre}

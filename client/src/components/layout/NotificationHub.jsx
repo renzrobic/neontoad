@@ -92,11 +92,11 @@ const NotificationHub = ({ isOpen, onToggle }) => {
  return (
  <div
  key={notif.id}
- className="p-3 px-4 flex gap-4 hover:bg-neutral-900 transition-colors cursor-pointer group relative"
+ className="p-3 px-4 flex gap-4 hover:bg-white/5 backdrop-blur-md rounded-xl border border-white/10 transition-colors cursor-pointer group relative"
  onClick={() => handleNotificationClick(notif)}
  >
  <div className="relative">
- <div className="w-14 h-14 bg-black flex-shrink-0 flex items-center justify-center">
+ <div className="w-14 h-14 bg-transparent flex-shrink-0 flex items-center justify-center">
  <img loading="lazy"
  src={notif.actorAvatar ||"https://wallpapers-clan.com/wp-content/uploads/2023/02/jujutsu-kaisen-satoru-gojo-pfp-1.jpg"}
  className="w-full h-full object-cover"
@@ -140,7 +140,7 @@ const NotificationHub = ({ isOpen, onToggle }) => {
  >
  <BoxyBell size={22} fill={unreadCount > 0 ?"currentColor" :"none"} />
  {unreadCount > 0 && (
- <span className="absolute top-1 right-1 w-4 h-4 bg-white text-black text-[10px] font-bold flex items-center justify-center rounded-none border-2 border-background shadow-[0_0_10px_rgba(255,255,255,0.3)]">
+ <span className="absolute top-1 right-1 w-4 h-4 bg-white text-black text-[10px] font-bold flex items-center justify-center rounded-xl border-2 border-background shadow-[0_0_10px_rgba(255,255,255,0.3)]">
  {unreadCount}
  </span>
  )}
@@ -158,7 +158,7 @@ const NotificationHub = ({ isOpen, onToggle }) => {
  animate={{ opacity: 1, y: 0, scale: 1 }}
  exit={{ opacity: 0, y: -10, scale: 0.98 }}
  transition={{ duration: 0.2 }}
- className="absolute top-full left-0 md:left-auto md:right-0 md:mt-4 w-full md:w-[420px] bg-background md:bg-black/95 md:backdrop-blur-3xl md: shadow-2xl flex flex-col max-h-[85vh] md:max-h-[80vh]"
+ className="absolute top-full left-0 md:left-auto md:right-0 md:mt-4 w-full md:w-[420px] bg-background md:bg-neutral-900/95 md:backdrop-blur-3xl md: shadow-2xl flex flex-col max-h-[85vh] md:max-h-[80vh]"
  >
  <div className="p-4 flex flex-col gap-4 flex-shrink-0">
  <div className="flex justify-between items-center relative">
@@ -166,7 +166,7 @@ const NotificationHub = ({ isOpen, onToggle }) => {
  
  <button 
  onClick={() => setShowOptions(!showOptions)}
- className="p-1.5 hover:bg-neutral-800 transition-colors text-white/90"
+ className="p-1.5 hover:bg-white/10 backdrop-blur-md rounded-xl transition-colors text-white/90"
  >
  <BoxyMoreVertical size={20} />
  </button>
@@ -180,10 +180,10 @@ const NotificationHub = ({ isOpen, onToggle }) => {
  exit={{ opacity: 0, scale: 0.95 }}
  className="absolute top-full right-0 mt-2 w-48 bg-[#1A1A1A] shadow-xl z-50 py-1"
  >
- <button onClick={handleMarkAllRead} className="w-full px-4 py-2.5 text-left text-body text-white hover:bg-neutral-800 flex items-center gap-2">
+ <button onClick={handleMarkAllRead} className="w-full px-4 py-2.5 text-left text-body text-white hover:bg-white/10 backdrop-blur-md rounded-xl flex items-center gap-2">
  <BoxyBell size={16} /> Mark all as read
  </button>
- <button onClick={handleClearAll} className="w-full px-4 py-2.5 text-left text-body text-white hover:bg-neutral-800 flex items-center gap-2">
+ <button onClick={handleClearAll} className="w-full px-4 py-2.5 text-left text-body text-white hover:bg-white/10 backdrop-blur-md rounded-xl flex items-center gap-2">
  <BoxyX size={16} /> Clear notifications
  </button>
  </motion.div>
@@ -194,13 +194,13 @@ const NotificationHub = ({ isOpen, onToggle }) => {
  <div className="flex gap-2">
  <button 
  onClick={() => setFilter('all')} 
- className={`px-4 py-1.5 text-body font-bold transition-colors ${filter === 'all' ? 'bg-neutral-800 text-white' : 'text-white/90 hover:bg-neutral-900 hover:text-white'}`}
+ className={`px-4 py-1.5 text-body font-bold transition-colors ${filter === 'all' ? 'bg-white/10 backdrop-blur-md rounded-xl text-white' : 'text-white/90 hover:bg-white/5 backdrop-blur-md rounded-xl border border-white/10 hover:text-white'}`}
  >
  All
  </button>
  <button 
  onClick={() => setFilter('unread')} 
- className={`px-4 py-1.5 text-body font-bold transition-colors ${filter === 'unread' ? 'bg-neutral-800 text-white' : 'text-white/90 hover:bg-neutral-900 hover:text-white'}`}
+ className={`px-4 py-1.5 text-body font-bold transition-colors ${filter === 'unread' ? 'bg-white/10 backdrop-blur-md rounded-xl text-white' : 'text-white/90 hover:bg-white/5 backdrop-blur-md rounded-xl border border-white/10 hover:text-white'}`}
  >
  Unread
  </button>
@@ -228,7 +228,7 @@ const NotificationHub = ({ isOpen, onToggle }) => {
  navigate('/notifications');
  onToggle(false);
  }}
- className="w-full py-3.5 text-body font-bold text-primary hover:bg-neutral-900 transition-all"
+ className="w-full py-3.5 text-body font-bold text-primary hover:bg-white/5 backdrop-blur-md rounded-xl border border-white/10 transition-all"
  >
  See all
  </button>

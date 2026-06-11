@@ -57,7 +57,7 @@ const AnimeCard = React.memo(({ anime }) => {
  return (
  <motion.div
  transition={{ duration: 0.3, ease:"easeOut" }}
- className="relative cursor-pointer aspect-[2/3] w-full bg-neutral-900 overflow-hidden group border-none"
+ className="relative cursor-pointer aspect-[2/3] w-full bg-white/5 backdrop-blur-md rounded-none border border-white/10 overflow-hidden group shadow-lg hover:shadow-2xl transition-all duration-300"
  onClick={() => {
  if (isNavigating) return;
  setIsNavigating(true);
@@ -66,18 +66,18 @@ const AnimeCard = React.memo(({ anime }) => {
  }, 0);
  }}
  >
- <div className="absolute inset-0 bg-neutral-900 z-0 flex items-center justify-center p-4 text-center">
+ <div className="absolute inset-0 bg-white/5 backdrop-blur-md rounded-xl border border-white/10 z-0 flex items-center justify-center p-4 text-center">
  <span className="text-[10px] font-medium text-white/5">{anime.title}</span>
  </div>
  
  {isNavigating && (
- <div className="absolute inset-0 z-[100] bg-black/40 flex items-center justify-center backdrop-blur-[2px]">
+ <div className="absolute inset-0 z-[100] bg-white/5 flex items-center justify-center backdrop-blur-[2px]">
  <div className="w-8 h-8 border-2 border-white border-t-transparent rounded-full animate-spin" />
  </div>
  )}
  
  {isNewEpisode && (
- <div className="absolute bottom-3 left-1/2 -translate-x-1/2 z-40 bg-primary text-black text-micro font-bold px-2.5 py-1 rounded-none shadow-lg whitespace-nowrap group-hover:opacity-0 transition-opacity duration-300">
+ <div className="absolute bottom-3 left-1/2 -translate-x-1/2 z-40 bg-primary text-black text-micro font-bold px-3 py-1 rounded-full shadow-xl whitespace-nowrap group-hover:opacity-0 transition-opacity duration-300">
  New Episode
  </div>
  )}
@@ -114,13 +114,13 @@ const AnimeCard = React.memo(({ anime }) => {
   </div>
 
   <div className="flex items-center gap-4 mt-1 md:mt-2">
-    <button onClick={handlePlay} className="text-primary hover:text-white transition-colors" title="Play">
+    <button onClick={handlePlay} className="text-primary hover:text-white transition-colors rounded-xl" title="Play">
       <BoxyPlay size={20} className="md:w-6 md:h-6" />
     </button>
-    <button onClick={handleBookmark} className="text-primary hover:text-white transition-colors" title={isFavorite ? "Remove from List" : "Add to List"}>
+    <button onClick={handleBookmark} className="text-primary hover:text-white transition-colors rounded-xl" title={isFavorite ? "Remove from List" : "Add to List"}>
       <BoxyBookmark size={20} className={`md:w-6 md:h-6 ${isFavorite ? 'fill-primary' : ''}`} />
     </button>
-    <button onClick={handlePlus} className="text-primary hover:text-white transition-colors" title="Add to Collection">
+    <button onClick={handlePlus} className="text-primary hover:text-white transition-colors rounded-xl" title="Add to Collection">
       <BoxyPlus size={24} className="md:w-7 md:h-7" />
     </button>
   </div>

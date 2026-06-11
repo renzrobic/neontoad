@@ -95,10 +95,10 @@ const NotificationsPage = () => {
  <div
  key={notif.id}
  onClick={() => handleNotificationClick(notif)}
- className="group relative flex items-start gap-4 md:gap-5 p-4 md:p-5 hover:bg-neutral-900 transition-all cursor-pointer"
+ className="group relative flex items-start gap-4 md:gap-5 p-4 md:p-5 hover:bg-white/5 backdrop-blur-md rounded-xl border border-white/10 transition-all cursor-pointer"
  >
  <div className="relative">
- <div className="w-16 h-16 flex-shrink-0 bg-black overflow-hidden">
+ <div className="w-16 h-16 flex-shrink-0 bg-transparent overflow-hidden">
  <img 
  loading="lazy"
  src={notif.actorAvatar ||"https://wallpapers-clan.com/wp-content/uploads/2023/02/jujutsu-kaisen-satoru-gojo-pfp-1.jpg"}
@@ -133,13 +133,13 @@ const NotificationsPage = () => {
  };
 
  return (
- <div className="pt-24 md:pt-32 pb-20 min-h-screen bg-transparent px-4 md:px-16 max-w-4xl mx-auto">
+ <div className="pt-24 md:pt-32 pb-20 min-h-screen bg-transparent px-6 md:px-16 max-w-4xl mx-auto">
  <div className="flex justify-between items-center mb-8 relative">
  <h1 className="text-[40px] md:text-[48px] font-bold text-white leading-none tracking-tighter">Notifications</h1>
  
  <button 
  onClick={() => setShowOptions(!showOptions)}
- className="p-2 md:p-3 hover:bg-neutral-800 transition-colors text-white/90"
+ className="p-2 md:p-3 hover:bg-white/10 backdrop-blur-md rounded-xl transition-colors text-white/90"
  >
  <BoxyMoreVertical size={28} />
  </button>
@@ -152,10 +152,10 @@ const NotificationsPage = () => {
  exit={{ opacity: 0, scale: 0.95 }}
  className="absolute top-full right-0 mt-2 w-64 bg-[#1A1A1A] shadow-2xl z-50 py-2"
  >
- <button onClick={handleMarkAllRead} className="w-full px-5 py-3 text-left text-body text-white hover:bg-neutral-800 flex items-center gap-3">
+ <button onClick={handleMarkAllRead} className="w-full px-5 py-3 text-left text-body text-white hover:bg-white/10 backdrop-blur-md rounded-xl flex items-center gap-3">
  <BoxyBell size={20} /> Mark all as read
  </button>
- <button onClick={handleClearAll} className="w-full px-5 py-3 text-left text-body text-white hover:bg-neutral-800 flex items-center gap-3">
+ <button onClick={handleClearAll} className="w-full px-5 py-3 text-left text-body text-white hover:bg-white/10 backdrop-blur-md rounded-xl flex items-center gap-3">
  <BoxyX size={20} /> Clear notifications
  </button>
  </motion.div>
@@ -166,13 +166,13 @@ const NotificationsPage = () => {
  <div className="flex gap-3 mb-10">
  <button 
  onClick={() => setFilter('all')} 
- className={`px-5 py-2 text-body font-bold transition-colors ${filter === 'all' ? 'bg-neutral-800 text-white' : 'text-white/90 hover:bg-neutral-900 hover:text-white'}`}
+ className={`px-5 py-2 text-body font-bold transition-colors ${filter === 'all' ? 'bg-white/10 backdrop-blur-md rounded-xl text-white' : 'text-white/90 hover:bg-white/5 backdrop-blur-md rounded-xl border border-white/10 hover:text-white'}`}
  >
  All
  </button>
  <button 
  onClick={() => setFilter('unread')} 
- className={`px-5 py-2 text-body font-bold transition-colors ${filter === 'unread' ? 'bg-neutral-800 text-white' : 'text-white/90 hover:bg-neutral-900 hover:text-white'}`}
+ className={`px-5 py-2 text-body font-bold transition-colors ${filter === 'unread' ? 'bg-white/10 backdrop-blur-md rounded-xl text-white' : 'text-white/90 hover:bg-white/5 backdrop-blur-md rounded-xl border border-white/10 hover:text-white'}`}
  >
  Unread
  </button>

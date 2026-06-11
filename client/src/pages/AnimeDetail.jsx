@@ -188,7 +188,7 @@ const AnimeDetail = () => {
  </Helmet>
  {/* Banner Section */}
  <div className="relative min-h-[40vh] md:min-h-[60vh] w-full flex flex-col justify-end">
- <div className="absolute inset-0 overflow-hidden bg-black">
+ <div className="absolute inset-0 overflow-hidden bg-transparent">
  {(() => {
  const displayVideo = anime.bannerVideo;
  const displayImage = anime.bannerImage || anime.image;
@@ -223,7 +223,7 @@ const AnimeDetail = () => {
  <div className="absolute inset-0 bg-gradient-to-b from-black/90 via-black/40 to-transparent pointer-events-none" />
  </div>
 
- <div className="relative w-full px-4 md:px-16 pt-28 md:pt-64 pb-12 md:pb-32 z-10">
+ <div className="relative w-full px-6 md:px-16 pt-28 md:pt-64 pb-12 md:pb-32 z-10">
  <motion.div
  initial={{ opacity: 0, y: 30 }}
  animate={{ opacity: 1, y: 0 }}
@@ -249,7 +249,7 @@ const AnimeDetail = () => {
  }
  }, 0);
  }}
- className="w-full sm:w-auto bg-primary text-black px-8 py-3 h-12 rounded-none font-semibold flex items-center justify-center gap-3 hover:bg-primary/90 transition-all active:scale-95 shadow-[0_0_20px_rgba(134,233,92,0.2)] text-body tracking-tight disabled:opacity-70 disabled:cursor-wait"
+ className="w-full sm:w-auto bg-primary text-black px-8 py-3 h-12 rounded-xl font-semibold flex items-center justify-center gap-3 hover:bg-primary/90 transition-all active:scale-95 shadow-[0_0_20px_rgba(134,233,92,0.2)] text-body tracking-tight disabled:opacity-70 disabled:cursor-wait"
  >
  {isNavigating ? (
  <div className="w-5 h-5 border-2 border-black border-t-transparent rounded-full animate-spin" />
@@ -260,7 +260,7 @@ const AnimeDetail = () => {
               
               <button 
                 onClick={handleFavorite} 
-                className="bg-neutral-800 text-primary h-12 w-12 rounded-none hover:bg-neutral-700 hover:text-white transition-all flex items-center justify-center shadow-lg"
+                className="bg-white/10 backdrop-blur-md rounded-xl text-primary h-12 w-12 rounded-xl hover:bg-neutral-700 hover:text-white transition-all flex items-center justify-center shadow-lg"
                 title={isFavorite ? "Remove from List" : "Add to List"}
               >
                 <BoxyBookmark size={18} className={isFavorite ? 'fill-primary text-primary' : ''} />
@@ -268,7 +268,7 @@ const AnimeDetail = () => {
               
               <button 
                 onClick={handlePlus} 
-                className="bg-neutral-800 text-primary h-12 w-12 rounded-none hover:bg-neutral-700 hover:text-white transition-all flex items-center justify-center shadow-lg"
+                className="bg-white/10 backdrop-blur-md rounded-xl text-primary h-12 w-12 rounded-xl hover:bg-neutral-700 hover:text-white transition-all flex items-center justify-center shadow-lg"
                 title="Add to Custom List"
               >
                 <BoxyPlus size={22} />
@@ -276,7 +276,7 @@ const AnimeDetail = () => {
               
               <button 
                 onClick={handleShare} 
-                className="bg-neutral-800 text-primary h-12 w-12 rounded-none hover:bg-neutral-700 hover:text-white transition-all flex items-center justify-center shadow-lg"
+                className="bg-white/10 backdrop-blur-md rounded-xl text-primary h-12 w-12 rounded-xl hover:bg-neutral-700 hover:text-white transition-all flex items-center justify-center shadow-lg"
                 title="Share"
               >
                 <BoxyShare size={18} />
@@ -284,7 +284,7 @@ const AnimeDetail = () => {
  </div>
 
  <div className="mt-8 flex flex-wrap items-center gap-4">
- <div className="flex items-center gap-2 bg-neutral-800 px-3 py-1 rounded-none">
+ <div className="flex items-center gap-2 bg-white/10 backdrop-blur-md rounded-xl px-3 py-1 rounded-xl">
  <BoxyStar className="text-white/90" size={14} fill="currentColor" />
  <span className="text-white/90 text-micro font-medium tracking-tight">{anime.rating || '0.0'} Score</span>
  </div>
@@ -317,11 +317,11 @@ const AnimeDetail = () => {
  </div>
 
  {/* Main Content */}
- <div className="mt-4 md:mt-8 px-4 md:px-16 pb-16 relative z-20">
+ <div className="mt-4 md:mt-8 px-6 md:px-16 pb-16 relative z-20">
  <div className="flex flex-col lg:flex-row gap-8 lg:-mt-16">
  {/* Left: Poster Column */}
  <div className="w-[160px] md:w-[200px] mx-auto lg:mx-0 lg:w-60 flex-shrink-0 relative z-30 space-y-4 md:space-y-6">
- <div className="rounded-none overflow-hidden shadow-2xl aspect-[2/3] bg-neutral-900 w-full">
+ <div className="rounded-none overflow-hidden shadow-2xl aspect-[2/3] bg-white/5 backdrop-blur-md border border-white/10 w-full">
  <img loading="lazy"
  src={anime.coverImage || anime.image}
  className="w-full h-full object-cover"
@@ -348,7 +348,7 @@ const AnimeDetail = () => {
  <>
  <button
  onClick={() => availableSeasons.length > 1 && setIsSeasonDropdownOpen(!isSeasonDropdownOpen)}
- className={`w-full sm:w-auto bg-transparent border-none py-1 rounded-none font-semibold transition-all text-h3 text-white outline-none text-left flex items-center gap-3 ${availableSeasons.length > 1 ? 'hover:text-white/90 cursor-pointer' : 'cursor-default'}`}
+ className={`w-full sm:w-auto bg-transparent border-none py-1 rounded-xl font-semibold transition-all text-h3 text-white outline-none text-left flex items-center gap-3 ${availableSeasons.length > 1 ? 'hover:text-white/90 cursor-pointer' : 'cursor-default'}`}
  >
  Season {selectedSeason}
  {availableSeasons.length > 1 && (
@@ -359,7 +359,7 @@ const AnimeDetail = () => {
  <motion.div
  initial={{ opacity: 0, y: -5 }}
  animate={{ opacity: 1, y: 0 }}
- className="absolute top-full right-0 sm:right-auto sm:left-0 mt-2 w-48 bg-[#0a0a0a] z-50 shadow-2xl p-2 flex flex-col gap-1 rounded-none glass-card"
+ className="absolute top-full right-0 sm:right-auto sm:left-0 mt-2 w-48 bg-[#0a0a0a] z-50 shadow-2xl p-2 flex flex-col gap-1 rounded-xl glass-card"
  >
  {availableSeasons.map(season => (
  <button
@@ -368,7 +368,7 @@ const AnimeDetail = () => {
  setSelectedSeason(season);
  setIsSeasonDropdownOpen(false);
  }}
- className={`text-left px-4 py-3 text-body font-medium transition-colors ${selectedSeason === season ? 'bg-neutral-800 text-white' : 'text-white/90 hover:bg-neutral-900 hover:text-white'}`}
+ className={`text-left px-4 py-3 text-body font-medium transition-colors ${selectedSeason === season ? 'bg-white/10 backdrop-blur-md rounded-xl text-white' : 'text-white/90 hover:bg-white/5 backdrop-blur-md rounded-xl border border-white/10 hover:text-white'}`}
  >
  Season {season}
  </button>
@@ -396,14 +396,14 @@ const AnimeDetail = () => {
                     navigate(`/watch/${ep.id}${history ? `?t=${Math.floor(history.time)}` : ''}`);
                   }, 0);
                 }}
-                className="flex flex-col md:flex-row md:items-center gap-4 md:gap-6 group cursor-pointer border-t border-white/10 p-4 md:p-6 hover:bg-neutral-800 transition-colors rounded-none"
+                className="flex flex-col md:flex-row md:items-center gap-4 md:gap-6 group cursor-pointer border-t border-white/10 p-4 md:p-6 hover:bg-white/10 backdrop-blur-md rounded-xl transition-colors rounded-xl"
               >
                 {/* Episode Number */}
                 <div className="hidden md:flex flex-shrink-0 w-8 md:w-12 justify-center items-center text-h2 font-bold text-white/60 group-hover:text-white transition-colors tracking-tighter">
                   {ep.episodeNumber}
                 </div>
 
-                <div className="relative w-full md:w-48 lg:w-56 flex-shrink-0 aspect-video bg-neutral-900 rounded overflow-hidden shadow-xl">
+                <div className="relative w-full md:w-48 lg:w-56 flex-shrink-0 aspect-video bg-white/5 backdrop-blur-md border border-white/10 rounded-none overflow-hidden shadow-xl">
                   <img loading="lazy" src={ep.thumbnail} alt="" className="w-full h-full object-cover transition-transform duration-700" />
                   <div className="absolute inset-0 bg-background/40 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
                     {isNavigating ? (

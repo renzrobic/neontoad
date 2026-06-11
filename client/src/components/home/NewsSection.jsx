@@ -30,7 +30,7 @@ const NewsSection = React.memo(() => {
 
  if (news.length === 0) {
  return (
- <div className="px-4 md:px-16 py-12 md:py-20 bg-transparent">
+ <div className="px-6 md:px-16 py-12 md:py-20 bg-transparent">
  <div className="mb-12">
  <h2 className="text-h3 md:text-h1 font-semibold text-white/90 tracking-tighter">News</h2>
  <div className="h-4" />
@@ -64,7 +64,7 @@ const NewsSection = React.memo(() => {
  }
 
  return (
- <div className="px-4 md:px-16 pt-0 pb-10 md:pb-[72px] bg-transparent">
+ <div className="px-6 md:px-16 pt-0 pb-10 md:pb-[72px] bg-transparent">
  <div className="flex flex-col md:flex-row justify-between items-start md:items-end mb-12 gap-6">
  <div>
  <h2 className="text-h3 md:text-h1 font-semibold text-white/90 tracking-tighter leading-none">Breaking news</h2>
@@ -119,14 +119,14 @@ const NewsSection = React.memo(() => {
  </div>
 
  <div className="pt-6 mt-auto flex-shrink-0">
- <div className="glass-card bg-neutral-900 p-6 md:p-8 space-y-4 flex flex-col md:flex-row items-center justify-between gap-4">
+ <div className="glass-card bg-white/5 backdrop-blur-md rounded-xl border border-white/10 p-6 md:p-8 space-y-4 flex flex-col md:flex-row items-center justify-between gap-4">
  <div>
  <h5 className="text-h4 font-medium text-white tracking-tight mb-1">Join the community</h5>
  <p className="text-[12px] text-white/90 leading-relaxed font-medium max-w-sm">
  Get the latest anime news and seasonal previews.
  </p>
  </div>
- <button className="w-full md:w-auto px-8 py-3.5 bg-white text-black text-micro font-bold hover:bg-white/90 transition-all active:scale-95 tracking-tight whitespace-nowrap rounded-none">
+ <button className="w-full md:w-auto px-8 py-3.5 bg-white text-black text-micro font-bold hover:bg-white/90 transition-all active:scale-95 tracking-tight whitespace-nowrap rounded-xl">
  Subscribe
  </button>
  </div>

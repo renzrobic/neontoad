@@ -129,7 +129,7 @@ const ReleaseCalendar = () => {
  if (loading || schedules.length === 0) return null;
 
  return (
- <div className="px-4 md:px-16 pt-0 pb-10 md:pb-[72px] relative z-20">
+ <div className="px-6 md:px-16 pt-0 pb-10 md:pb-[72px] relative z-20">
  <h2 className="text-h4 md:text-h3 font-bold text-white mb-6 tracking-tight">Upcoming Releases</h2>
  
  <div className="relative">
@@ -146,15 +146,15 @@ const ReleaseCalendar = () => {
  transition={{ delay: idx * 0.1 }}
  key={schedule.id}
  onClick={() => schedule.animeId && navigate(`/anime/${schedule.animeId}`)}
- className={`min-w-[280px] md:min-w-[320px] bg-white/[0.02] p-4 rounded-none flex items-center gap-4 snap-start transition-all hover:bg-white/[0.05] ${schedule.animeId ? 'cursor-pointer' : ''}`}
+ className={`min-w-[280px] md:min-w-[320px] bg-white/[0.02] p-4 rounded-xl flex items-center gap-4 snap-start transition-all hover:bg-white/[0.05] ${schedule.animeId ? 'cursor-pointer' : ''}`}
  >
- <div className="flex flex-col items-center justify-center min-w-[60px] p-2 bg-neutral-900 rounded-none">
+ <div className="flex flex-col items-center justify-center min-w-[60px] p-2 bg-white/5 backdrop-blur-md rounded-xl border border-white/10 rounded-xl">
  <span className="text-[#86E95C] text-[10px] font-bold uppercase tracking-widest">{dayName}</span>
  <span className="text-white text-h4 font-black tracking-tighter">{monthDay.split(' ')[1]}</span>
  </div>
  
  {schedule.image && (
- <img loading="lazy" src={schedule.image} className="w-12 h-16 object-cover rounded-none shadow-lg" alt={schedule.animeTitle || schedule.title} />
+ <img loading="lazy" src={schedule.image} className="w-12 h-16 object-cover rounded-xl shadow-lg" alt={schedule.animeTitle || schedule.title} />
  )}
  
  <div className="flex flex-col flex-1 overflow-hidden">

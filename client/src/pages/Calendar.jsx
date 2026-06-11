@@ -106,7 +106,7 @@ const Calendar = () => {
  }, []);
 
  return (
- <div className="pt-24 min-h-screen bg-transparent px-4 md:px-16 pb-20">
+ <div className="pt-24 min-h-screen bg-transparent px-6 md:px-16 pb-20">
  <div className="mb-12 flex items-end justify-between">
  <div className="space-y-2">
  <h1 className="text-h2 md:text-h1 font-semibold text-white flex items-center tracking-tight">
@@ -135,12 +135,12 @@ const Calendar = () => {
  <div
  key={i}
  onClick={() => navigate(`/anime/${anime.id}`)}
- className={`${theme.cardBg} hover: overflow-hidden cursor-pointer group transition-all`}
+ className={`${theme.cardBg} !rounded-none overflow-hidden cursor-pointer group transition-all`}
  >
  <div className="h-28 relative overflow-hidden">
  <img loading="lazy" src={anime.image} className="w-full h-full object-cover transition-transform duration-700" alt="" />
  <div className="absolute inset-0 bg-gradient-to-t from-background/90 to-transparent" />
- <div className="absolute top-2 right-2 bg-neutral-800 text-white backdrop-blur-md font-medium text-[10px] px-2 py-1 tracking-tight">
+ <div className="absolute top-2 right-2 bg-white/10 backdrop-blur-md rounded-xl text-white backdrop-blur-md font-medium text-[10px] px-2 py-1 tracking-tight">
  New Episode
  </div>
  </div>

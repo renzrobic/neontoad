@@ -36,7 +36,7 @@ const TopTenRow = React.memo(({ title ="Top 10 Trending", data = [], loading = f
  return (
  <div className="mb-4 md:mb-8 group/row relative">
 
- <div className="px-4 md:px-16 flex items-center justify-between mb-4">
+ <div className="px-6 md:px-16 flex items-center justify-between mb-4">
  <h2 className="text-h3 md:text-h2 font-bold text-white tracking-tight">
  {title}
  </h2>
@@ -45,7 +45,7 @@ const TopTenRow = React.memo(({ title ="Top 10 Trending", data = [], loading = f
  <div className="relative group/arrows">
  <button
  onClick={() => slide('left')}
- className="absolute left-0 top-0 bottom-0 z-40 bg-black/60 w-12 hidden md:group-hover/arrows:flex items-center justify-center text-h2 hover:bg-black/90 transition-all text-white"
+ className="absolute left-0 top-0 bottom-0 z-40 bg-white/10 w-12 hidden md:group-hover/arrows:flex items-center justify-center text-h2 hover:bg-neutral-900/90 transition-all text-white"
  >
  <BoxyChevron direction="left" size={32} />
  </button>
@@ -94,7 +94,7 @@ const TopTenRow = React.memo(({ title ="Top 10 Trending", data = [], loading = f
                         </span>
                       </div>
                       
-                      <div className="relative z-10 w-[calc((100vw-50px)/2.5)] md:w-[calc((100vw-216px)/5.5)] lg:w-[calc((100vw-216px)/6.5)] aspect-[2/3] overflow-hidden transition-transform duration-300 bg-neutral-900 border-none">
+                      <div className="relative z-10 w-[calc((100vw-50px)/2.5)] md:w-[calc((100vw-216px)/5.5)] lg:w-[calc((100vw-216px)/6.5)] aspect-[2/3] overflow-hidden transition-transform duration-300 bg-white/5 backdrop-blur-md rounded-xl border border-white/10 border-none">
                         <SkeletonCard />
                       </div>
                     </div>
@@ -169,14 +169,14 @@ const TopTenRow = React.memo(({ title ="Top 10 Trending", data = [], loading = f
  )}
 
  {/* The Anime Poster */}
- <div className="relative z-10 w-[calc((100vw-50px)/2.5)] md:w-[calc((100vw-216px)/5.5)] lg:w-[calc((100vw-216px)/6.5)] aspect-[2/3] overflow-hidden transition-transform duration-300 bg-neutral-900 border-none shadow-[-20px_0_30px_rgba(0,0,0,0.9)]">
+ <div className="relative z-10 w-[calc((100vw-50px)/2.5)] md:w-[calc((100vw-216px)/5.5)] lg:w-[calc((100vw-216px)/6.5)] aspect-[2/3] overflow-hidden transition-transform duration-300 bg-white/5 backdrop-blur-md rounded-xl border border-white/10 border-none shadow-[-20px_0_30px_rgba(0,0,0,0.9)]">
  {isNavigating === anime.id && (
- <div className="absolute inset-0 z-[100] bg-black/40 flex items-center justify-center backdrop-blur-[2px]">
+ <div className="absolute inset-0 z-[100] bg-white/5 flex items-center justify-center backdrop-blur-[2px]">
  <div className="w-8 h-8 border-2 border-white border-t-transparent rounded-full animate-spin" />
  </div>
  )}
  {isNewEpisode && (
- <div className="absolute bottom-3 left-1/2 -translate-x-1/2 z-40 bg-primary text-black text-micro font-bold px-2.5 py-1 rounded-none shadow-lg whitespace-nowrap group-hover:opacity-0 transition-opacity duration-300">
+ <div className="absolute bottom-3 left-1/2 -translate-x-1/2 z-40 bg-primary text-black text-micro font-bold px-2.5 py-1 rounded-xl shadow-lg whitespace-nowrap group-hover:opacity-0 transition-opacity duration-300">
  New Episode
  </div>
  )}
@@ -222,7 +222,7 @@ const TopTenRow = React.memo(({ title ="Top 10 Trending", data = [], loading = f
 
  <button
  onClick={() => slide('right')}
- className="absolute right-0 top-0 bottom-0 z-40 bg-black/60 w-12 hidden md:group-hover/arrows:flex items-center justify-center text-h2 hover:bg-black/90 transition-all text-white"
+ className="absolute right-0 top-0 bottom-0 z-40 bg-white/10 w-12 hidden md:group-hover/arrows:flex items-center justify-center text-h2 hover:bg-neutral-900/90 transition-all text-white"
  >
  <BoxyChevron direction="right" size={32} />
  </button>

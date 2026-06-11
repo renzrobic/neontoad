@@ -72,7 +72,7 @@ const Account = () => {
  };
 
  return (
- <div className="min-h-screen bg-transparent pt-24 md:pt-32 pb-20 px-4 md:px-16">
+ <div className="min-h-screen bg-transparent pt-24 md:pt-32 pb-20 px-6 md:px-16">
  <div className="w-full">
  <h1 className="text-[48px] md:text-[64px] font-bold text-white mb-12 tracking-tighter">Account</h1>
 
@@ -92,7 +92,7 @@ const Account = () => {
  </div>
  <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center pt-6 gap-4">
  <div className="flex items-center gap-4">
- <div className="bg-neutral-900 text-white/90 px-4 py-1.5 rounded-none">
+ <div className="bg-white/5 backdrop-blur-md rounded-xl border border-white/10 text-white/90 px-4 py-1.5 rounded-xl">
  <span className="font-medium text-micro tracking-tight">Standard</span>
  </div>
  <p className="text-white/90 font-medium text-body">Free tier access active.</p>
@@ -109,7 +109,7 @@ const Account = () => {
  </div>
  <div className="md:col-span-2 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
  <div className="flex items-center gap-4">
- <span className="bg-neutral-900 text-white/90 px-4 py-1.5 rounded-none font-medium text-micro tracking-tight">Standard</span>
+ <span className="bg-white/5 backdrop-blur-md rounded-xl border border-white/10 text-white/90 px-4 py-1.5 rounded-xl font-medium text-micro tracking-tight">Standard</span>
  <p className="text-white/90 font-medium text-body">Community plan (1080p)</p>
  </div>
  <button onClick={() => toast('Advanced tiers not yet released.')} className="text-white/90 font-medium hover:text-white transition-colors text-body tracking-tight w-full sm:w-auto text-left sm:text-right">View benefits</button>
@@ -125,14 +125,14 @@ const Account = () => {
  <div className="flex flex-wrap gap-8 mb-8">
  {profiles.map(profile => (
  <div key={profile.id} className="flex flex-col items-center gap-3 group cursor-pointer" onClick={() => navigate(`/profiles/edit/${profile.id}`)}>
- <div className="w-16 h-16 rounded-none overflow-hidden group-hover: transition-all opacity-80 group-hover:opacity-100">
+ <div className="w-16 h-16 rounded-xl overflow-hidden group-hover: transition-all opacity-80 group-hover:opacity-100">
  <img loading="lazy" src={profile.avatarUrl} className="w-full h-full object-cover" alt="" />
  </div>
  <span className="text-white/90 text-body font-semibold tracking-tight group-hover:text-white transition-colors mt-2">{profile.name}</span>
  </div>
  ))}
  {profiles.length < 5 && (
- <Link to="/profiles/create" className="w-16 h-16 glass-card bg-neutral-900 flex items-center justify-center hover:bg-neutral-800 transition-all group">
+ <Link to="/profiles/create" className="w-16 h-16 glass-card bg-white/5 backdrop-blur-md rounded-xl border border-white/10 flex items-center justify-center hover:bg-white/10 backdrop-blur-md rounded-xl transition-all group">
  <BoxyPlus className="text-white/90 group-hover:text-white/90 transition-colors" />
  </Link>
  )}
@@ -149,7 +149,7 @@ const Account = () => {
  <div className="md:col-span-2 space-y-4">
  <button onClick={() => toast('Device synchronization active.')} className="text-white/90 font-medium hover:text-white transition-colors text-body block tracking-tight text-left">Activate a device</button>
  <button onClick={() => { toast.success('All sessions terminated.'); handleLogout(); }} className="text-white/90 font-medium hover:text-white transition-colors text-body block tracking-tight text-left">Sign out of all devices</button>
- <button onClick={handleDeleteAccount} className="text-red-500/80 font-medium hover:text-red-500 transition-colors text-body block tracking-tight text-left mt-4 pt-4 w-full sm:w-auto">Delete Account</button>
+ <button onClick={handleDeleteAccount} className="text-red-500/80 font-medium hover:text-red-500 transition-colors text-body block tracking-tight text-left mt-4 pt-4 w-full sm:w-auto rounded-xl">Delete Account</button>
  </div>
  </section>
  </div>
@@ -157,7 +157,7 @@ const Account = () => {
  <div className="mt-20 flex justify-center">
  <button
  onClick={handleLogout}
- className="w-full max-w-sm min-h-[44px] md:min-h-[48px] glass-card bg-neutral-900 text-white/90 px-16 py-3 font-medium text-body hover:text-white hover:bg-neutral-800 transition-all tracking-tight flex items-center justify-center"
+ className="w-full max-w-sm min-h-[44px] md:min-h-[48px] glass-card bg-white/5 backdrop-blur-md rounded-xl border border-white/10 text-white/90 px-16 py-3 font-medium text-body hover:text-white hover:bg-white/10 backdrop-blur-md rounded-xl transition-all tracking-tight flex items-center justify-center"
  >
  Sign out of NeonToad
  </button>

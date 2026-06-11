@@ -53,7 +53,7 @@ const Search = () => {
  }, [q]);
 
  return (
- <div className="min-h-screen bg-transparent pt-24 md:pt-32 pb-20 px-4 md:px-16">
+ <div className="min-h-screen bg-transparent pt-24 md:pt-32 pb-20 px-6 md:px-16">
  <Helmet>
  <title>{`Search: ${q} | NeonToad`}</title>
  </Helmet>

@@ -1,7 +1,7 @@
 import React from 'react';
 
 const SkeletonReel = () => (
- <div className="relative h-[100dvh] w-full snap-start bg-black flex items-center justify-center overflow-hidden animate-pulse">
+ <div className="relative h-[100dvh] w-full snap-start bg-transparent flex items-center justify-center overflow-hidden animate-pulse">
  {/* Shimmer sweep */}
  <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/4 to-transparent -translate-x-full animate-[shimmer_2s_infinite] pointer-events-none z-[150]" />
 
@@ -17,9 +17,9 @@ const SkeletonReel = () => (
  <div className="relative h-[96vh] aspect-[9/16] bg-[#111] flex-shrink-0 overflow-hidden shadow-2xl">
  {/* Unified Top Controls Ghost */}
  <div className="absolute top-4 left-1/2 -translate-x-1/2 z-20 flex items-center gap-2">
- <div className="w-9 h-9 rounded-full bg-neutral-800" />
- <div className="w-12 h-9 rounded-full bg-neutral-800" />
- <div className="w-32 h-8 bg-neutral-800 rounded-full" />
+ <div className="w-9 h-9 rounded-full bg-white/10 backdrop-blur-md" />
+ <div className="w-12 h-9 rounded-full bg-white/10 backdrop-blur-md" />
+ <div className="w-32 h-8 bg-white/10 backdrop-blur-md rounded-full" />
  </div>
 
  {/* Gradient */}
@@ -34,7 +34,7 @@ const SkeletonReel = () => (
  </div>
  <div className="space-y-1.5 mt-2">
  <div className="h-3 w-full bg-white/8 rounded" />
- <div className="h-3 w-3/4 bg-neutral-900 rounded" />
+ <div className="h-3 w-3/4 bg-white/5 backdrop-blur-md border border-white/10 rounded" />
  </div>
  </div>
 
@@ -58,8 +58,8 @@ const SkeletonReel = () => (
  <div className="lg:hidden relative h-[100dvh] w-full bg-[#0a0a0a] overflow-hidden">
  {/* Top bar ghost */}
  <div className="absolute top-0 inset-x-0 z-40 px-4 pt-[40px] md:pt-[60px] pb-4 flex justify-center items-center">
- <div className="absolute left-4 w-9 h-9 rounded-full bg-neutral-800" />
- <div className="w-28 h-7 bg-neutral-800 rounded-full" />
+ <div className="absolute left-4 w-9 h-9 rounded-full bg-white/10 backdrop-blur-md" />
+ <div className="w-28 h-7 bg-white/10 backdrop-blur-md rounded-full" />
  <div className="absolute right-4 w-9 h-9 bg-white/8 rounded-full" />
  </div>
 
@@ -87,7 +87,7 @@ const SkeletonReel = () => (
  <div className="h-2.5 w-24 bg-white/8 rounded mt-1" />
  <div className="space-y-1.5 mt-2">
  <div className="h-3 w-full bg-white/8 rounded" />
- <div className="h-3 w-2/3 bg-neutral-900 rounded" />
+ <div className="h-3 w-2/3 bg-white/5 backdrop-blur-md border border-white/10 rounded" />
  </div>
  </div>
 

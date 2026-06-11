@@ -336,3 +336,43 @@ export const BoxyMoreVertical = ({ size = 24, className ="" }) => (
  <circle cx="12" cy="19" r="1" />
  </svg>
 );
+
+export const BoxyRotateCcw = ({ size = 24, className = "" }) => (
+  <svg {...commonProps(size, className)}>
+    <path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8" />
+    <path d="M3 3v5h5" />
+  </svg>
+);
+
+export const BoxyRotateCw = ({ size = 24, className = "" }) => (
+  <svg {...commonProps(size, className)}>
+    <path d="M21 12a9 9 0 1 1-9-9 9.75 9.75 0 0 1 6.74 2.74L21 8" />
+    <path d="M21 3v5h-5" />
+  </svg>
+);
+
+export const BoxySkipForward = ({ size = 24, className ="", fill }) => (
+ <svg {...commonProps(size, className, fill)}>
+ <polygon points="5 4 15 12 5 20 5 4" />
+ <line x1="19" y1="5" x2="19" y2="19" />
+ </svg>
+);
+
+export const BoxySubtitles = ({ size = 24, className ="" }) => (
+ <svg {...commonProps(size, className)}>
+ <rect x="3" y="5" width="18" height="14" rx="2" ry="2" />
+ <line x1="7" y1="15" x2="11" y2="15" />
+ <line x1="13" y1="15" x2="17" y2="15" />
+ <line x1="7" y1="11" x2="17" y2="11" />
+ </svg>
+);
+
+export const BoxyEpisodes = ({ size = 24, className ="" }) => (
+ <svg {...commonProps(size, className)}>
+ <rect x="3" y="11" width="12" height="10" rx="2" ry="2" />
+ <path d="M7 7h10a2 2 0 0 1 2 2v8" />
+ <path d="M11 3h10a2 2 0 0 1 2 2v8" />
+ </svg>
+);
+
+

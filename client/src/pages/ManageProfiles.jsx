@@ -28,14 +28,14 @@ const ManageProfiles = () => {
  className="flex flex-col items-center gap-5 group cursor-pointer relative"
  onClick={() => navigate(`/profiles/edit/${profile.id}`)}
  >
- <div className="relative w-28 h-28 md:w-36 md:h-36 rounded-none overflow-hidden border-2 border-transparent group-hover:border-white transition-all duration-300">
+ <div className="relative w-28 h-28 md:w-36 md:h-36 rounded-xl overflow-hidden ring-2 ring-transparent ring-offset-2 ring-offset-background group-hover:ring-white/80 transition-all duration-300">
  <img loading="lazy"
  src={profile.avatarUrl || DEFAULT_AVATAR}
  alt={profile.name}
  className="w-full h-full object-cover transition-opacity"
  />
- <div className="absolute inset-0 flex items-center justify-center bg-black/60 backdrop-blur-sm">
- <div className="p-3 rounded-none group-hover: transition-colors bg-black/40 backdrop-blur-md">
+ <div className="absolute inset-0 flex items-center justify-center bg-white/10 backdrop-blur-sm">
+ <div className="p-3 rounded-xl group-hover: transition-colors bg-white/5 backdrop-blur-md">
  <BoxyEdit size={20} className="text-white" />
  </div>
  </div>
@@ -48,7 +48,7 @@ const ManageProfiles = () => {
 
  {profiles.length < 5 && (
  <Link to="/profiles/create" className="flex flex-col items-center gap-5 group">
- <div className="w-28 h-28 md:w-36 md:h-36 rounded-none flex items-center justify-center transition-all group-hover:bg-neutral-900 border-2 group-hover:border-white">
+ <div className="w-28 h-28 md:w-36 md:h-36 rounded-xl flex items-center justify-center transition-all group-hover:bg-white/5 backdrop-blur-md rounded-xl border border-white/10 border-2 group-hover:ring-white/80">
  <BoxyPlus size={64} className="text-white/90 group-hover:text-white transition-colors" />
  </div>
  <span className="text-white/90 group-hover:text-white text-body font-semibold transition-colors tracking-tight mt-2">
@@ -66,7 +66,7 @@ const ManageProfiles = () => {
  >
  <button
  onClick={() => navigate('/profiles')}
- className="bg-white text-black px-8 py-2 font-bold hover:bg-white/90 transition-all text-sm tracking-wide uppercase rounded-none shadow-[0_0_20px_rgba(255,255,255,0.1)]"
+ className="bg-white text-black px-8 py-2 font-bold hover:bg-white/90 transition-all text-sm tracking-wide uppercase rounded-xl shadow-[0_0_20px_rgba(255,255,255,0.1)]"
  >
  Finish Configuration
  </button>

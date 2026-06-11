@@ -37,7 +37,7 @@ const NewsDetail = () => {
  };
 
  if (loading) return (
- <div className="min-h-screen bg-black flex items-center justify-center">
+ <div className="min-h-screen bg-transparent flex items-center justify-center">
  <div style={{ borderRadius: '50%' }} className="w-12 h-12 border-4 border-t-white animate-spin" />
  </div>
  );
@@ -74,7 +74,7 @@ const NewsDetail = () => {
  <BoxyChevron direction="left" size={16} /> Back to feed
  </button>
  <div className="flex items-center gap-4">
- <span className="bg-neutral-800 text-white px-3 py-1 text-[11px] font-medium tracking-widest">{article.category}</span>
+ <span className="bg-white/10 backdrop-blur-md rounded-xl text-white px-3 py-1 text-[11px] font-medium tracking-widest">{article.category}</span>
  <span className="text-white/90 text-micro font-medium">{formatDate(article.date)}</span>
  </div>
  <h1 className="text-h2 md:text-h1 font-semibold text-white leading-tight tracking-tight max-w-3xl">
@@ -89,7 +89,7 @@ const NewsDetail = () => {
  <div className="space-y-12">
  {/* Author Badge */}
  <div className="flex items-center gap-5 py-8 border-y">
- <div className="w-12 h-12 bg-neutral-900 flex items-center justify-center flex-shrink-0">
+ <div className="w-12 h-12 bg-white/5 backdrop-blur-md rounded-xl border border-white/10 flex items-center justify-center flex-shrink-0">
  <span className="text-white font-semibold text-micro">NT</span>
  </div>
  <div>
@@ -116,11 +116,11 @@ const NewsDetail = () => {
 
  {/* Decorative Terminal Line */}
  <div className="py-16 flex items-center gap-4">
- <div className="flex-grow h-px bg-neutral-900" />
+ <div className="flex-grow h-px bg-white/5 backdrop-blur-md rounded-xl border border-white/10" />
  <div className="flex gap-2">
- {[1, 2, 3].map(i => <div key={i} className="w-1.5 h-1.5 bg-neutral-700 rounded-none" />)}
+ {[1, 2, 3].map(i => <div key={i} className="w-1.5 h-1.5 bg-neutral-700 rounded-xl" />)}
  </div>
- <div className="flex-grow h-px bg-neutral-900" />
+ <div className="flex-grow h-px bg-white/5 backdrop-blur-md rounded-xl border border-white/10" />
  </div>
 
  <p className="text-white/90 text-micro tracking-tight leading-loose font-medium">
@@ -134,13 +134,13 @@ const NewsDetail = () => {
  <p className="text-[11px] font-medium text-white/90 tracking-widest">LATEST NEWS</p>
  <div className="flex gap-6 justify-center md:justify-start">
  {['Twitter', 'Discord', 'Share'].map(link => (
- <button key={link} className="text-micro font-medium text-white/90 hover:text-white transition-colors">{link}</button>
+ <button key={link} className="text-micro font-medium text-white/90 hover:text-white transition-colors rounded-xl">{link}</button>
  ))}
  </div>
  </div>
  <button
  onClick={() => navigate('/')}
- className="w-full md:w-auto bg-neutral-900 px-12 py-5 text-micro font-semibold hover:bg-neutral-800 transition-all tracking-tight"
+ className="w-full md:w-auto bg-white/5 backdrop-blur-md rounded-xl border border-white/10 px-12 py-5 text-micro font-semibold hover:bg-white/10 backdrop-blur-md rounded-xl transition-all tracking-tight"
  >
  Back to news
  </button>

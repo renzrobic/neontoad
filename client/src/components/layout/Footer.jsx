@@ -6,7 +6,7 @@ import logoFull from '../../assets/logo/logo-full.svg';
 const Footer = () => {
  return (
  <footer className="bg-transparent backdrop-blur-2xl pt-20 pb-10">
- <div className="max-w-7xl mx-auto px-4 md:px-16">
+ <div className="max-w-7xl mx-auto px-6 md:px-16">
  <div className="grid grid-cols-1 md:grid-cols-4 gap-12 mb-16">
  <div className="flex flex-col items-center md:items-start space-y-8">
  <img loading="lazy" src={logoFull} alt="NeonToad" className="h-16 md:h-[86px] w-auto mx-auto md:mx-0" />
@@ -52,7 +52,7 @@ const Footer = () => {
 
  <div className="space-y-6">
  <h4 className="text-white font-medium text-h4 tracking-tight">Experience</h4>
- <div className="glass-card bg-neutral-900 p-6 space-y-4">
+ <div className="glass-card bg-white/5 backdrop-blur-md rounded-xl border border-white/10 p-6 space-y-4">
  <p className="text-body text-white/90 font-medium leading-relaxed tracking-tight">
  Experience the best of anime with NeonToad. Follow us on social media for updates!
  </p>
