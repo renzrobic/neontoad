@@ -115,61 +115,61 @@ const VideoEmbed = ({ sourceUrl, isFullscreen = false, nextEpisode, onPlayNext, 
  </div>
  )}
 
-  {hasError && (
-  <div className="absolute inset-0 flex flex-col items-center justify-center bg-background z-10 text-white/90">
-  <div className="w-16 h-16 rounded-full bg-white/5 flex items-center justify-center mb-4">
-  <BoxyTV className="text-white/50" size={32} />
-  </div>
-  <span className="tracking-tight text-micro font-medium">Stream Unavailable</span>
-  <span className="text-[11px] mt-2 text-white/50 font-normal">We're having trouble loading this video. Please try another source.</span>
-  </div>
-  )}
+ {hasError && (
+ <div className="absolute inset-0 flex flex-col items-center justify-center bg-background z-10 text-white">
+ <div className="w-16 h-16 rounded-full bg-white/5 flex items-center justify-center mb-4">
+ <BoxyTV className="text-netflixGray" size={32} />
+ </div>
+ <span className="text-micro font-medium">Stream Unavailable</span>
+ <span className="text-[11px] mt-2 text-netflixGray font-normal">We're having trouble loading this video. Please try another source.</span>
+ </div>
+ )}
 
  {embedUrl ? (
  isDirectVideo ? (
-          <CustomVideoPlayer
-            ref={videoRef}
-            key={`vid-${embedUrl}`}
-            src={embedUrl}
-            initialTime={initialTime}
-            skipAnim={skipAnim}
-            topControls={topControls}
-            anime={anime}
-            episode={episode}
-            onBack={onBack}
-            onEpisodesClick={onEpisodesClick}
-            onToggleFullscreen={onToggleFullscreen}
-            onLoadedData={() => setLoading(false)}
-            onError={() => { setLoading(false); setHasError(true); }}
-            onTimeUpdate={handleTimeUpdate}
-            onEnded={handleEnded}
-            onPlay={(e) => {
-              try {
-                if (window.screen && window.screen.orientation && window.screen.orientation.lock) {
-                  window.screen.orientation.lock('landscape').catch(() => {});
-                }
-              } catch (err) {}
-            }}
-          >
-            {showSkipIntro && skipTimes?.op && (
-              <div className="absolute bottom-36 right-8 z-40 animate-in fade-in slide-in-from-right-4 duration-300 pointer-events-auto">
-                <button onClick={() => { if (videoRef.current) videoRef.current.currentTime = skipTimes.op.endTime; setShowSkipIntro(false); }} className="bg-white/10 backdrop-blur-md rounded-xl hover:bg-white text-white hover:text-black backdrop-blur-md px-4 py-2 text-[12px] font-bold tracking-widest uppercase transition-all shadow-xl flex items-center gap-2">
-                  Skip Intro <BoxyPlay size={14} fill="currentColor" />
-                </button>
-              </div>
-            )}
-            {showNextPrompt && nextEpisode && (
-              <div className="absolute bottom-36 right-4 md:bottom-40 md:right-8 z-50 flex flex-col items-end animate-in fade-in slide-in-from-right-8 duration-500 pointer-events-auto cursor-pointer group/next" onClick={onPlayNext}>
-                <div className="relative w-48 md:w-64 aspect-video rounded-md overflow-hidden shadow-2xl ring-2 ring-transparent ring-offset-2 ring-offset-background group-hover/next:border-white transition-all transform group-hover/next:-translate-y-2">
-                  <img src={nextEpisode.thumbnail || anime?.image} alt="Next Episode" className="w-full h-full object-cover" />
-                  <div className="absolute inset-0 bg-white/5 flex flex-col justify-end p-3">
-                    <span className="text-white text-xs font-bold uppercase tracking-widest mb-1 flex items-center gap-1"><BoxyPlay size={12} fill="currentColor" /> Up Next</span>
-                    <span className="text-white text-sm md:text-base font-black truncate">{nextEpisode.title || `Episode ${nextEpisode.episodeNumber}`}</span>
-                  </div>
-                </div>
-              </div>
-            )}
-          </CustomVideoPlayer>
+ <CustomVideoPlayer
+ ref={videoRef}
+ key={`vid-${embedUrl}`}
+ src={embedUrl}
+ initialTime={initialTime}
+ skipAnim={skipAnim}
+ topControls={topControls}
+ anime={anime}
+ episode={episode}
+ onBack={onBack}
+ onEpisodesClick={onEpisodesClick}
+ onToggleFullscreen={onToggleFullscreen}
+ onLoadedData={() => setLoading(false)}
+ onError={() => { setLoading(false); setHasError(true); }}
+ onTimeUpdate={handleTimeUpdate}
+ onEnded={handleEnded}
+ onPlay={(e) => {
+ try {
+ if (window.screen && window.screen.orientation && window.screen.orientation.lock) {
+ window.screen.orientation.lock('landscape').catch(() => {});
+ }
+ } catch (err) {}
+ }}
+ >
+ {showSkipIntro && skipTimes?.op && (
+ <div className="absolute bottom-36 right-8 z-40 animate-in fade-in slide-in-from-right-4 duration-300 pointer-events-auto">
+ <button onClick={() => { if (videoRef.current) videoRef.current.currentTime = skipTimes.op.endTime; setShowSkipIntro(false); }} className="bg-white/10 backdrop-blur-md rounded-xl hover:bg-white text-white hover:text-black backdrop-blur-md px-4 py-2 text-[12px] font-medium uppercase transition-all shadow-xl flex items-center gap-2">
+ Skip Intro <BoxyPlay size={14} fill="currentColor" />
+ </button>
+ </div>
+ )}
+ {showNextPrompt && nextEpisode && (
+ <div className="absolute bottom-36 right-4 md:bottom-40 md:right-8 z-50 flex flex-col items-end animate-in fade-in slide-in-from-right-8 duration-500 pointer-events-auto cursor-pointer group/next" onClick={onPlayNext}>
+ <div className="relative w-48 md:w-64 aspect-video rounded-md overflow-hidden shadow-2xl ring-2 ring-transparent ring-offset-2 ring-offset-background group-hover/next:border-white transition-all transform group-hover/next:-translate-y-2">
+ <img src={nextEpisode.thumbnail || anime?.image} alt="Next Episode" className="w-full h-full object-cover" />
+ <div className="absolute inset-0 bg-white/5 flex flex-col justify-end p-3">
+ <span className="text-white text-xs font-medium uppercase mb-1 flex items-center gap-1"><BoxyPlay size={12} fill="currentColor" /> Up Next</span>
+ <span className="text-white text-sm md:text-base font-medium truncate">{nextEpisode.title || `Episode ${nextEpisode.episodeNumber}`}</span>
+ </div>
+ </div>
+ </div>
+ )}
+ </CustomVideoPlayer>
  ) : (
  <iframe
  key={`ifr-${embedUrl}`}
@@ -183,23 +183,23 @@ const VideoEmbed = ({ sourceUrl, isFullscreen = false, nextEpisode, onPlayNext, 
  />
  )
  ) : (
-  <div className="flex flex-col items-center justify-center h-full text-white bg-background px-4 text-center">
-  <div className="w-16 h-16 rounded-full bg-white/5 flex items-center justify-center mb-4">
-  <BoxyTV className="text-white/50" size={32} />
-  </div>
-  <span className="tracking-tight text-micro font-medium">Source Disconnected</span>
-  <span className="text-[11px] mt-2 text-white/50 font-normal">This video source is currently unavailable.</span>
-  </div>
+ <div className="flex flex-col items-center justify-center h-full text-white bg-background px-4 text-center">
+ <div className="w-16 h-16 rounded-full bg-white/5 flex items-center justify-center mb-4">
+ <BoxyTV className="text-netflixGray" size={32} />
+ </div>
+ <span className="text-micro font-medium">Source Disconnected</span>
+ <span className="text-[11px] mt-2 text-netflixGray font-normal">This video source is currently unavailable.</span>
+ </div>
  )}
  {!isDirectVideo && showNextPrompt && nextEpisode && (
  <div className="absolute bottom-16 right-4 md:bottom-24 md:right-8 z-50 flex flex-col items-end animate-in fade-in slide-in-from-right-8 duration-500 pointer-events-auto cursor-pointer group/next" onClick={onPlayNext}>
-   <div className="relative w-48 md:w-64 aspect-video rounded-md overflow-hidden shadow-2xl ring-2 ring-transparent ring-offset-2 ring-offset-background group-hover/next:border-white transition-all transform group-hover/next:-translate-y-2">
-     <img src={nextEpisode.thumbnail || anime?.image} alt="Next Episode" className="w-full h-full object-cover" />
-     <div className="absolute inset-0 bg-white/5 flex flex-col justify-end p-3">
-       <span className="text-white text-xs font-bold uppercase tracking-widest mb-1 flex items-center gap-1"><BoxyPlay size={12} fill="currentColor" /> Up Next</span>
-       <span className="text-white text-sm md:text-base font-black truncate">{nextEpisode.title || `Episode ${nextEpisode.episodeNumber}`}</span>
-     </div>
-   </div>
+ <div className="relative w-48 md:w-64 aspect-video rounded-md overflow-hidden shadow-2xl ring-2 ring-transparent ring-offset-2 ring-offset-background group-hover/next:border-white transition-all transform group-hover/next:-translate-y-2">
+ <img src={nextEpisode.thumbnail || anime?.image} alt="Next Episode" className="w-full h-full object-cover" />
+ <div className="absolute inset-0 bg-white/5 flex flex-col justify-end p-3">
+ <span className="text-white text-xs font-medium uppercase mb-1 flex items-center gap-1"><BoxyPlay size={12} fill="currentColor" /> Up Next</span>
+ <span className="text-white text-sm md:text-base font-medium truncate">{nextEpisode.title || `Episode ${nextEpisode.episodeNumber}`}</span>
+ </div>
+ </div>
  </div>
  )}
  </div>

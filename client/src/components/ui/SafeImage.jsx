@@ -18,7 +18,7 @@ const SafeImage = ({ src, alt, className, skeletonClass ="" }) => {
  <div className={`relative ${className} bg-white/5 backdrop-blur-md rounded-xl border border-white/10 overflow-hidden flex items-center justify-center`}>
  {/* Skeleton / Loading State */}
  {loading && !error && (
- <div className={`absolute inset-0 animate-pulse bg-white/10 backdrop-blur-md rounded-xl z-10 ${skeletonClass}`} />
+ <div className={`absolute inset-0 animate-pulse bg-white/10 backdrop-blur-md rounded-md z-10 ${skeletonClass}`} />
  )}
 
  {/* Error / Fallback State */}
@@ -27,7 +27,7 @@ const SafeImage = ({ src, alt, className, skeletonClass ="" }) => {
  <div className="w-6 h-6 mb-1 flex items-center justify-center opacity-20">
  <span className="text-white text-[10px]">?</span>
  </div>
- <span className="text-[8px] font-mideum text-white/90 leading-none">
+ <span className="text-[8px] font-mideum text-white leading-none">
  Coming Soon
  </span>
  </div>

@@ -548,7 +548,7 @@ const Admin = () => {
  if (checkingAuth) {
  return (
  <div className="min-h-screen bg-transparent flex items-center justify-center p-8 font-sans">
- <p className="text-white/90 text-micro font-medium tracking-widest uppercase animate-pulse">Verifying Identity...</p>
+ <p className="text-white text-micro font-medium uppercase animate-pulse">Verifying Identity...</p>
  </div>
  );
  }
@@ -588,7 +588,7 @@ const Admin = () => {
  fetchData();
  } catch(err) {
  console.error("Purge failed", err);
- toast.error("Purge failed: " + err.message);
+ toast.error("Purge failed:" + err.message);
  }
  }
  };
@@ -597,14 +597,14 @@ const Admin = () => {
  return (
  <div className="min-h-screen bg-transparent flex items-center justify-center p-8 font-sans">
  <motion.div initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }} className="w-full max-w-sm space-y-8 text-center">
- <div className="w-24 h-24 mx-auto bg-white/10 backdrop-blur-md rounded-xl flex items-center justify-center rounded-full mb-6">
+ <div className="w-24 h-24 mx-auto bg-white/10 backdrop-blur-md flex items-center justify-center rounded-xl mb-6">
  <BoxyShield size={40} className="text-white" />
  </div>
  <div className="space-y-3">
- <h1 className="text-h3 font-bold text-white tracking-tight">Access Denied</h1>
- <p className="text-micro text-white/90 font-medium leading-relaxed">You must be logged in as an authorized administrator to view this console.</p>
+ <h1 className="text-h3 font-medium text-white">Access Denied</h1>
+ <p className="text-micro text-white font-medium leading-relaxed">You must be logged in as an authorized administrator to view this console.</p>
  </div>
- <a href="/" className="inline-block mt-8 text-micro font-bold text-white/90 hover:text-white tracking-widest uppercase transition-colors">
+ <a href="/" className="inline-block mt-8 text-micro font-medium text-white hover:text-white uppercase transition-colors">
  Return to Surface
  </a>
  </motion.div>
@@ -640,13 +640,13 @@ const Admin = () => {
  { id: 'ads', label: 'Ad Spaces' },
  { id: 'settings', label: 'Site Configuration' }
  ].map(tab => (
- <button key={tab.id} onClick={() => setActiveTab(tab.id)} className={`w-full text-left px-5 py-3.5 text-micro font-medium transition-all rounded-xl flex items-center gap-3 ${activeTab === tab.id ? 'bg-white/10 backdrop-blur-md rounded-xl text-white font-bold' : 'text-white/90 hover:text-white hover:bg-white/5 backdrop-blur-md rounded-xl border border-white/10'}`}>
- <span className="tracking-tight">{tab.label}</span>
+ <button key={tab.id} onClick={() => setActiveTab(tab.id)} className={`w-full text-left px-5 py-3.5 text-micro font-medium transition-all rounded-xl flex items-center gap-3 ${activeTab === tab.id ? 'bg-white/10 backdrop-blur-md rounded-xl text-white font-medium' : 'text-white hover:text-white hover:bg-white/5 backdrop-blur-md rounded-xl border border-white/10'}`}>
+ <span className="">{tab.label}</span>
  </button>
  ))}
  </nav>
  <div className="p-8">
- <button onClick={() => setIsAuthorized(false)} className="w-full py-3 rounded-xl text-micro font-medium bg-red-500/10 text-red-400 hover:bg-red-500/20 hover:text-red-300 transition-colors tracking-tight">Logout</button>
+ <button onClick={() => setIsAuthorized(false)} className="w-full py-3 rounded-xl text-micro font-medium bg-red-500/10 text-red-400 hover:bg-red-500/20 hover:text-red-300 transition-colors">Logout</button>
  </div>
  </aside>
 
@@ -655,8 +655,8 @@ const Admin = () => {
  <div className="max-w-[1600px] mx-auto p-6 md:p-10 lg:p-12">
  <header className="mb-12 flex flex-col md:flex-row md:items-end justify-between gap-6 pb-8">
  <div className="space-y-2">
- <h1 className="text-h3 font-bold text-white leading-none tracking-tight capitalize">{activeTab.replace('-', ' ')}</h1>
- <p className="text-[11px] font-medium text-white/90 tracking-widest uppercase">Admin Dashboard</p>
+ <h1 className="text-h3 font-medium text-white leading-none capitalize">{activeTab.replace('-', ' ')}</h1>
+ <p className="text-[11px] font-medium text-white uppercase">Admin Dashboard</p>
  </div>
  {activeTab !== 'overview' && activeTab !== 'ads' && activeTab !== 'reels' && activeTab !== 'avatars' && (
  <button onClick={() => { 
@@ -666,7 +666,7 @@ const Admin = () => {
  setScheduleFormData({ dayOfWeek: 'Monday', time: '12:00', animeId: '', animeTitle: '' });
  setFeaturedFormData({ animeId: '', animeTitle: '', customImage: '', customVideo: '', tagline: '', customTitleLogo: '' });
  setShowModal(true); 
- }} className="bg-white/10 backdrop-blur-md rounded-xl text-white/90 px-8 py-3.5 text-micro font-medium tracking-tight hover:bg-neutral-700 transition-all">Add New</button>
+ }} className="bg-white/10 backdrop-blur-md rounded-xl text-white px-8 py-3.5 text-micro font-medium hover:bg-neutral-700 transition-all">Add New</button>
  )}
  </header>
 
@@ -684,10 +684,10 @@ const Admin = () => {
  ) : activeTab === 'overview' ? (
  <div className="space-y-8">
  <div className="flex justify-end gap-4">
- <button onClick={handlePurgeData} className="px-6 py-3 bg-red-900/50 hover:bg-red-800 text-white/90 hover:text-white transition-all text-micro font-bold uppercase tracking-widest border border-red-500/30 rounded-xl">
+ <button onClick={handlePurgeData} className="px-6 py-3 bg-red-900/50 hover:bg-red-800 text-white hover:text-white transition-all text-micro font-medium uppercase border border-red-500/30 rounded-xl">
  PURGE UNWANTED DATA
  </button>
- <button onClick={handleResetViews} className="px-6 py-3 bg-white/5 backdrop-blur-md rounded-xl border border-white/10 hover:bg-white/10 shadow-xl text-white/90 hover:text-white transition-all text-micro font-bold uppercase tracking-widest">
+ <button onClick={handleResetViews} className="px-6 py-3 bg-white/5 backdrop-blur-md rounded-xl border border-white/10 hover:bg-white/10 shadow-xl text-white hover:text-white transition-all text-micro font-medium uppercase">
  Reset All View Counts
  </button>
  </div>
@@ -703,14 +703,14 @@ const Admin = () => {
  { label: 'Streams Active', value: stats.totalSchedules }
  ].map((stat, i) => (
  <div key={i} className="glass-card p-6 space-y-2 border-l-2 border-l-white/20">
- <p className="text-[10px] font-bold text-white/90 tracking-widest uppercase">{stat.label}</p>
- <p className="text-h3 md:text-h2 font-bold text-white leading-none tracking-tighter">{stat.value}</p>
+ <p className="text-[10px] font-medium text-white uppercase">{stat.label}</p>
+ <p className="text-h3 md:text-h2 font-medium text-white leading-none">{stat.value}</p>
  </div>
  ))}
  </div>
 
  <div className="mt-12 space-y-6">
- <h2 className="text-h4 font-medium tracking-tight text-white/90">Top Anime by Views</h2>
+ <h2 className="text-h4 font-medium text-white">Top Anime by Views</h2>
  <div className="divide-y divide-white/5 pt-4">
  {[...anime]
  .sort((a, b) => (b.viewCount || 0) - (a.viewCount || 0))
@@ -724,14 +724,14 @@ const Admin = () => {
  </div>
  ) : (
  <div className="w-10 h-14 bg-white/5 backdrop-blur-md rounded-xl border border-white/10 flex-shrink-0 flex items-center justify-center">
- <span className="text-[8px] text-white/90 uppercase">No Img</span>
+ <span className="text-[8px] text-white uppercase">No Img</span>
  </div>
  )}
- <h3 className="text-body font-medium text-white/90 group-hover:text-white transition-all tracking-tight ml-2">{item.title}</h3>
+ <h3 className="text-body font-medium text-white group-hover:text-white transition-all ml-2">{item.title}</h3>
  </div>
  <div className="flex flex-col items-end">
- <span className="text-h4 font-bold text-white">{item.viewCount || 0}</span>
- <span className="text-[10px] font-bold text-white/90 tracking-widest uppercase mt-1">Views</span>
+ <span className="text-h4 font-medium text-white">{item.viewCount || 0}</span>
+ <span className="text-[10px] font-medium text-white uppercase mt-1">Views</span>
  </div>
  </div>
  ))}
@@ -745,15 +745,15 @@ const Admin = () => {
  <div key={u.id} className="group flex items-center justify-between py-6 hover:bg-white/[0.02] px-6 transition-all mb-4">
  <div className="flex items-center gap-6">
  <div className="flex-col">
- <h3 className="text-h4 font-medium text-white/90 group-hover:text-white transition-all tracking-tight">{u.email}</h3>
- <p className="text-[10px] text-white/90 font-medium tracking-widest uppercase mt-1">
+ <h3 className="text-h4 font-medium text-white group-hover:text-white transition-all">{u.email}</h3>
+ <p className="text-[10px] text-white font-medium uppercase mt-1">
  Joined: {new Date(u.createdAt).toLocaleDateString()} {u.isBanned ? <span className="text-white ml-2">• BANNED</span> : null}
  </p>
  </div>
  </div>
  <div className="flex items-center gap-4 opacity-0 group-hover:opacity-100 transition-all">
- <button onClick={() => handlePromoteUser(u.id, u.email)} className="text-micro font-medium text-white/90 hover:text-[#86E95C] tracking-tight transition-colors">Promote to Admin</button>
- <button onClick={() => handleBanUser(u.id, u.email, u.isBanned)} className="text-micro font-medium text-white/90 hover:text-white tracking-tight transition-colors">
+ <button onClick={() => handlePromoteUser(u.id, u.email)} className="text-micro font-medium text-white hover:text-[#86E95C] transition-colors">Promote to Admin</button>
+ <button onClick={() => handleBanUser(u.id, u.email, u.isBanned)} className="text-micro font-medium text-white hover:text-white transition-colors">
  {u.isBanned ? 'Unban' : 'Ban User'}
  </button>
  </div>
@@ -770,13 +770,13 @@ const Admin = () => {
  ) : (
  <div className="space-y-8">
  <div className="relative group">
- <BoxySearch className="absolute left-6 top-1/2 -translate-y-1/2 text-white/90 group-focus-within:text-[#86E95C] transition-colors" size={20} />
+ <BoxySearch className="absolute left-6 top-1/2 -translate-y-1/2 text-white group-focus-within:text-[#86E95C] transition-colors" size={20} />
  <input 
  type="text" 
  value={animeSearchQuery}
  onChange={e => setAnimeSearchQuery(e.target.value)}
  placeholder="Search series to add episodes..."
- className="w-full bg-white/[0.03] py-5 pl-16 pr-6 rounded-2xl text-micro font-medium text-white outline-none focus: transition-all placeholder:text-white/90 tracking-tight"
+ className="w-full bg-white/[0.03] py-5 pl-16 pr-6 rounded-md text-micro font-medium text-white outline-none focus: transition-all placeholder:text-white"
  />
  </div>
  <div className="divide-y divide-white/5">
@@ -785,22 +785,22 @@ const Admin = () => {
  .map(item => (
  <div key={item.id} className="group flex items-center justify-between py-10 hover:bg-white/[0.02] px-6 transition-all">
  <div className="flex items-center gap-6">
- <span className="text-[11px] font-medium text-white/90 tabular-nums w-4">0{item.id % 9}</span>
+ <span className="text-[11px] font-medium text-white tabular-nums w-4">0{item.id % 9}</span>
  {item.image ? (
  <div className="w-12 h-16 bg-white/5 backdrop-blur-md rounded-xl border border-white/10 flex-shrink-0 overflow-hidden shadow-lg">
  <img loading="lazy" src={item.image} className="w-full h-full object-cover opacity-70 group-hover:opacity-100 transition-all" alt={item.title} />
  </div>
  ) : (
  <div className="w-12 h-16 bg-white/5 backdrop-blur-md rounded-xl border border-white/10 flex-shrink-0 flex items-center justify-center">
- <span className="text-[10px] text-white/90 uppercase">No Img</span>
+ <span className="text-[10px] text-white uppercase">No Img</span>
  </div>
  )}
- <h3 className="text-h4 font-medium text-white/90 group-hover:text-white transition-all tracking-tight ml-2">{item.title}</h3>
+ <h3 className="text-h4 font-medium text-white group-hover:text-white transition-all ml-2">{item.title}</h3>
  </div>
  <div className="flex items-center gap-4 opacity-0 group-hover:opacity-100 transition-all">
- <button onClick={() => setSelectedAnimeForEpisodes(item)} className="text-micro font-medium text-[#86E95C] hover:text-[#86E95C]/80 tracking-tight transition-colors">Episodes</button>
- <button onClick={() => { setEditingItem(item); setFormData(item); setShowModal(true); }} className="text-micro font-medium text-white/90 hover:text-white tracking-tight transition-colors">Edit</button>
- <button onClick={() => openDeleteModal('anime', item.id, item.title)} className="text-micro font-medium text-white/90 hover:text-white tracking-tight transition-colors">Delete</button>
+ <button onClick={() => setSelectedAnimeForEpisodes(item)} className="text-micro font-medium text-[#86E95C] hover:text-[#86E95C]/80 transition-colors">Episodes</button>
+ <button onClick={() => { setEditingItem(item); setFormData(item); setShowModal(true); }} className="text-micro font-medium text-white hover:text-white transition-colors">Edit</button>
+ <button onClick={() => openDeleteModal('anime', item.id, item.title)} className="text-micro font-medium text-white hover:text-white transition-colors">Delete</button>
  </div>
  </div>
  ))}
@@ -814,11 +814,11 @@ const Admin = () => {
  <div key={item.id} className="group flex items-center justify-between py-10 hover:bg-white/[0.02] px-6 transition-all">
  <div className="flex items-center gap-8">
  <div className="w-12 h-12 bg-white/5 backdrop-blur-md rounded-xl border border-white/10 flex-shrink-0 overflow-hidden"><img loading="lazy" src={item.image} className="w-full h-full object-cover grayscale opacity-50 group-hover:grayscale-0 group-hover:opacity-100 transition-all" alt="" /></div>
- <h3 className="text-h4 font-medium text-white/90 group-hover:text-white transition-all tracking-tight line-clamp-1">{item.title}</h3>
+ <h3 className="text-h4 font-medium text-white group-hover:text-white transition-all line-clamp-1">{item.title}</h3>
  </div>
  <div className="flex items-center gap-3 mt-4 opacity-0 group-hover:opacity-100 transition-opacity">
- <button onClick={() => { setEditingItem(item); setNewsFormData(item); setShowModal(true); }} className="text-micro font-medium text-white hover:text-[#86E95C] tracking-tight transition-colors">Edit</button>
- <button onClick={() => openDeleteModal('news', item.id, item.title)} className="text-micro font-medium text-white/90 hover:text-white tracking-tight transition-colors">Delete</button>
+ <button onClick={() => { setEditingItem(item); setNewsFormData(item); setShowModal(true); }} className="text-micro font-medium text-white hover:text-[#86E95C] transition-colors">Edit</button>
+ <button onClick={() => openDeleteModal('news', item.id, item.title)} className="text-micro font-medium text-white hover:text-white transition-colors">Delete</button>
  </div>
  </div>
  ))}
@@ -828,16 +828,16 @@ const Admin = () => {
  ) : activeTab === 'schedule' ? (
  <div className="space-y-16">
  <div className="space-y-6">
- <h2 className="text-h4 font-medium tracking-tight text-white/90">Queued Episodes (Auto-Release)</h2>
+ <h2 className="text-h4 font-medium text-white">Queued Episodes (Auto-Release)</h2>
  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 pt-8">
  {queuedEpisodes.length === 0 ? (
- <p className="text-white/90 text-micro font-medium">No queued episodes waiting for release.</p>
+ <p className="text-white text-micro font-medium">No queued episodes waiting for release.</p>
  ) : queuedEpisodes.map(ep => (
  <div key={ep.id} className="group p-6 space-y-6 hover:bg-white/[0.02] transition-all relative">
  <div className="flex gap-4 items-start">
  {ep.animeImage && <img loading="lazy" src={ep.animeImage} className="w-12 h-16 object-cover bg-white/5 backdrop-blur-md rounded-xl border border-white/10" alt="" />}
  <div className="flex-1 min-w-0">
- <p className={`text-[10px] font-bold tracking-widest uppercase mb-1 ${
+ <p className={`text-[10px] font-medium uppercase mb-1 ${
  ep.releaseDate 
  ? (ep.releaseDate.toDate() <= new Date() ? 'text-[#86E95C]' : 'text-orange-500') 
  : 'text-orange-500'
@@ -846,18 +846,18 @@ const Admin = () => {
  ? (ep.releaseDate.toDate() <= new Date() ? 'Released' : 'Scheduled') 
  : 'Pending Schedule'}
  </p>
- <h4 className="text-micro font-medium text-white tracking-tight line-clamp-1">{ep.animeTitle}</h4>
- <p className="text-micro text-white/90">S{ep.season} E{ep.episodeNumber}</p>
+ <h4 className="text-micro font-medium text-white line-clamp-1">{ep.animeTitle}</h4>
+ <p className="text-micro text-white">S{ep.season} E{ep.episodeNumber}</p>
  </div>
  </div>
  {ep.releaseDate && (
- <div className="bg-white/5 backdrop-blur-md rounded-xl border border-white/10 p-3 text-micro text-white/90 font-medium">
+ <div className="bg-white/5 backdrop-blur-md rounded-xl border border-white/10 p-3 text-micro text-white font-medium">
  Releases: {ep.releaseDate.toDate().toLocaleString()}
  </div>
  )}
  <button 
  onClick={() => setReleaseEpisodeModal({ isOpen: true, episode: ep, date: '', time: '' })}
- className="w-full bg-orange-500/10 text-orange-500 hover:bg-orange-500 hover:text-white transition-all py-2 text-micro font-bold uppercase tracking-widest"
+ className="w-full bg-orange-500/10 text-orange-500 hover:bg-orange-500 hover:text-white transition-all py-2 text-micro font-medium uppercase"
  >
  Set Release Date
  </button>
@@ -867,21 +867,21 @@ const Admin = () => {
  </div>
 
  <div className="space-y-6">
- <h2 className="text-h4 font-medium tracking-tight text-white/90">Weekly Airing Schedules (Generic)</h2>
+ <h2 className="text-h4 font-medium text-white">Weekly Airing Schedules (Generic)</h2>
  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 pt-8">
  {schedules.map(s => (
  <div key={s.id} className="group p-8 space-y-6 hover:bg-white/[0.02] transition-all">
  <div className="flex justify-between items-start">
  <div>
- <span className="text-[10px] font-bold text-white/90 tracking-widest uppercase block mb-2">Every {s.dayOfWeek || s.date}</span>
- <span className="text-h2 font-medium text-[#86E95C] leading-none tracking-tighter">{s.time}</span>
+ <span className="text-[10px] font-medium text-white uppercase block mb-2">Every {s.dayOfWeek || s.date}</span>
+ <span className="text-h2 font-medium text-[#86E95C] leading-none">{s.time}</span>
  </div>
  <div className="flex gap-4 opacity-0 group-hover:opacity-100 transition-all">
- <button onClick={() => { setEditingItem(s); setScheduleFormData(s); setShowModal(true); }} className="text-micro font-medium text-white/90 hover:text-white">Edit</button>
- <button onClick={() => openDeleteModal('schedules', s.id, s.animeTitle || s.title)} className="text-micro font-medium text-white/90 hover:text-white">Delete</button>
+ <button onClick={() => { setEditingItem(s); setScheduleFormData(s); setShowModal(true); }} className="text-micro font-medium text-white hover:text-white">Edit</button>
+ <button onClick={() => openDeleteModal('schedules', s.id, s.animeTitle || s.title)} className="text-micro font-medium text-white hover:text-white">Delete</button>
  </div>
  </div>
- <h4 className="text-h4 font-medium text-white group-hover:text-[#86E95C] transition-all tracking-tight">{s.animeTitle || s.title}</h4>
+ <h4 className="text-h4 font-medium text-white group-hover:text-[#86E95C] transition-all">{s.animeTitle || s.title}</h4>
  </div>
  ))}
  </div>
@@ -892,21 +892,21 @@ const Admin = () => {
  <div className="grid grid-cols-1 gap-8 pt-12">
  {featuredList.length === 0 ? (
  <div className="flex flex-col items-center justify-center py-12 text-center space-y-2">
- <p className="text-micro font-medium text-white/90">No featured anime.</p>
- <p className="text-[10px] text-white/90">Click"Add New" to feature an anime on the homepage.</p>
+ <p className="text-micro font-medium text-white">No featured anime.</p>
+ <p className="text-[10px] text-white">Click"Add New" to feature an anime on the homepage.</p>
  </div>
  ) : featuredList.map(f => (
  <div key={f.id} className="group flex items-center justify-between p-6 hover:bg-white/[0.02] transition-all">
  <div className="flex items-center gap-8">
  {f.customImage && <div className="w-32 h-20 bg-white/5 backdrop-blur-md rounded-xl border border-white/10 flex-shrink-0"><img loading="lazy" src={f.customImage} className="w-full h-full object-cover" alt="" /></div>}
  <div className="space-y-2">
- <h3 className="text-h3 font-medium text-white tracking-tight">{f.animeTitle}</h3>
- <p className="text-micro text-white/90">{f.tagline}</p>
+ <h3 className="text-h3 font-medium text-white">{f.animeTitle}</h3>
+ <p className="text-micro text-white">{f.tagline}</p>
  </div>
  </div>
  <div className="flex items-center gap-6 opacity-0 group-hover:opacity-100 transition-all">
- <button onClick={() => { setEditingItem(f); setFeaturedFormData(f); setShowModal(true); }} className="text-micro font-medium text-white/90 hover:text-white">Edit</button>
- <button onClick={() => openDeleteModal('featured', f.id, f.animeTitle)} className="text-micro font-medium text-white/90 hover:text-white">Remove</button>
+ <button onClick={() => { setEditingItem(f); setFeaturedFormData(f); setShowModal(true); }} className="text-micro font-medium text-white hover:text-white">Edit</button>
+ <button onClick={() => openDeleteModal('featured', f.id, f.animeTitle)} className="text-micro font-medium text-white hover:text-white">Remove</button>
  </div>
  </div>
  ))}
@@ -916,7 +916,7 @@ const Admin = () => {
  <form onSubmit={handleSaveSettings} className="max-w-3xl space-y-12">
  <div className="grid grid-cols-1 gap-8">
  <div className="space-y-4">
- <p className="text-[10px] font-bold text-white/90 tracking-widest uppercase">Maintenance Mode</p>
+ <p className="text-[10px] font-medium text-white uppercase">Maintenance Mode</p>
  <div className="bg-white/[0.03] p-8 flex items-center justify-between">
  <span className="text-white font-medium">Enable Maintenance Screen</span>
  <label className="relative inline-flex items-center cursor-pointer">
@@ -930,7 +930,7 @@ const Admin = () => {
  </div>
  </div>
  <div className="space-y-4">
- <p className="text-[10px] font-bold text-white/90 tracking-widest uppercase">Brand Theme Color</p>
+ <p className="text-[10px] font-medium text-white uppercase">Brand Theme Color</p>
  <div className="bg-white/[0.03] p-8 flex items-center gap-6">
  <input 
  type="color" 
@@ -947,7 +947,7 @@ const Admin = () => {
  </div>
  </div>
  <div className="space-y-4">
- <p className="text-[10px] font-bold text-white/90 tracking-widest uppercase">Global SEO Title</p>
+ <p className="text-[10px] font-medium text-white uppercase">Global SEO Title</p>
  <div className="bg-white/[0.03] p-8">
  <input 
  type="text" 
@@ -958,7 +958,7 @@ const Admin = () => {
  </div>
  </div>
  <div className="space-y-4">
- <p className="text-[10px] font-bold text-white/90 tracking-widest uppercase">Global SEO Description</p>
+ <p className="text-[10px] font-medium text-white uppercase">Global SEO Description</p>
  <div className="bg-white/[0.03] p-8">
  <textarea 
  value={settingsFormData.seoDescription} 
@@ -968,7 +968,7 @@ const Admin = () => {
  </div>
  </div>
  <div className="pt-8">
- <button type="submit" className="w-full bg-[#86E95C] text-black font-bold py-4 hover:bg-[#86E95C]/80 transition-colors uppercase tracking-widest text-micro rounded-xl">
+ <button type="submit" className="w-full bg-[#86E95C] text-black font-medium py-4 hover:bg-[#86E95C]/80 transition-colors uppercase text-micro rounded-xl">
  Save Configuration
  </button>
  </div>
@@ -1002,13 +1002,13 @@ const Admin = () => {
  className="w-full max-w-lg glass-card bg-white/5 backdrop-blur-md rounded-xl border border-white/10 p-12 space-y-12 backdrop-blur-3xl"
  >
  <div className="space-y-4">
- <p className="text-[10px] font-bold text-white tracking-widest uppercase">High-Level Threat Detected!</p>
- <h2 className="text-h2 font-medium text-white tracking-tighter leading-tight">Cast Obliteration Magic</h2>
- <p className="text-micro text-white/90 leading-relaxed">
+ <p className="text-[10px] font-medium text-white uppercase">High-Level Threat Detected!</p>
+ <h2 className="text-h2 font-medium text-white leading-tight">Cast Obliteration Magic</h2>
+ <p className="text-micro text-white leading-relaxed">
  This magic cannot be undone. To verify your guild rank, please chant the true name below:
  </p>
  <div className="py-3 px-4 bg-white/5 backdrop-blur-md rounded-xl border border-white/10 inline-block">
- <span className="text-micro font-bold text-white tracking-widest select-none">{deleteModal.title}</span>
+ <span className="text-micro font-medium text-white select-none">{deleteModal.title}</span>
  </div>
  </div>
 
@@ -1022,11 +1022,11 @@ const Admin = () => {
  autoComplete="off"
  />
  <div className="flex gap-4 pt-4">
- <button onClick={() => setDeleteModal({ isOpen: false, collection: '', id: '', title: '', input: '' })} className="flex-1 py-4 bg-white/5 backdrop-blur-md rounded-xl border border-white/10 hover:bg-white/10 shadow-xl text-white text-micro font-bold tracking-widest transition-all">ABORT</button>
+ <button onClick={() => setDeleteModal({ isOpen: false, collection: '', id: '', title: '', input: '' })} className="flex-1 py-4 bg-white/5 backdrop-blur-md rounded-xl border border-white/10 hover:bg-white/10 shadow-xl text-white text-micro font-medium transition-all">ABORT</button>
  <button 
  onClick={handleSafeDelete}
  disabled={deleteModal.input !== deleteModal.title}
- className="flex-1 py-4 bg-white/5 backdrop-blur-md rounded-xl border border-white/10 text-white/90 text-micro font-bold tracking-widest transition-all disabled:opacity-50 disabled:cursor-not-allowed hover:bg-white/10 shadow-xl hover:text-white disabled:hover:bg-white/5 backdrop-blur-md rounded-xl border border-white/10 hover:"
+ className="flex-1 py-4 bg-white/5 backdrop-blur-md rounded-xl border border-white/10 text-white text-micro font-medium transition-all disabled:opacity-50 disabled:cursor-not-allowed hover:bg-white/10 shadow-xl hover:text-white disabled:hover:bg-white/5 backdrop-blur-md rounded-xl border border-white/10 hover:"
  >
  OBLITERATE
  </button>
@@ -1043,23 +1043,23 @@ const Admin = () => {
  <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="fixed inset-0 z-[500] bg-neutral-900/90 backdrop-blur-md flex items-center justify-center p-6 font-sans">
  <motion.div initial={{ scale: 0.95, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} className="w-full max-w-md glass-card bg-white/5 backdrop-blur-md rounded-xl border border-white/10 p-8 space-y-8 backdrop-blur-3xl">
  <div className="space-y-2">
- <h3 className="text-h4 font-bold text-white tracking-tight">Schedule Episode Release</h3>
- <p className="text-micro text-white/90">
+ <h3 className="text-h4 font-medium text-white">Schedule Episode Release</h3>
+ <p className="text-micro text-white">
  {releaseEpisodeModal.episode?.animeTitle} - S{releaseEpisodeModal.episode?.season} E{releaseEpisodeModal.episode?.episodeNumber}
  </p>
  </div>
  <form onSubmit={handleReleaseQueuedEpisode} className="space-y-6">
  <div className="space-y-2">
- <label className="text-[10px] font-bold text-white/90 tracking-widest uppercase">Release Date</label>
+ <label className="text-[10px] font-medium text-white uppercase">Release Date</label>
  <input required type="date" value={releaseEpisodeModal.date} onChange={e => setReleaseEpisodeModal({...releaseEpisodeModal, date: e.target.value})} className="w-full bg-white/5 backdrop-blur-md rounded-xl border border-white/10 p-4 text-white outline-none focus:border-[#86E95C]/50" />
  </div>
  <div className="space-y-2">
- <label className="text-[10px] font-bold text-white/90 tracking-widest uppercase">Release Time</label>
+ <label className="text-[10px] font-medium text-white uppercase">Release Time</label>
  <input required type="time" value={releaseEpisodeModal.time} onChange={e => setReleaseEpisodeModal({...releaseEpisodeModal, time: e.target.value})} className="w-full bg-white/5 backdrop-blur-md rounded-xl border border-white/10 p-4 text-white outline-none focus:border-[#86E95C]/50" />
  </div>
  <div className="flex gap-4 pt-4">
- <button type="button" onClick={() => setReleaseEpisodeModal({ isOpen: false, episode: null, date: '', time: '' })} className="flex-1 py-4 bg-white/5 backdrop-blur-md rounded-xl border border-white/10 hover:bg-white/10 shadow-xl text-white text-micro font-bold tracking-widest transition-all">CANCEL</button>
- <button type="submit" disabled={uploading} className="flex-1 py-4 bg-[#86E95C] text-black text-micro font-bold tracking-widest hover:bg-[#86E95C]/80 transition-all rounded-xl">{uploading ? 'SCHEDULING...' : 'SET ALARM'}</button>
+ <button type="button" onClick={() => setReleaseEpisodeModal({ isOpen: false, episode: null, date: '', time: '' })} className="flex-1 py-4 bg-white/5 backdrop-blur-md rounded-xl border border-white/10 hover:bg-white/10 shadow-xl text-white text-micro font-medium transition-all">CANCEL</button>
+ <button type="submit" disabled={uploading} className="flex-1 py-4 bg-[#86E95C] text-black text-micro font-medium hover:bg-[#86E95C]/80 transition-all rounded-xl">{uploading ? 'SCHEDULING...' : 'SET ALARM'}</button>
  </div>
  </form>
  </motion.div>
@@ -1073,14 +1073,14 @@ const Admin = () => {
  <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="fixed inset-0 z-[300] bg-white/10 backdrop-blur-3xl flex flex-col overflow-hidden font-sans">
  <div className="p-8 lg:p-12 flex justify-between items-center bg-transparent relative z-20">
  <div className="flex items-center gap-4">
- <button onClick={() => setShowModal(false)} className="text-micro font-medium text-white/90 hover:text-white tracking-tight transition-colors">Close News</button>
+ <button onClick={() => setShowModal(false)} className="text-micro font-medium text-white hover:text-white transition-colors">Close News</button>
  </div>
  <div className="flex items-center gap-4">
- <span className="text-micro font-medium text-white/90 tracking-tight">{editingItem ? 'Edit Article' : 'Create Article'}</span>
+ <span className="text-micro font-medium text-white">{editingItem ? 'Edit Article' : 'Create Article'}</span>
  </div>
  <button onClick={activeTab === 'news' ? handleSaveNews : activeTab === 'schedule' ? handleSaveSchedule : activeTab === 'featured' ? handleSaveFeatured : handleSaveAnime}
  disabled={uploading}
- className="bg-white/90 text-background px-10 py-3.5 text-micro font-semibold tracking-tight hover:bg-white transition-all disabled:opacity-50 rounded-xl"
+ className="bg-white/90 text-background px-10 py-3.5 text-micro font-semibold hover:bg-white transition-all disabled:opacity-50 rounded-xl"
  >
  {uploading ? 'Casting...' : 'Seal the Pact'}
  </button>
@@ -1094,7 +1094,7 @@ const Admin = () => {
  {/* Header Section */}
  <div className="grid grid-cols-1 md:grid-cols-2 gap-8 pb-16">
  <div className="space-y-4">
- <p className="text-[10px] font-bold text-white/90 tracking-widest uppercase">News Category</p>
+ <p className="text-[10px] font-medium text-white uppercase">News Category</p>
  <div className="relative group">
  <select 
  value={newsFormData.category} 
@@ -1111,7 +1111,7 @@ const Admin = () => {
  </div>
  </div>
  <div className="space-y-4">
- <p className="text-[10px] font-bold text-white/90 tracking-widest uppercase">Featured Visual</p>
+ <p className="text-[10px] font-medium text-white uppercase">Featured Visual</p>
  <div className="flex gap-4">
  <div 
  onClick={() => {
@@ -1126,17 +1126,17 @@ const Admin = () => {
  {uploading ? (
  <div className="flex items-center gap-3">
  <div style={{ borderRadius: '50%' }} className="w-4 h-4 border-2 border-t-white animate-spin" />
- <span className="text-[10px] font-bold text-white/90 tracking-widest uppercase">Syncing...</span>
+ <span className="text-[10px] font-medium text-white uppercase">Syncing...</span>
  </div>
  ) : newsFormData.image ? (
  <div className="flex items-center gap-4 w-full">
  <img loading="lazy" src={newsFormData.image} className="w-8 h-8 object-cover rounded-xl" alt="" />
- <span className="text-[10px] font-bold text-white/90 tracking-widest uppercase truncate tracking-tighter">Asset Linked</span>
+ <span className="text-[10px] font-medium text-white uppercase truncate">Asset Linked</span>
  </div>
  ) : (
  <div className="flex items-center gap-3">
  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" className="opacity-40"><path d="M21 15V19C21 19.5304 20.7893 20.0391 20.4142 20.4142C20.0391 20.7893 19.5304 21 19 21H5C4.46957 21 3.96086 20.7893 3.58579 20.4142C3.21071 20.0391 3 19.5304 3 19V15M17 8L12 3M12 3L7 8M12 3V15" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/></svg>
- <span className="text-[10px] font-bold text-white/90 tracking-widest transition-colors uppercase">Upload File</span>
+ <span className="text-[10px] font-medium text-white transition-colors uppercase">Upload File</span>
  </div>
  )}
  </div>
@@ -1145,7 +1145,7 @@ const Admin = () => {
  value={newsFormData.image}
  onChange={(e) => setNewsFormData({ ...newsFormData, image: e.target.value })}
  placeholder="Paste URL instead..."
- className="w-full bg-transparent border-none text-[10px] font-bold text-white/90 outline-none placeholder:text-white/90 tracking-widest uppercase"
+ className="w-full bg-transparent border-none text-[10px] font-medium text-white outline-none placeholder:text-white uppercase"
  />
  </div>
  </div>
@@ -1155,61 +1155,61 @@ const Admin = () => {
  {/* Editor Section */}
  <div className="space-y-12">
  <div className="space-y-4">
- <p className="text-[10px] font-bold text-white/90 tracking-widest uppercase">Title</p>
+ <p className="text-[10px] font-medium text-white uppercase">Title</p>
  <div className="bg-white/[0.03] p-8">
  <input 
  value={newsFormData.title} 
  onChange={e => setNewsFormData({ ...newsFormData, title: e.target.value })} 
  placeholder="Enter article headline..." 
- className="w-full bg-transparent border-none text-h2 font-semibold text-white outline-none placeholder:text-white/90 leading-tight tracking-tight" 
+ className="w-full bg-transparent border-none text-h2 font-semibold text-white outline-none placeholder:text-white leading-tight" 
  />
  </div>
  </div>
 
  <div className="space-y-4 col-span-2">
- <p className="text-[10px] font-bold text-white/90 tracking-widest uppercase">News Content</p>
+ <p className="text-[10px] font-medium text-white uppercase">News Content</p>
  <div className="bg-white/[0.02] flex flex-col">
  {/* Toolbar */}
  <div className="flex flex-wrap items-center gap-1 p-4 bg-white/10 backdrop-blur-xl sticky top-0 z-20">
  {/* History */}
  <div className="flex items-center gap-1 pr-3 mr-2">
- <button onClick={() => { execCommand('undo'); updateActiveStyles(); }} className="w-9 h-9 flex items-center justify-center bg-white/5 backdrop-blur-md rounded-xl border border-white/10 text-white/90 hover:bg-white/10 shadow-xl hover:text-white transition-all rounded-xl" title="Undo (Ctrl+Z)">
+ <button onClick={() => { execCommand('undo'); updateActiveStyles(); }} className="w-9 h-9 flex items-center justify-center bg-white/5 backdrop-blur-md rounded-xl border border-white/10 text-white hover:bg-white/10 shadow-xl hover:text-white transition-all rounded-xl" title="Undo (Ctrl+Z)">
  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"/></svg>
  </button>
- <button onClick={() => { execCommand('redo'); updateActiveStyles(); }} className="w-9 h-9 flex items-center justify-center bg-white/5 backdrop-blur-md rounded-xl border border-white/10 text-white/90 hover:bg-white/10 shadow-xl hover:text-white transition-all rounded-xl" title="Redo (Ctrl+Y)">
+ <button onClick={() => { execCommand('redo'); updateActiveStyles(); }} className="w-9 h-9 flex items-center justify-center bg-white/5 backdrop-blur-md rounded-xl border border-white/10 text-white hover:bg-white/10 shadow-xl hover:text-white transition-all rounded-xl" title="Redo (Ctrl+Y)">
  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg>
  </button>
  </div>
 
  {/* Formatting */}
  <div className="flex items-center gap-1 pr-3 mr-2">
- <button onClick={() => { execCommand('bold'); updateActiveStyles(); }} className={`w-9 h-9 flex items-center justify-center transition-all rounded-xl ${activeStyles.bold ? 'bg-white text-background shadow-lg shadow-white/10' : 'bg-white/5 backdrop-blur-md rounded-xl border border-white/10 text-white/90 hover:bg-white/10 shadow-xl hover:text-white'}`} title="Bold">
+ <button onClick={() => { execCommand('bold'); updateActiveStyles(); }} className={`w-9 h-9 flex items-center justify-center transition-all rounded-xl ${activeStyles.bold ? 'bg-white text-background shadow-lg shadow-white/10' : 'bg-white/5 backdrop-blur-md rounded-xl border border-white/10 text-white hover:bg-white/10 shadow-xl hover:text-white'}`} title="Bold">
  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M6 4h8a4 4 0 0 1 4 4 4 4 0 0 1-4 4H6z"/><path d="M6 12h9a4 4 0 0 1 4 4 4 4 0 0 1-4 4H6z"/></svg>
  </button>
- <button onClick={() => { execCommand('italic'); updateActiveStyles(); }} className={`w-9 h-9 flex items-center justify-center transition-all rounded-xl ${activeStyles.italic ? 'bg-white text-background shadow-lg shadow-white/10' : 'bg-white/5 backdrop-blur-md rounded-xl border border-white/10 text-white/90 hover:bg-white/10 shadow-xl hover:text-white'}`} title="Italic">
+ <button onClick={() => { execCommand('italic'); updateActiveStyles(); }} className={`w-9 h-9 flex items-center justify-center transition-all rounded-xl ${activeStyles.italic ? 'bg-white text-background shadow-lg shadow-white/10' : 'bg-white/5 backdrop-blur-md rounded-xl border border-white/10 text-white hover:bg-white/10 shadow-xl hover:text-white'}`} title="Italic">
  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><line x1="19" y1="4" x2="10" y2="4"/><line x1="14" y1="20" x2="5" y2="20"/><line x1="15" y1="4" x2="9" y2="20"/></svg>
  </button>
- <button onClick={() => { execCommand('underline'); updateActiveStyles(); }} className={`w-9 h-9 flex items-center justify-center transition-all rounded-xl ${activeStyles.underline ? 'bg-white text-background shadow-lg shadow-white/10' : 'bg-white/5 backdrop-blur-md rounded-xl border border-white/10 text-white/90 hover:bg-white/10 shadow-xl hover:text-white'}`} title="Underline">
+ <button onClick={() => { execCommand('underline'); updateActiveStyles(); }} className={`w-9 h-9 flex items-center justify-center transition-all rounded-xl ${activeStyles.underline ? 'bg-white text-background shadow-lg shadow-white/10' : 'bg-white/5 backdrop-blur-md rounded-xl border border-white/10 text-white hover:bg-white/10 shadow-xl hover:text-white'}`} title="Underline">
  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M6 3v7a6 6 0 0 0 6 6 6 6 0 0 0 6-6V3"/><line x1="4" y1="21" x2="20" y2="21"/></svg>
  </button>
  </div>
 
  {/* Alignment */}
  <div className="flex items-center gap-1 pr-3 mr-2">
- <button onClick={() => { execCommand('justifyLeft'); updateActiveStyles(); }} className={`w-9 h-9 flex items-center justify-center transition-all rounded-xl ${activeStyles.justifyLeft ? 'bg-white text-background shadow-lg shadow-white/10' : 'bg-white/5 backdrop-blur-md rounded-xl border border-white/10 text-white/90 hover:bg-white/10 shadow-xl hover:text-white'}`} title="Align Left">
+ <button onClick={() => { execCommand('justifyLeft'); updateActiveStyles(); }} className={`w-9 h-9 flex items-center justify-center transition-all rounded-xl ${activeStyles.justifyLeft ? 'bg-white text-background shadow-lg shadow-white/10' : 'bg-white/5 backdrop-blur-md rounded-xl border border-white/10 text-white hover:bg-white/10 shadow-xl hover:text-white'}`} title="Align Left">
  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><line x1="17" y1="10" x2="3" y2="10"/><line x1="21" y1="6" x2="3" y2="6"/><line x1="21" y1="14" x2="3" y2="14"/><line x1="17" y1="18" x2="3" y2="18"/></svg>
  </button>
- <button onClick={() => { execCommand('justifyCenter'); updateActiveStyles(); }} className={`w-9 h-9 flex items-center justify-center transition-all rounded-xl ${activeStyles.justifyCenter ? 'bg-white text-background shadow-lg shadow-white/10' : 'bg-white/5 backdrop-blur-md rounded-xl border border-white/10 text-white/90 hover:bg-white/10 shadow-xl hover:text-white'}`} title="Align Center">
+ <button onClick={() => { execCommand('justifyCenter'); updateActiveStyles(); }} className={`w-9 h-9 flex items-center justify-center transition-all rounded-xl ${activeStyles.justifyCenter ? 'bg-white text-background shadow-lg shadow-white/10' : 'bg-white/5 backdrop-blur-md rounded-xl border border-white/10 text-white hover:bg-white/10 shadow-xl hover:text-white'}`} title="Align Center">
  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><line x1="18" y1="10" x2="6" y2="10"/><line x1="21" y1="6" x2="3" y2="6"/><line x1="21" y1="14" x2="3" y2="14"/><line x1="18" y1="18" x2="6" y2="18"/></svg>
  </button>
- <button onClick={() => { execCommand('justifyRight'); updateActiveStyles(); }} className={`w-9 h-9 flex items-center justify-center transition-all rounded-xl ${activeStyles.justifyRight ? 'bg-white text-background shadow-lg shadow-white/10' : 'bg-white/5 backdrop-blur-md rounded-xl border border-white/10 text-white/90 hover:bg-white/10 shadow-xl hover:text-white'}`} title="Align Right">
+ <button onClick={() => { execCommand('justifyRight'); updateActiveStyles(); }} className={`w-9 h-9 flex items-center justify-center transition-all rounded-xl ${activeStyles.justifyRight ? 'bg-white text-background shadow-lg shadow-white/10' : 'bg-white/5 backdrop-blur-md rounded-xl border border-white/10 text-white hover:bg-white/10 shadow-xl hover:text-white'}`} title="Align Right">
  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><line x1="21" y1="10" x2="7" y2="10"/><line x1="21" y1="6" x2="3" y2="6"/><line x1="21" y1="14" x2="3" y2="14"/><line x1="21" y1="18" x2="7" y2="18"/></svg>
  </button>
  </div>
 
  {/* Lists */}
  <div className="flex items-center gap-1 pr-3 mr-2">
- <button onClick={() => { execCommand('insertUnorderedList'); updateActiveStyles(); }} className={`w-9 h-9 flex items-center justify-center transition-all rounded-xl ${activeStyles.insertUnorderedList ? 'bg-white text-background shadow-lg shadow-white/10' : 'bg-white/5 backdrop-blur-md rounded-xl border border-white/10 text-white/90 hover:bg-white/10 shadow-xl hover:text-white'}`} title="Bullet List">
+ <button onClick={() => { execCommand('insertUnorderedList'); updateActiveStyles(); }} className={`w-9 h-9 flex items-center justify-center transition-all rounded-xl ${activeStyles.insertUnorderedList ? 'bg-white text-background shadow-lg shadow-white/10' : 'bg-white/5 backdrop-blur-md rounded-xl border border-white/10 text-white hover:bg-white/10 shadow-xl hover:text-white'}`} title="Bullet List">
  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
  <line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/>
  <rect x="3" y="5" width="2" height="2" fill="currentColor" stroke="none"/>
@@ -1217,7 +1217,7 @@ const Admin = () => {
  <rect x="3" y="17" width="2" height="2" fill="currentColor" stroke="none"/>
  </svg>
  </button>
- <button onClick={() => { execCommand('insertOrderedList'); updateActiveStyles(); }} className={`w-9 h-9 flex items-center justify-center transition-all rounded-xl ${activeStyles.insertOrderedList ? 'bg-white text-background shadow-lg shadow-white/10' : 'bg-white/5 backdrop-blur-md rounded-xl border border-white/10 text-white/90 hover:bg-white/10 shadow-xl hover:text-white'}`} title="Numbered List">
+ <button onClick={() => { execCommand('insertOrderedList'); updateActiveStyles(); }} className={`w-9 h-9 flex items-center justify-center transition-all rounded-xl ${activeStyles.insertOrderedList ? 'bg-white text-background shadow-lg shadow-white/10' : 'bg-white/5 backdrop-blur-md rounded-xl border border-white/10 text-white hover:bg-white/10 shadow-xl hover:text-white'}`} title="Numbered List">
  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
  <line x1="10" y1="6" x2="21" y2="6"/><line x1="10" y1="12" x2="21" y2="12"/><line x1="10" y1="18" x2="21" y2="18"/>
  <path d="M4 6h1v4M4 10h2M4 18h2" strokeWidth="2"/>
@@ -1230,7 +1230,7 @@ const Admin = () => {
  <div className="flex items-center gap-1">
  <select 
  onChange={(e) => { execCommand('fontSize', e.target.value); updateActiveStyles(); }}
- className="h-9 bg-white/5 backdrop-blur-md rounded-xl border border-white/10 px-3 text-[10px] font-bold text-white/90 outline-none hover:bg-white/10 shadow-xl hover:text-white transition-all cursor-pointer rounded-xl mr-1 appearance-none"
+ className="h-9 bg-white/5 backdrop-blur-md rounded-xl border border-white/10 px-3 text-[10px] font-medium text-white outline-none hover:bg-white/10 shadow-xl hover:text-white transition-all cursor-pointer rounded-xl mr-1 appearance-none"
  title="Font Size"
  defaultValue="3"
  >
@@ -1268,7 +1268,7 @@ const Admin = () => {
  setNewsFormData(prev => ({ ...prev, content: editorRef.current.innerHTML }));
  }
  }}
- className="h-9 bg-white/5 backdrop-blur-md rounded-xl border border-white/10 px-3 text-[10px] font-bold text-white/90 outline-none hover:bg-white/10 shadow-xl hover:text-white transition-all cursor-pointer rounded-xl mr-1 appearance-none"
+ className="h-9 bg-white/5 backdrop-blur-md rounded-xl border border-white/10 px-3 text-[10px] font-medium text-white outline-none hover:bg-white/10 shadow-xl hover:text-white transition-all cursor-pointer rounded-xl mr-1 appearance-none"
  title="Line Height"
  defaultValue="1.6"
  >
@@ -1280,11 +1280,11 @@ const Admin = () => {
  <option value="2.0" className="bg-[#0D0D0D] text-white">2.0</option>
  </select>
 
- <button onClick={() => { const color = prompt('Enter Color (Hex/Name):', '#86E95C'); if(color) execCommand('foreColor', color); }} className="w-9 h-9 flex items-center justify-center bg-white/5 backdrop-blur-md rounded-xl border border-white/10 hover:bg-white/10 shadow-xl transition-all text-white/90 hover:text-white rounded-xl" title="Text Color">
+ <button onClick={() => { const color = prompt('Enter Color (Hex/Name):', '#86E95C'); if(color) execCommand('foreColor', color); }} className="w-9 h-9 flex items-center justify-center bg-white/5 backdrop-blur-md rounded-xl border border-white/10 hover:bg-white/10 shadow-xl transition-all text-white hover:text-white rounded-xl" title="Text Color">
  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M4 20h16"/><path d="M17 16l-5-12-5 12"/><path d="M7 12h10"/></svg>
  </button>
 
- <button onClick={() => execCommand('insertHorizontalRule')} className="w-9 h-9 flex items-center justify-center bg-white/5 backdrop-blur-md rounded-xl border border-white/10 hover:bg-white/10 shadow-xl transition-all text-white/90 hover:text-white rounded-xl" title="Horizontal Rule">
+ <button onClick={() => execCommand('insertHorizontalRule')} className="w-9 h-9 flex items-center justify-center bg-white/5 backdrop-blur-md rounded-xl border border-white/10 hover:bg-white/10 shadow-xl transition-all text-white hover:text-white rounded-xl" title="Horizontal Rule">
  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><line x1="5" y1="12" x2="19" y2="12"/></svg>
  </button>
 
@@ -1294,13 +1294,13 @@ const Admin = () => {
  execCommand('formatBlock', isQuote ? 'div' : 'blockquote');
  updateActiveStyles();
  }} 
- className={`w-9 h-9 flex items-center justify-center transition-all rounded-xl ${activeStyles.blockquote ? 'bg-white text-background shadow-lg shadow-white/10' : 'bg-white/5 backdrop-blur-md rounded-xl border border-white/10 text-white/90 hover:bg-white/10 shadow-xl hover:text-white'}`} 
+ className={`w-9 h-9 flex items-center justify-center transition-all rounded-xl ${activeStyles.blockquote ? 'bg-white text-background shadow-lg shadow-white/10' : 'bg-white/5 backdrop-blur-md rounded-xl border border-white/10 text-white hover:bg-white/10 shadow-xl hover:text-white'}`} 
  title="Quote"
  >
  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M3 21c3 0 7-1 7-8V5c0-1.25-.756-2.017-2-2H4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2 1 0 1 0 1 1v1c0 2.5 1 4.5 1 6zm11 0c3 0 7-1 7-8V5c0-1.25-.756-2.017-2-2h-4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2 1 0 1 0 1 1v1c0 2.5 1 4.5 1 6z"/></svg>
  </button>
 
- <button onClick={() => { const url = prompt('Enter URL:'); if(url) execCommand('createLink', url); }} className="w-9 h-9 flex items-center justify-center bg-white/5 backdrop-blur-md rounded-xl border border-white/10 hover:bg-white/10 shadow-xl transition-all text-white/90 hover:text-white rounded-xl" title="Insert Link">
+ <button onClick={() => { const url = prompt('Enter URL:'); if(url) execCommand('createLink', url); }} className="w-9 h-9 flex items-center justify-center bg-white/5 backdrop-blur-md rounded-xl border border-white/10 hover:bg-white/10 shadow-xl transition-all text-white hover:text-white rounded-xl" title="Insert Link">
  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
  </button>
  </div>
@@ -1314,7 +1314,7 @@ const Admin = () => {
  toast.success("External Asset Linked");
  }
  }} 
- className="flex items-center gap-3 px-4 h-9 bg-white/10 backdrop-blur-md rounded-xl hover:bg-neutral-700 text-[9px] font-bold tracking-widest transition-all text-[#86E95C] rounded-xl border-[#86E95C]/20"
+ className="flex items-center gap-3 px-4 h-9 bg-white/10 backdrop-blur-md rounded-xl hover:bg-neutral-700 text-[9px] font-medium transition-all text-[#86E95C] rounded-xl border-[#86E95C]/20"
  >
  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
  MEDIA
@@ -1331,7 +1331,7 @@ const Admin = () => {
  setNewsFormData(prev => ({ ...prev, content: html }));
  updateActiveStyles();
  }}
- className="w-full h-[50vh] bg-transparent border-none text-body text-white/90 outline-none resize-none" 
+ className="w-full h-[50vh] bg-transparent border-none text-body text-white outline-none resize-none" 
  placeholder="Start writing the news content..."
  />
  </div>
@@ -1350,9 +1350,9 @@ const Admin = () => {
  <form onSubmit={handleSaveSchedule} className="space-y-12">
  <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
  <div className="space-y-4">
- <p className="text-[10px] font-bold text-white/90 tracking-widest uppercase">Day of the Week</p>
+ <p className="text-[10px] font-medium text-white uppercase">Day of the Week</p>
  <div className="bg-white/[0.03] p-8">
- <select value={scheduleFormData.dayOfWeek || 'Monday'} onChange={e => setScheduleFormData({ ...scheduleFormData, dayOfWeek: e.target.value })} className="w-full bg-transparent border-none text-h3 font-semibold text-white outline-none tracking-tight appearance-none cursor-pointer">
+ <select value={scheduleFormData.dayOfWeek || 'Monday'} onChange={e => setScheduleFormData({ ...scheduleFormData, dayOfWeek: e.target.value })} className="w-full bg-transparent border-none text-h3 font-semibold text-white outline-none appearance-none cursor-pointer">
  {['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'].map(d => (
  <option key={d} value={d} className="bg-[#0D0D0D] text-white">{d}</option>
  ))}
@@ -1360,14 +1360,14 @@ const Admin = () => {
  </div>
  </div>
  <div className="space-y-4">
- <p className="text-[10px] font-bold text-white/90 tracking-widest uppercase">Stream Time</p>
+ <p className="text-[10px] font-medium text-white uppercase">Stream Time</p>
  <div className="bg-white/[0.03] p-8">
- <input type="time" value={scheduleFormData.time} onChange={e => setScheduleFormData({ ...scheduleFormData, time: e.target.value })} className="w-full bg-transparent border-none text-h3 font-semibold text-white outline-none tracking-tight custom-time-input" />
+ <input type="time" value={scheduleFormData.time} onChange={e => setScheduleFormData({ ...scheduleFormData, time: e.target.value })} className="w-full bg-transparent border-none text-h3 font-semibold text-white outline-none custom-time-input" />
  </div>
  </div>
  </div>
  <div className="space-y-4">
- <p className="text-[10px] font-bold text-white/90 tracking-widest uppercase">Link to Anime</p>
+ <p className="text-[10px] font-medium text-white uppercase">Link to Anime</p>
  <div className="bg-white/[0.03] p-8">
  <select 
  value={scheduleFormData.animeId} 
@@ -1375,7 +1375,7 @@ const Admin = () => {
  const selected = anime.find(a => String(a.id) === String(e.target.value));
  setScheduleFormData({ ...scheduleFormData, animeId: selected?.id || '', animeTitle: selected?.title || '' });
  }}
- className="w-full bg-transparent border-none text-h3 font-semibold text-white outline-none tracking-tight appearance-none cursor-pointer"
+ className="w-full bg-transparent border-none text-h3 font-semibold text-white outline-none appearance-none cursor-pointer"
  >
  <option value="" className="bg-[#0D0D0D] text-white">-- Select Anime --</option>
  {anime.map(a => (
@@ -1388,7 +1388,7 @@ const Admin = () => {
  ) : activeTab === 'featured' ? (
  <form onSubmit={handleSaveFeatured} className="space-y-12">
  <div className="space-y-4">
- <p className="text-[10px] font-bold text-white/90 tracking-widest uppercase">Featured Anime</p>
+ <p className="text-[10px] font-medium text-white uppercase">Featured Anime</p>
  <div className="bg-white/[0.03] p-8">
  <select 
  value={featuredFormData.animeId} 
@@ -1396,7 +1396,7 @@ const Admin = () => {
  const selected = anime.find(a => String(a.id) === String(e.target.value));
  setFeaturedFormData({ ...featuredFormData, animeId: selected?.id || '', animeTitle: selected?.title || '' });
  }}
- className="w-full bg-transparent border-none text-h3 font-semibold text-white outline-none tracking-tight appearance-none cursor-pointer"
+ className="w-full bg-transparent border-none text-h3 font-semibold text-white outline-none appearance-none cursor-pointer"
  >
  <option value="" className="bg-[#0D0D0D] text-white">-- Select Anime --</option>
  {anime.map(a => (
@@ -1406,27 +1406,27 @@ const Admin = () => {
  </div>
  </div>
  <div className="space-y-4">
- <p className="text-[10px] font-bold text-white/90 tracking-widest uppercase">Tagline / Catchphrase</p>
+ <p className="text-[10px] font-medium text-white uppercase">Tagline / Catchphrase</p>
  <div className="bg-white/[0.03] p-8">
- <input value={featuredFormData.tagline} onChange={e => setFeaturedFormData({ ...featuredFormData, tagline: e.target.value })} className="w-full bg-transparent border-none text-h3 font-semibold text-white outline-none placeholder:text-white/90 tracking-tight" placeholder="e.g. The #1 show of the season!" />
+ <input value={featuredFormData.tagline} onChange={e => setFeaturedFormData({ ...featuredFormData, tagline: e.target.value })} className="w-full bg-transparent border-none text-h3 font-semibold text-white outline-none placeholder:text-white" placeholder="e.g. The #1 show of the season!" />
  </div>
  </div>
  <div className="space-y-4">
- <p className="text-[10px] font-bold text-white/90 tracking-widest uppercase">Custom Hero Image URL (Optional)</p>
+ <p className="text-[10px] font-medium text-white uppercase">Custom Hero Image URL (Optional)</p>
  <div className="bg-white/[0.03] p-8">
- <input value={featuredFormData.customImage} onChange={e => setFeaturedFormData({ ...featuredFormData, customImage: e.target.value })} className="w-full bg-transparent border-none text-h4 font-medium text-white/90 outline-none placeholder:text-white/90" placeholder="Leave blank to use default anime poster..." />
+ <input value={featuredFormData.customImage} onChange={e => setFeaturedFormData({ ...featuredFormData, customImage: e.target.value })} className="w-full bg-transparent border-none text-h4 font-medium text-white outline-none placeholder:text-white" placeholder="Leave blank to use default anime poster..." />
  </div>
  </div>
  <div className="space-y-4">
- <p className="text-[10px] font-bold text-white/90 tracking-widest uppercase">Custom Background Video URL (Optional)</p>
+ <p className="text-[10px] font-medium text-white uppercase">Custom Background Video URL (Optional)</p>
  <div className="bg-white/[0.03] p-8">
- <input value={featuredFormData.customVideo} onChange={e => setFeaturedFormData({ ...featuredFormData, customVideo: e.target.value })} className="w-full bg-transparent border-none text-h4 font-medium text-white/90 outline-none placeholder:text-white/90" placeholder="Paste YouTube link or direct video URL (e.g. .mp4)..." />
+ <input value={featuredFormData.customVideo} onChange={e => setFeaturedFormData({ ...featuredFormData, customVideo: e.target.value })} className="w-full bg-transparent border-none text-h4 font-medium text-white outline-none placeholder:text-white" placeholder="Paste YouTube link or direct video URL (e.g. .mp4)..." />
  </div>
  </div>
  <div className="space-y-4">
- <p className="text-[10px] font-bold text-white/90 tracking-widest uppercase">Custom Title Logo URL (Optional PNG)</p>
+ <p className="text-[10px] font-medium text-white uppercase">Custom Title Logo URL (Optional PNG)</p>
  <div className="bg-white/[0.03] p-8">
- <input value={featuredFormData.customTitleLogo} onChange={e => setFeaturedFormData({ ...featuredFormData, customTitleLogo: e.target.value })} className="w-full bg-transparent border-none text-h4 font-medium text-white/90 outline-none placeholder:text-white/90" placeholder="Paste logo image URL..." />
+ <input value={featuredFormData.customTitleLogo} onChange={e => setFeaturedFormData({ ...featuredFormData, customTitleLogo: e.target.value })} className="w-full bg-transparent border-none text-h4 font-medium text-white outline-none placeholder:text-white" placeholder="Paste logo image URL..." />
  </div>
  </div>
  </form>
@@ -1440,12 +1440,12 @@ const Admin = () => {
  { label: 'STUDIO', value: formData.studio, key: 'studio', placeholder: 'e.g. Mappa' }
  ].map((field) => (
  <div key={field.key} className="space-y-4">
- <p className="text-[10px] font-bold text-white/90 tracking-widest uppercase">{field.label}</p>
+ <p className="text-[10px] font-medium text-white uppercase">{field.label}</p>
  <div className="bg-white/[0.03] p-6">
  <input 
  value={field.value} 
  onChange={e => setFormData({ ...formData, [field.key]: e.target.value })} 
- className="w-full bg-transparent border-none text-body font-medium text-white outline-none placeholder:text-white/90" 
+ className="w-full bg-transparent border-none text-body font-medium text-white outline-none placeholder:text-white" 
  placeholder={field.placeholder} 
  />
  </div>
@@ -1456,23 +1456,23 @@ const Admin = () => {
  {/* Title and Rating */}
  <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
  <div className="space-y-4">
- <p className="text-[10px] font-bold text-white/90 tracking-widest uppercase">Anime Title</p>
+ <p className="text-[10px] font-medium text-white uppercase">Anime Title</p>
  <div className="bg-white/[0.03] p-8">
  <input 
  value={formData.title} 
  onChange={e => setFormData({ ...formData, title: e.target.value })} 
- className="w-full bg-transparent border-none text-h2 font-semibold text-white outline-none placeholder:text-white/90 tracking-tight" 
+ className="w-full bg-transparent border-none text-h2 font-semibold text-white outline-none placeholder:text-white" 
  placeholder="Enter anime title..."
  />
  </div>
  </div>
  <div className="space-y-4">
- <p className="text-[10px] font-bold text-white/90 tracking-widest uppercase">Rating</p>
+ <p className="text-[10px] font-medium text-white uppercase">Rating</p>
  <div className="bg-white/[0.03] p-8">
  <input 
  value={formData.rating} 
  onChange={e => setFormData({ ...formData, rating: e.target.value })} 
- className="w-full bg-transparent border-none text-h2 font-semibold text-white outline-none placeholder:text-white/90 tabular-nums" 
+ className="w-full bg-transparent border-none text-h2 font-semibold text-white outline-none placeholder:text-white tabular-nums" 
  placeholder="0.0"
  />
  </div>
@@ -1483,46 +1483,46 @@ const Admin = () => {
  <div className="space-y-8">
  <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
  <div className="space-y-4">
- <p className="text-[10px] font-bold text-white/90 tracking-widest uppercase">Poster Image (URL)</p>
+ <p className="text-[10px] font-medium text-white uppercase">Poster Image (URL)</p>
  <div className="bg-white/[0.03] p-6">
  <input 
  value={formData.image || ''} 
  onChange={e => setFormData({ ...formData, image: e.target.value })} 
- className="w-full bg-transparent border-none text-micro font-medium text-white/90 outline-none focus:text-white transition-all" 
+ className="w-full bg-transparent border-none text-micro font-medium text-white outline-none focus:text-white transition-all" 
  placeholder="https://..."
  />
  </div>
  </div>
  <div className="space-y-4">
- <p className="text-[10px] font-bold text-white/90 tracking-widest uppercase">Hero Banner Image (Landscape)</p>
+ <p className="text-[10px] font-medium text-white uppercase">Hero Banner Image (Landscape)</p>
  <div className="bg-white/[0.03] p-6">
  <input 
  value={formData.bannerImage || ''} 
  onChange={e => setFormData({ ...formData, bannerImage: e.target.value })} 
- className="w-full bg-transparent border-none text-micro font-medium text-white/90 outline-none focus:text-white transition-all" 
+ className="w-full bg-transparent border-none text-micro font-medium text-white outline-none focus:text-white transition-all" 
  placeholder="https://..."
  />
  </div>
  </div>
  <div className="space-y-4">
- <p className="text-[10px] font-bold text-white/90 tracking-widest uppercase">Hero Banner Video (Embed URL)</p>
+ <p className="text-[10px] font-medium text-white uppercase">Hero Banner Video (Embed URL)</p>
  <div className="bg-white/[0.03] p-6">
  <input 
  value={formData.bannerVideo || ''} 
  onChange={e => setFormData({ ...formData, bannerVideo: e.target.value })} 
- className="w-full bg-transparent border-none text-micro font-medium text-white/90 outline-none focus:text-white transition-all" 
+ className="w-full bg-transparent border-none text-micro font-medium text-white outline-none focus:text-white transition-all" 
  placeholder="YouTube URL..."
  />
  </div>
  </div>
  </div>
  <div className="space-y-4">
- <p className="text-[10px] font-bold text-white/90 tracking-widest uppercase">Anime Synopsis</p>
+ <p className="text-[10px] font-medium text-white uppercase">Anime Synopsis</p>
  <div className="bg-white/[0.03] p-8">
  <textarea 
  value={formData.description} 
  onChange={e => setFormData({ ...formData, description: e.target.value })} 
- className="w-full bg-transparent border-none text-h4 font-medium text-white/90 outline-none h-48 resize-none leading-relaxed placeholder:text-white/90" 
+ className="w-full bg-transparent border-none text-h4 font-medium text-white outline-none h-48 resize-none leading-relaxed placeholder:text-white" 
  placeholder="Provide a detailed summary..."
  />
  </div>
@@ -1634,19 +1634,19 @@ const EpisodeManager = ({ anime, onBack }) => {
  <div className="space-y-8 animate-in fade-in zoom-in duration-300">
  <div className="flex items-center justify-between pb-6">
  <div className="flex items-center gap-4">
- <button onClick={onBack} className="text-white/90 hover:text-white transition-colors rounded-xl">
+ <button onClick={onBack} className="text-white hover:text-white transition-colors rounded-xl">
  <BoxyChevron direction="left" size={24} />
  </button>
  <div>
- <h2 className="text-h3 font-bold text-white tracking-tight">{anime.title} Episodes</h2>
- <p className="text-micro text-white/90 font-medium">Manage video links and descriptions</p>
+ <h2 className="text-h3 font-medium text-white">{anime.title} Episodes</h2>
+ <p className="text-micro text-white font-medium">Manage video links and descriptions</p>
  </div>
  </div>
  <button onClick={() => { 
  setEditingEp(null); 
  setFormData({ episodeNumber: episodes.length + 1, season: 1, title: '', thumbnail: '', duration: '', videoUrl: '', description: '', status: 'published' });
  setShowModal(true); 
- }} className="bg-white/10 backdrop-blur-md rounded-xl text-white/90 px-6 py-2.5 text-micro font-medium tracking-tight hover:bg-neutral-700 transition-all">
+ }} className="bg-white/10 backdrop-blur-md rounded-xl text-white px-6 py-2.5 text-micro font-medium hover:bg-neutral-700 transition-all">
  Add Episode
  </button>
  </div>
@@ -1654,7 +1654,7 @@ const EpisodeManager = ({ anime, onBack }) => {
  {loading ? (
  <div className="animate-pulse h-24 bg-white/5 backdrop-blur-md rounded-xl border border-white/10 w-full" />
  ) : episodes.length === 0 ? (
- <div className="py-12 text-center text-white/90 text-micro font-medium">No episodes found. Add one to begin.</div>
+ <div className="py-12 text-center text-white text-micro font-medium">No episodes found. Add one to begin.</div>
  ) : (
  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
  {episodes.map(ep => (
@@ -1663,24 +1663,24 @@ const EpisodeManager = ({ anime, onBack }) => {
  {ep.thumbnail ? (
  <img loading="lazy" src={ep.thumbnail} alt={ep.title} className="w-full h-full object-cover" />
  ) : (
- <div className="w-full h-full flex items-center justify-center text-white/90"><BoxyPlay size={32} /></div>
+ <div className="w-full h-full flex items-center justify-center text-white"><BoxyPlay size={32} /></div>
  )}
- <div className="absolute top-2 left-2 bg-neutral-900/80 px-2 py-1 text-[10px] font-bold text-white rounded-xl">
+ <div className="absolute top-2 left-2 bg-neutral-900/80 px-2 py-1 text-[10px] font-medium text-white rounded-xl">
  S{ep.season} E{ep.episodeNumber}
  </div>
  {ep.status === 'queued' && (
- <div className="absolute top-2 right-2 bg-orange-500/80 px-2 py-1 text-[10px] font-bold text-white rounded-xl uppercase tracking-widest">
+ <div className="absolute top-2 right-2 bg-orange-500/80 px-2 py-1 text-[10px] font-medium text-white rounded-xl uppercase">
  Queued
  </div>
  )}
  </div>
  <div>
- <h4 className="text-micro font-bold text-white/90 truncate">{ep.title || `Episode ${ep.episodeNumber}`}</h4>
- <p className="text-[10px] text-white/90 truncate">{ep.videoUrl || 'No video URL set'}</p>
+ <h4 className="text-micro font-medium text-white truncate">{ep.title || `Episode ${ep.episodeNumber}`}</h4>
+ <p className="text-[10px] text-white truncate">{ep.videoUrl || 'No video URL set'}</p>
  </div>
  <div className="flex gap-2 mt-auto pt-4">
- <button onClick={() => { setEditingEp(ep); setFormData(ep); setShowModal(true); }} className="flex-1 py-2 bg-white/5 backdrop-blur-md rounded-xl border border-white/10 text-white/90 hover:text-white hover:bg-white/10 shadow-xl text-micro font-medium transition-colors">Edit</button>
- <button onClick={() => handleDelete(ep.id)} className="flex-1 py-2 bg-white/5 backdrop-blur-md rounded-xl border border-white/10 text-white/90 hover: hover:text-white hover:bg-white/10 shadow-xl text-micro font-medium transition-colors">Delete</button>
+ <button onClick={() => { setEditingEp(ep); setFormData(ep); setShowModal(true); }} className="flex-1 py-2 bg-white/5 backdrop-blur-md rounded-xl border border-white/10 text-white hover:text-white hover:bg-white/10 shadow-xl text-micro font-medium transition-colors">Edit</button>
+ <button onClick={() => handleDelete(ep.id)} className="flex-1 py-2 bg-white/5 backdrop-blur-md rounded-xl border border-white/10 text-white hover: hover:text-white hover:bg-white/10 shadow-xl text-micro font-medium transition-colors">Delete</button>
  </div>
  </div>
  ))}
@@ -1691,57 +1691,57 @@ const EpisodeManager = ({ anime, onBack }) => {
  <div className="fixed inset-0 z-[400] bg-neutral-900/80 flex items-center justify-center p-4">
  <div className="glass-card bg-white/5 backdrop-blur-md rounded-xl border border-white/10 backdrop-blur-3xl w-full max-w-2xl max-h-[90vh] overflow-y-auto p-8 space-y-8">
  <div className="flex justify-between items-center">
- <h3 className="text-h4 font-bold text-white">{editingEp ? 'Edit Episode' : 'Add New Episode'}</h3>
- <button onClick={() => setShowModal(false)} className="text-white/90 hover:text-white"><BoxyX size={24} /></button>
+ <h3 className="text-h4 font-medium text-white">{editingEp ? 'Edit Episode' : 'Add New Episode'}</h3>
+ <button onClick={() => setShowModal(false)} className="text-white hover:text-white"><BoxyX size={24} /></button>
  </div>
  
  <form onSubmit={handleSave} className="space-y-6">
  <div className="grid grid-cols-2 gap-6">
  <div className="space-y-2">
- <label className="text-[10px] font-bold text-white/90 tracking-widest uppercase">Episode Number</label>
+ <label className="text-[10px] font-medium text-white uppercase">Episode Number</label>
  <input type="number" required value={formData.episodeNumber} onChange={e => setFormData({...formData, episodeNumber: e.target.value})} className="w-full bg-white/5 backdrop-blur-md rounded-xl border border-white/10 p-3 text-white outline-none focus:" />
  </div>
  <div className="space-y-2">
- <label className="text-[10px] font-bold text-white/90 tracking-widest uppercase">Season</label>
+ <label className="text-[10px] font-medium text-white uppercase">Season</label>
  <input type="number" required value={formData.season} onChange={e => setFormData({...formData, season: e.target.value})} className="w-full bg-white/5 backdrop-blur-md rounded-xl border border-white/10 p-3 text-white outline-none focus:" />
  </div>
  </div>
  
  <div className="space-y-2">
- <label className="text-[10px] font-bold text-white/90 tracking-widest uppercase">Episode Title</label>
+ <label className="text-[10px] font-medium text-white uppercase">Episode Title</label>
  <input type="text" required value={formData.title} onChange={e => setFormData({...formData, title: e.target.value})} className="w-full bg-white/5 backdrop-blur-md rounded-xl border border-white/10 p-3 text-white outline-none focus:" placeholder="e.g. The Beginning" />
  </div>
  
  <div className="space-y-2">
- <label className="text-[10px] font-bold text-white/90 tracking-widest uppercase">Video URL (YouTube, MP4, etc)</label>
+ <label className="text-[10px] font-medium text-white uppercase">Video URL (YouTube, MP4, etc)</label>
  <input type="text" required value={formData.videoUrl} onChange={e => setFormData({...formData, videoUrl: e.target.value})} className="w-full bg-white/5 backdrop-blur-md rounded-xl border border-white/10 p-3 text-white outline-none focus:" placeholder="https://youtube.com/watch?v=..." />
  </div>
  
  <div className="grid grid-cols-2 gap-6">
  <div className="space-y-2">
- <label className="text-[10px] font-bold text-white/90 tracking-widest uppercase">Thumbnail URL</label>
+ <label className="text-[10px] font-medium text-white uppercase">Thumbnail URL</label>
  <input type="text" value={formData.thumbnail} onChange={e => setFormData({...formData, thumbnail: e.target.value})} className="w-full bg-white/5 backdrop-blur-md rounded-xl border border-white/10 p-3 text-white outline-none focus:" placeholder="https://..." />
  </div>
  <div className="space-y-2">
- <label className="text-[10px] font-bold text-white/90 tracking-widest uppercase">Duration (Optional)</label>
+ <label className="text-[10px] font-medium text-white uppercase">Duration (Optional)</label>
  <input type="text" value={formData.duration} onChange={e => setFormData({...formData, duration: e.target.value})} className="w-full bg-white/5 backdrop-blur-md rounded-xl border border-white/10 p-3 text-white outline-none focus:" placeholder="24:00" />
  </div>
  </div>
 
  <div className="space-y-2">
- <label className="text-[10px] font-bold text-white/90 tracking-widest uppercase">Short Description</label>
+ <label className="text-[10px] font-medium text-white uppercase">Short Description</label>
  <textarea rows={4} value={formData.description} onChange={e => setFormData({...formData, description: e.target.value})} className="w-full bg-white/5 backdrop-blur-md rounded-xl border border-white/10 p-3 text-white outline-none focus: resize-none" placeholder="What happens in this episode?" />
  </div>
 
  <div className="space-y-2">
- <label className="text-[10px] font-bold text-white/90 tracking-widest uppercase">Publishing Status</label>
+ <label className="text-[10px] font-medium text-white uppercase">Publishing Status</label>
  <select value={formData.status || 'published'} onChange={e => setFormData({...formData, status: e.target.value})} className="w-full bg-[#111] p-3 text-white outline-none focus: appearance-none">
  <option value="published">Publish Instantly</option>
  <option value="queued">Queue for Later (Requires Schedule)</option>
  </select>
  </div>
 
- <button type="submit" className="w-full bg-primary text-background font-bold py-4 hover:bg-primary/90 shadow-lg shadow-primary/20 rounded-full transition-colors uppercase tracking-widest text-micro rounded-xl">
+ <button type="submit" className="w-full bg-primary text-background font-medium py-4 hover:bg-primary/90 shadow-lg shadow-primary/20 rounded-md transition-colors uppercase text-micro">
  Save Episode
  </button>
  </form>
@@ -1806,8 +1806,8 @@ const AdForm = ({ id, label, initialData }) => {
  <form onSubmit={handleSubmit} className="space-y-12 pt-16">
  <div className="flex justify-between items-center">
  <div className="space-y-1">
- <p className="text-[10px] font-bold text-white/90 tracking-widest uppercase">{label}</p>
- <h3 className="text-h4 font-medium text-white tracking-tight">Ad Placement Settings</h3>
+ <p className="text-[10px] font-medium text-white uppercase">{label}</p>
+ <h3 className="text-h4 font-medium text-white">Ad Placement Settings</h3>
  </div>
  <div className="flex items-center gap-6">
  <label className="flex items-center gap-3 cursor-pointer group">
@@ -1829,13 +1829,13 @@ const AdForm = ({ id, label, initialData }) => {
  <div className={`w-10 h-5 flex items-center p-1 transition-all ${isHidden ? 'bg-white/5 backdrop-blur-md rounded-xl border border-white/10 ' : 'bg-white/10 backdrop-blur-md rounded-xl '}`}>
  <div className={`w-2.5 h-2.5 transition-all ${isHidden ? 'bg-white/40 ml-5' : 'bg-white'}`} />
  </div>
- <span className={`text-[10px] font-bold tracking-widest transition-all ${isHidden ? 'text-white/90' : 'text-white'}`}>
+ <span className={`text-[10px] font-medium transition-all ${isHidden ? 'text-white' : 'text-white'}`}>
  {isHidden ? 'HIDDEN' : 'ACTIVE'}
  </span>
  </label>
  <button type="button" 
  onClick={handleReset}
- className="text-[10px] font-bold tracking-widest text-white/90 hover:text-white transition-all rounded-xl"
+ className="text-[10px] font-medium text-white hover:text-white transition-all rounded-xl"
  >
  RESET DEFAULT
  </button>
@@ -1844,7 +1844,7 @@ const AdForm = ({ id, label, initialData }) => {
 
  <div className={`grid grid-cols-1 md:grid-cols-2 gap-8 transition-all duration-500 ${isHidden ? 'opacity-30 grayscale pointer-events-none' : ''}`}>
  <div className="space-y-4">
- <p className="text-[10px] font-bold text-white/90 tracking-widest uppercase">Ad Image</p>
+ <p className="text-[10px] font-medium text-white uppercase">Ad Image</p>
  <div 
  onClick={() => { const i = document.createElement('input'); i.type = 'file'; i.accept = 'image/*'; i.onchange = handleUpload; i.click(); }} 
  className="group relative w-full h-[280px] bg-white/[0.03] flex flex-col items-center justify-center cursor-pointer hover:bg-white/[0.05] hover: transition-all overflow-hidden"
@@ -1854,7 +1854,7 @@ const AdForm = ({ id, label, initialData }) => {
  ) : (
  <div className="flex flex-col items-center gap-3">
  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" className="opacity-40"><path d="M21 15V19C21 19.5304 20.7893 20.0391 20.4142 20.4142C20.0391 20.7893 19.5304 21 19 21H5C4.46957 21 3.96086 20.7893 3.58579 20.4142C3.21071 20.0391 3 19.5304 3 19V15M17 8L12 3M12 3L7 8M12 3V15" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/></svg>
- <span className="text-[10px] font-bold text-white/90 tracking-widest uppercase">{uploading ? 'Syncing...' : 'Upload Campaign Image'}</span>
+ <span className="text-[10px] font-medium text-white uppercase">{uploading ? 'Syncing...' : 'Upload Campaign Image'}</span>
  </div>
  )}
  </div>
@@ -1862,27 +1862,27 @@ const AdForm = ({ id, label, initialData }) => {
 
  <div className="space-y-8 flex flex-col justify-end">
  <div className="space-y-4">
- <p className="text-[10px] font-bold text-white/90 tracking-widest uppercase">Button Link Destination</p>
+ <p className="text-[10px] font-medium text-white uppercase">Button Link Destination</p>
  <div className="bg-white/[0.03] p-6">
  <input name="buttonLink"
  defaultValue={initialData?.buttonLink || ''}
  list="site-routes"
- className="w-full bg-transparent border-none text-body font-medium text-white outline-none placeholder:text-white/90 rounded-xl" 
+ className="w-full bg-transparent border-none text-body font-medium text-white outline-none placeholder:text-white rounded-xl" 
  placeholder="/anime/..."
  />
  </div>
  </div>
  <div className="space-y-4">
- <p className="text-[10px] font-bold text-white/90 tracking-widest uppercase">Button Text</p>
+ <p className="text-[10px] font-medium text-white uppercase">Button Text</p>
  <div className="bg-white/[0.03] p-6">
  <input name="buttonText"
  defaultValue={initialData?.buttonText || 'WATCH NOW'}
- className="w-full bg-transparent border-none text-body font-medium text-white outline-none placeholder:text-white/90 tracking-widest uppercase rounded-xl" 
+ className="w-full bg-transparent border-none text-body font-medium text-white outline-none placeholder:text-white uppercase rounded-xl" 
  placeholder="WATCH NOW"
  />
  </div>
  </div>
- <button type="submit" disabled={uploading} className="w-full bg-[#86E95C] text-black font-bold py-4 hover:bg-[#86E95C]/80 transition-colors uppercase tracking-widest text-micro disabled:opacity-50 mt-auto rounded-xl">
+ <button type="submit" disabled={uploading} className="w-full bg-[#86E95C] text-black font-medium py-4 hover:bg-[#86E95C]/80 transition-colors uppercase text-micro disabled:opacity-50 mt-auto rounded-xl">
  {uploading ? 'SYNCHRONIZING...' : 'SYNCHRONIZE CAMPAIGN'}
  </button>
  </div>
@@ -2037,7 +2037,7 @@ const ReelModerator = ({ reelsList, onRefresh }) => {
  <div className="bg-white/[0.02] rounded-xl overflow-hidden">
  <table className="w-full text-left border-collapse">
  <thead>
- <tr className="bg-white/5 text-[10px] font-bold text-white/90 tracking-widest uppercase">
+ <tr className="bg-white/5 text-[10px] font-medium text-white uppercase">
  <th className="p-4 pl-6">Creator & Reel</th>
  <th className="p-4 text-center">Likes</th>
  <th className="p-4 text-center">Comments</th>
@@ -2048,15 +2048,15 @@ const ReelModerator = ({ reelsList, onRefresh }) => {
  </thead>
  <tbody className="divide-y divide-white/5">
  {reelsList?.length === 0 ? (
- <tr><td colSpan="6" className="p-8 text-center text-white/90 text-micro font-medium">No active reels to moderate.</td></tr>
+ <tr><td colSpan="6" className="p-8 text-center text-white text-micro font-medium">No active reels to moderate.</td></tr>
  ) : reelsList?.map(reel => (
  <tr key={reel.id} className="group hover:bg-white/[0.05] transition-colors">
  <td className="p-4 pl-6">
  <div className="flex items-center gap-4">
  <img loading="lazy" src={reel.userAvatar ||"https://i.pravatar.cc/150"} alt="" className="w-10 h-10 object-cover rounded-full bg-white/5 backdrop-blur-md rounded-xl border border-white/10" />
  <div className="min-w-0 max-w-[250px]">
- <p className="text-micro font-bold text-white truncate">@{reel.userName}</p>
- <p className="text-[11px] text-white/90 truncate mt-0.5" title={reel.caption || reel.animeTitle}>{reel.caption || reel.animeTitle || 'Untitled Reel'}</p>
+ <p className="text-micro font-medium text-white truncate">@{reel.userName}</p>
+ <p className="text-[11px] text-white truncate mt-0.5" title={reel.caption || reel.animeTitle}>{reel.caption || reel.animeTitle || 'Untitled Reel'}</p>
  </div>
  </div>
  </td>
@@ -2064,21 +2064,21 @@ const ReelModerator = ({ reelsList, onRefresh }) => {
  <td className="p-4 text-center text-micro text-white font-medium">{reel.comments || 0}</td>
  <td className="p-4 text-center">
  {reel.reportCount > 0 ? (
- <span className="text-micro font-bold text-white">{reel.reportCount}</span>
+ <span className="text-micro font-medium text-white">{reel.reportCount}</span>
  ) : reel.moderationStatus === 'addressed' ? (
- <span className="text-[10px] bg-white/10 backdrop-blur-md rounded-xl text-white px-2 py-1 rounded-xl font-bold uppercase tracking-widest">Checked</span>
+ <span className="text-[10px] bg-white/10 backdrop-blur-md rounded-xl text-white px-2 py-1 rounded-xl font-medium uppercase">Checked</span>
  ) : (
- <span className="text-micro font-medium text-white/90">0</span>
+ <span className="text-micro font-medium text-white">0</span>
  )}
  </td>
  <td className="p-4 text-center text-micro text-white font-medium">{reel.views || 0}</td>
  <td className="p-4 pr-6 text-right">
  <div className="flex items-center justify-end gap-3 opacity-50 group-hover:opacity-100 transition-all">
  {reel.reportCount > 0 && (
- <button onClick={() => handleDismissReports(reel.id)} className="text-[10px] font-bold tracking-widest uppercase text-white/90 hover:text-white transition-colors bg-white/5 backdrop-blur-md rounded-xl border border-white/10 hover:bg-white/10 shadow-xl px-4 py-2.5 hover:">Dismiss</button>
+ <button onClick={() => handleDismissReports(reel.id)} className="text-[10px] font-medium uppercase text-white hover:text-white transition-colors bg-white/5 backdrop-blur-md rounded-xl border border-white/10 hover:bg-white/10 shadow-xl px-4 py-2.5 hover:">Dismiss</button>
  )}
- <button onClick={() => handleOpenComments(reel)} className="text-[10px] font-bold tracking-widest uppercase text-white/90 hover:text-white transition-colors bg-white/5 backdrop-blur-md rounded-xl border border-white/10 px-4 py-2.5 hover:">Comments</button>
- <button onClick={() => setSelectedReel(reel)} className="text-[10px] font-bold tracking-widest uppercase text-white/90 hover:text-white transition-colors bg-white/5 backdrop-blur-md rounded-xl border border-white/10 hover:bg-white/10 shadow-xl px-4 py-2.5 hover:">Moderate</button>
+ <button onClick={() => handleOpenComments(reel)} className="text-[10px] font-medium uppercase text-white hover:text-white transition-colors bg-white/5 backdrop-blur-md rounded-xl border border-white/10 px-4 py-2.5 hover:">Comments</button>
+ <button onClick={() => setSelectedReel(reel)} className="text-[10px] font-medium uppercase text-white hover:text-white transition-colors bg-white/5 backdrop-blur-md rounded-xl border border-white/10 hover:bg-white/10 shadow-xl px-4 py-2.5 hover:">Moderate</button>
  </div>
  </td>
  </tr>
@@ -2096,7 +2096,7 @@ const ReelModerator = ({ reelsList, onRefresh }) => {
  {/* Video Preview Side */}
  <div className="md:w-[40%] bg-transparent flex items-center justify-center relative overflow-hidden min-h-[400px]">
  <video src={selectedReel.url} className="w-full h-full object-contain" controls autoPlay loop />
- <div className="absolute top-4 left-4 bg-neutral-900/80 px-3 py-1.5 text-micro font-bold text-white tracking-tight shadow-lg">
+ <div className="absolute top-4 left-4 bg-neutral-900/80 px-3 py-1.5 text-micro font-medium text-white shadow-lg">
  @{selectedReel.userName}
  </div>
  </div>
@@ -2104,14 +2104,14 @@ const ReelModerator = ({ reelsList, onRefresh }) => {
  {/* Controls Side */}
  <div className="md:w-[60%] p-8 md:p-12 space-y-8 overflow-y-auto flex flex-col justify-between">
  <div>
- <h3 className="text-h3 font-bold text-white tracking-tight mb-2">Moderate Reel</h3>
- <p className="text-micro text-white/90">Target: @{selectedReel.userName} -"{selectedReel.title}"</p>
- <p className="text-[12px] text-white/90 mt-4 leading-relaxed line-clamp-3 italic">"{selectedReel.description}"</p>
+ <h3 className="text-h3 font-medium text-white mb-2">Moderate Reel</h3>
+ <p className="text-micro text-white">Target: @{selectedReel.userName} -"{selectedReel.title}"</p>
+ <p className="text-[12px] text-white mt-4 leading-relaxed line-clamp-3 italic">"{selectedReel.description}"</p>
  </div>
 
  <div className="space-y-6">
  <div className="space-y-2">
- <label className="text-[10px] font-bold text-white/90 tracking-widest uppercase">Select Warning Message</label>
+ <label className="text-[10px] font-medium text-white uppercase">Select Warning Message</label>
  <select 
  value={premadeMessage} 
  onChange={e => setPremadeMessage(e.target.value)}
@@ -2124,7 +2124,7 @@ const ReelModerator = ({ reelsList, onRefresh }) => {
  </div>
 
  <div className="space-y-2">
- <label className="text-[10px] font-bold text-white/90 tracking-widest uppercase">Custom Message (Optional)</label>
+ <label className="text-[10px] font-medium text-white uppercase">Custom Message (Optional)</label>
  <input 
  type="text" 
  value={premadeMessage}
@@ -2134,7 +2134,7 @@ const ReelModerator = ({ reelsList, onRefresh }) => {
  </div>
 
  <div className="space-y-2">
- <label className="text-[10px] font-bold text-white/90 tracking-widest uppercase">Ban User Duration</label>
+ <label className="text-[10px] font-medium text-white uppercase">Ban User Duration</label>
  <select 
  value={banDuration} 
  onChange={e => setBanDuration(e.target.value)}
@@ -2148,8 +2148,8 @@ const ReelModerator = ({ reelsList, onRefresh }) => {
  </div>
 
  <div className="flex gap-4 pt-4">
- <button onClick={() => setSelectedReel(null)} className="flex-1 py-4 bg-white/5 backdrop-blur-md rounded-xl border border-white/10 hover:bg-white/10 shadow-xl text-white text-micro font-bold tracking-widest uppercase transition-all">Cancel</button>
- <button onClick={handleModerate} className="flex-1 py-4 bg-white/5 backdrop-blur-md rounded-xl border border-white/10 text-white/90 text-micro font-bold tracking-widest uppercase hover:bg-white/10 shadow-xl hover:text-white hover: transition-all">Confirm Moderation</button>
+ <button onClick={() => setSelectedReel(null)} className="flex-1 py-4 bg-white/5 backdrop-blur-md rounded-xl border border-white/10 hover:bg-white/10 shadow-xl text-white text-micro font-medium uppercase transition-all">Cancel</button>
+ <button onClick={handleModerate} className="flex-1 py-4 bg-white/5 backdrop-blur-md rounded-xl border border-white/10 text-white text-micro font-medium uppercase hover:bg-white/10 shadow-xl hover:text-white hover: transition-all">Confirm Moderation</button>
  </div>
  </div>
  </div>
@@ -2162,37 +2162,37 @@ const ReelModerator = ({ reelsList, onRefresh }) => {
  <div className="w-full max-w-2xl max-h-[80vh] flex flex-col glass-card bg-white/5 backdrop-blur-md rounded-xl border border-white/10 backdrop-blur-3xl">
  <div className="p-6 flex justify-between items-center bg-white/5">
  <div>
- <h3 className="text-h4 font-bold text-white tracking-tight">Reel Comments</h3>
- <p className="text-[10px] text-white/90 tracking-widest uppercase mt-1">Target: @{viewingCommentsReel.userName}</p>
+ <h3 className="text-h4 font-medium text-white">Reel Comments</h3>
+ <p className="text-[10px] text-white uppercase mt-1">Target: @{viewingCommentsReel.userName}</p>
  </div>
- <button onClick={() => setViewingCommentsReel(null)} className="text-white/90 hover:text-white transition-colors">
+ <button onClick={() => setViewingCommentsReel(null)} className="text-white hover:text-white transition-colors">
  <BoxyX size={24} />
  </button>
  </div>
  <div className="flex-1 overflow-y-auto p-6 space-y-4">
  {reelComments.length === 0 ? (
- <p className="text-white/90 text-micro text-center py-8">No comments on this reel.</p>
+ <p className="text-white text-micro text-center py-8">No comments on this reel.</p>
  ) : reelComments.map(comment => (
  <div key={comment.id} className="bg-white/5 backdrop-blur-md rounded-xl border border-white/10 p-4 flex gap-4 group">
  <img loading="lazy" src={comment.userAvatar} alt="User" className="w-10 h-10 object-cover rounded-full" />
  <div className="flex-1">
  <div className="flex justify-between items-start">
  <div>
- <p className="text-micro font-bold text-white flex items-center gap-2">
+ <p className="text-micro font-medium text-white flex items-center gap-2">
  {comment.userName}
- {comment.isMod && <span className="bg-blue-500 text-white text-[9px] px-1.5 py-0.5 rounded-xl uppercase tracking-widest">MOD</span>}
+ {comment.isMod && <span className="bg-blue-500 text-white text-[9px] px-1.5 py-0.5 rounded-xl uppercase">MOD</span>}
  </p>
- <p className="text-[10px] text-white/90">{comment.createdAt?.toDate().toLocaleString()}</p>
+ <p className="text-[10px] text-white">{comment.createdAt?.toDate().toLocaleString()}</p>
  </div>
  <button 
  onClick={() => handleDeleteComment(comment.id)}
- className="opacity-0 group-hover:opacity-100 text-white/90 hover:text-white transition-all p-2"
+ className="opacity-0 group-hover:opacity-100 text-white hover:text-white transition-all p-2"
  title="Delete Comment"
  >
  <BoxyX size={16} />
  </button>
  </div>
- <p className="text-micro text-white/90 mt-2">{comment.text}</p>
+ <p className="text-micro text-white mt-2">{comment.text}</p>
  </div>
  </div>
  ))}
@@ -2210,7 +2210,7 @@ const ReelModerator = ({ reelsList, onRefresh }) => {
  />
  <button 
  onClick={() => handlePostModComment(viewingCommentsReel.id)} 
- className="bg-blue-500/20 text-blue-500 px-6 text-micro font-bold uppercase hover:bg-blue-500 hover:text-white transition-all border-blue-500/20"
+ className="bg-blue-500/20 text-blue-500 px-6 text-micro font-medium uppercase hover:bg-blue-500 hover:text-white transition-all border-blue-500/20"
  >
  POST AS MOD
  </button>

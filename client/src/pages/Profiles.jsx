@@ -34,7 +34,7 @@ const Profiles = () => {
  <motion.h1
  initial={{ opacity: 0, y: -10 }}
  animate={{ opacity: 1, y: 0 }}
- className="text-[40px] md:text-[56px] font-bold text-white tracking-tighter"
+ className="text-[40px] md:text-[56px] font-medium text-white"
  >
  Who's watching?
  </motion.h1>
@@ -61,7 +61,7 @@ const Profiles = () => {
  className="w-full h-full object-cover"
  />
  </div>
- <span className="text-white/90 group-hover:text-white text-body font-semibold transition-colors tracking-tight mt-2">
+ <span className="text-white group-hover:text-white text-body font-semibold transition-colors mt-2">
  {profile.name}
  </span>
  </motion.div>
@@ -70,9 +70,9 @@ const Profiles = () => {
  {profiles.length < 5 && (
  <Link to="/profiles/create" className="flex flex-col items-center gap-5 group">
  <div className="w-28 h-28 md:w-36 md:h-36 rounded-2xl flex items-center justify-center transition-all bg-white/5 backdrop-blur-md ring-2 ring-white/10 group-hover:ring-white/80 ring-offset-4 ring-offset-background group-hover:bg-white/10 shadow-2xl">
- <BoxyPlus size={64} className="text-white/80 group-hover:text-white group-hover:scale-110 transition-all duration-300" />
+ <BoxyPlus size={64} className="text-white group-hover:text-white group-hover:scale-110 transition-all duration-300" />
  </div>
- <span className="text-white/90 group-hover:text-white text-body font-semibold transition-colors tracking-tight mt-2">
+ <span className="text-white group-hover:text-white text-body font-semibold transition-colors mt-2">
  Add Profile
  </span>
  </Link>
@@ -89,7 +89,7 @@ const Profiles = () => {
  >
  <Link
  to="/profiles/manage"
- className="text-white/90 hover:text-white px-6 py-2 hover:border-white font-semibold transition-all tracking-wide uppercase text-sm"
+ className="text-white hover:text-white px-6 py-2 hover:border-white font-semibold transition-all tracking-wide uppercase text-sm"
  >
  Manage Profiles
  </Link>

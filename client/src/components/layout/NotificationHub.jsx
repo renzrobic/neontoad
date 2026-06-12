@@ -84,7 +84,7 @@ const NotificationHub = ({ isOpen, onToggle }) => {
  if (notifs.length === 0) return null;
  return (
  <div className="mb-2">
- <h4 className="text-body font-bold text-white px-4 mb-2 tracking-tight">{title}</h4>
+ <h4 className="text-body font-medium text-white px-4 mb-2">{title}</h4>
  {notifs.map((notif) => {
  const isUnread = !notif.readBy?.includes(user?.uid);
  const cleanMessage = notif.message.replace(/^System\s*/i, '');
@@ -110,11 +110,11 @@ const NotificationHub = ({ isOpen, onToggle }) => {
  </div>
  
  <div className="flex-grow pr-6 flex flex-col justify-center min-h-[56px] space-y-0.5">
- <p className="text-body text-white/90 leading-tight">
- {notif.actorName && <span className="font-bold text-white mr-1">{notif.actorName}</span>}
+ <p className="text-body text-white leading-tight">
+ {notif.actorName && <span className="font-medium text-white mr-1">{notif.actorName}</span>}
  {cleanMessage}
  </p>
- <p className="text-micro font-bold text-primary tracking-tight">
+ <p className="text-micro font-medium text-primary">
  {notif.createdAt?.toDate ? formatDistanceToNow(notif.createdAt.toDate(), { addSuffix: true }) : 'Just now'}
  </p>
  </div>
@@ -140,7 +140,7 @@ const NotificationHub = ({ isOpen, onToggle }) => {
  >
  <BoxyBell size={22} fill={unreadCount > 0 ?"currentColor" :"none"} />
  {unreadCount > 0 && (
- <span className="absolute top-1 right-1 w-4 h-4 bg-white text-black text-[10px] font-bold flex items-center justify-center rounded-xl border-2 border-background shadow-[0_0_10px_rgba(255,255,255,0.3)]">
+ <span className="absolute top-1 right-1 w-4 h-4 bg-white text-black text-[10px] font-medium flex items-center justify-center rounded-xl border-2 border-background shadow-[0_0_10px_rgba(255,255,255,0.3)]">
  {unreadCount}
  </span>
  )}
@@ -162,11 +162,11 @@ const NotificationHub = ({ isOpen, onToggle }) => {
  >
  <div className="p-4 flex flex-col gap-4 flex-shrink-0">
  <div className="flex justify-between items-center relative">
- <h3 className="text-[24px] font-bold text-white tracking-tighter leading-none">Notifications</h3>
+ <h3 className="text-[24px] font-medium text-white leading-none">Notifications</h3>
  
  <button 
  onClick={() => setShowOptions(!showOptions)}
- className="p-1.5 hover:bg-white/10 backdrop-blur-md rounded-xl transition-colors text-white/90"
+ className="p-1.5 hover:bg-white/10 backdrop-blur-md rounded-xl transition-colors text-white"
  >
  <BoxyMoreVertical size={20} />
  </button>
@@ -194,13 +194,13 @@ const NotificationHub = ({ isOpen, onToggle }) => {
  <div className="flex gap-2">
  <button 
  onClick={() => setFilter('all')} 
- className={`px-4 py-1.5 text-body font-bold transition-colors ${filter === 'all' ? 'bg-white/10 backdrop-blur-md rounded-xl text-white' : 'text-white/90 hover:bg-white/5 backdrop-blur-md rounded-xl border border-white/10 hover:text-white'}`}
+ className={`px-4 py-1.5 text-body font-medium transition-colors ${filter === 'all' ? 'bg-white/10 backdrop-blur-md rounded-xl text-white' : 'text-white hover:bg-white/5 backdrop-blur-md rounded-xl border border-white/10 hover:text-white'}`}
  >
  All
  </button>
  <button 
  onClick={() => setFilter('unread')} 
- className={`px-4 py-1.5 text-body font-bold transition-colors ${filter === 'unread' ? 'bg-white/10 backdrop-blur-md rounded-xl text-white' : 'text-white/90 hover:bg-white/5 backdrop-blur-md rounded-xl border border-white/10 hover:text-white'}`}
+ className={`px-4 py-1.5 text-body font-medium transition-colors ${filter === 'unread' ? 'bg-white/10 backdrop-blur-md rounded-xl text-white' : 'text-white hover:bg-white/5 backdrop-blur-md rounded-xl border border-white/10 hover:text-white'}`}
  >
  Unread
  </button>
@@ -215,9 +215,9 @@ const NotificationHub = ({ isOpen, onToggle }) => {
  {renderGroup('Earlier', grouped.Earlier)}
  </>
  ) : (
- <div className="py-20 flex flex-col items-center justify-center text-white/90 gap-4">
+ <div className="py-20 flex flex-col items-center justify-center text-white gap-4">
  <BoxyBell size={48} className="opacity-20" />
- <p className="text-body font-bold text-white/90">No notifications</p>
+ <p className="text-body font-medium text-white">No notifications</p>
  </div>
  )}
  </div>
@@ -228,7 +228,7 @@ const NotificationHub = ({ isOpen, onToggle }) => {
  navigate('/notifications');
  onToggle(false);
  }}
- className="w-full py-3.5 text-body font-bold text-primary hover:bg-white/5 backdrop-blur-md rounded-xl border border-white/10 transition-all"
+ className="w-full py-3.5 text-body font-medium text-primary hover:bg-white/5 backdrop-blur-md rounded-xl border border-white/10 transition-all"
  >
  See all
  </button>

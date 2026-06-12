@@ -60,24 +60,24 @@ const Search = () => {
  <div className="mb-12">
  {q ? (
  <>
- <h1 className="text-h2 md:text-h1 font-medium text-white/90 tracking-tight mb-4">
+ <h1 className="text-h2 md:text-h1 font-medium text-white mb-4">
  Results for <span className="text-white">"{q}"</span>
  </h1>
- <p className="text-white/90 font-medium text-micro tracking-tight">
+ <p className="text-white font-medium text-micro">
  {loading ? 'Searching NeonToad database...' : `${results.length} Titles found`}
  </p>
  </>
  ) : (
- <h1 className="text-h2 md:text-h1 font-medium text-white tracking-tight mb-4">Search</h1>
+ <h1 className="text-h2 md:text-h1 font-medium text-white mb-4">Search</h1>
  )}
  </div>
 
  {!q ? (
- <div className="flex flex-col items-center justify-center py-32 text-white/90 gap-6">
+ <div className="flex flex-col items-center justify-center py-32 text-white gap-6">
  <BoxySearch size={80} className="opacity-10" />
  <div className="text-center">
- <h2 className="text-h3 font-medium text-white/90 mb-2 tracking-tight">Search NeonToad</h2>
- <p className="text-micro font-medium max-w-xs mx-auto tracking-tight">Type a title, genre, or keyword in the search bar above.</p>
+ <h2 className="text-h3 font-medium text-white mb-2">Search NeonToad</h2>
+ <p className="text-micro font-medium max-w-xs mx-auto">Type a title, genre, or keyword in the search bar above.</p>
  </div>
  </div>
  ) : loading ? (
@@ -91,11 +91,11 @@ const Search = () => {
  ))}
  </div>
  ) : (
- <div className="flex flex-col items-center justify-center py-20 text-white/90 gap-6">
+ <div className="flex flex-col items-center justify-center py-20 text-white gap-6">
  <BoxySearch size={80} className="opacity-10" />
  <div className="text-center">
- <h2 className="text-h3 font-medium text-white/90 mb-2 tracking-tight">No results found</h2>
- <p className="text-micro font-medium max-w-xs mx-auto tracking-tight">Try searching for something else or browse our full library.</p>
+ <h2 className="text-h3 font-medium text-white mb-2">No results found</h2>
+ <p className="text-micro font-medium max-w-xs mx-auto">Try searching for something else or browse our full library.</p>
  </div>
  </div>
  )}

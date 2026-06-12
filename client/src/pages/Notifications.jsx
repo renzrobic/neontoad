@@ -85,7 +85,7 @@ const NotificationsPage = () => {
  if (notifs.length === 0) return null;
  return (
  <div className="mb-6">
- <h4 className="text-h4 font-bold text-white mb-4 tracking-tight px-2">{title}</h4>
+ <h4 className="text-h4 font-medium text-white mb-4 px-2">{title}</h4>
  <div className="space-y-1">
  {notifs.map((notif) => {
  const isUnread = !notif.readBy?.includes(user?.uid);
@@ -112,11 +112,11 @@ const NotificationsPage = () => {
  </div>
  
  <div className="flex-grow pr-10 flex flex-col justify-center min-h-[64px] space-y-1">
- <p className="text-body md:text-h4 text-white/90 leading-tight">
- {notif.actorName && <span className="font-bold text-white mr-1.5">{notif.actorName}</span>}
+ <p className="text-body md:text-h4 text-white leading-tight">
+ {notif.actorName && <span className="font-medium text-white mr-1.5">{notif.actorName}</span>}
  {cleanMessage}
  </p>
- <p className="text-micro md:text-body font-bold text-primary tracking-tight">
+ <p className="text-micro md:text-body font-medium text-primary">
  {notif.createdAt?.toDate ? formatDistanceToNow(notif.createdAt.toDate(), { addSuffix: true }) : 'Just now'}
  </p>
  </div>
@@ -135,11 +135,11 @@ const NotificationsPage = () => {
  return (
  <div className="pt-24 md:pt-32 pb-20 min-h-screen bg-transparent px-6 md:px-16 max-w-4xl mx-auto">
  <div className="flex justify-between items-center mb-8 relative">
- <h1 className="text-[40px] md:text-[48px] font-bold text-white leading-none tracking-tighter">Notifications</h1>
+ <h1 className="text-[40px] md:text-[48px] font-medium text-white leading-none">Notifications</h1>
  
  <button 
  onClick={() => setShowOptions(!showOptions)}
- className="p-2 md:p-3 hover:bg-white/10 backdrop-blur-md rounded-xl transition-colors text-white/90"
+ className="p-2 md:p-3 hover:bg-white/10 backdrop-blur-md rounded-xl transition-colors text-white"
  >
  <BoxyMoreVertical size={28} />
  </button>
@@ -166,13 +166,13 @@ const NotificationsPage = () => {
  <div className="flex gap-3 mb-10">
  <button 
  onClick={() => setFilter('all')} 
- className={`px-5 py-2 text-body font-bold transition-colors ${filter === 'all' ? 'bg-white/10 backdrop-blur-md rounded-xl text-white' : 'text-white/90 hover:bg-white/5 backdrop-blur-md rounded-xl border border-white/10 hover:text-white'}`}
+ className={`px-5 py-2 text-body font-medium transition-colors ${filter === 'all' ? 'bg-white/10 backdrop-blur-md rounded-xl text-white' : 'text-white hover:bg-white/5 backdrop-blur-md rounded-xl border border-white/10 hover:text-white'}`}
  >
  All
  </button>
  <button 
  onClick={() => setFilter('unread')} 
- className={`px-5 py-2 text-body font-bold transition-colors ${filter === 'unread' ? 'bg-white/10 backdrop-blur-md rounded-xl text-white' : 'text-white/90 hover:bg-white/5 backdrop-blur-md rounded-xl border border-white/10 hover:text-white'}`}
+ className={`px-5 py-2 text-body font-medium transition-colors ${filter === 'unread' ? 'bg-white/10 backdrop-blur-md rounded-xl text-white' : 'text-white hover:bg-white/5 backdrop-blur-md rounded-xl border border-white/10 hover:text-white'}`}
  >
  Unread
  </button>
@@ -187,8 +187,8 @@ const NotificationsPage = () => {
  </>
  ) : (
  <div className="flex flex-col items-center justify-center py-32">
- <BoxyBell size={56} className="text-white/90 mb-6" />
- <p className="text-h4 text-white/90 font-bold">No notifications to show</p>
+ <BoxyBell size={56} className="text-white mb-6" />
+ <p className="text-h4 text-white font-medium">No notifications to show</p>
  </div>
  )}
  </div>

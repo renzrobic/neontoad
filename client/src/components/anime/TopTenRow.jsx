@@ -37,7 +37,7 @@ const TopTenRow = React.memo(({ title ="Top 10 Trending", data = [], loading = f
  <div className="mb-4 md:mb-8 group/row relative">
 
  <div className="px-6 md:px-16 flex items-center justify-between mb-4">
- <h2 className="text-h3 md:text-h2 font-bold text-white tracking-tight">
+ <h2 className="text-h3 md:text-h2 font-medium text-white">
  {title}
  </h2>
  </div>
@@ -45,7 +45,7 @@ const TopTenRow = React.memo(({ title ="Top 10 Trending", data = [], loading = f
  <div className="relative group/arrows">
  <button
  onClick={() => slide('left')}
- className="absolute left-0 top-0 bottom-0 z-40 bg-white/10 w-12 hidden md:group-hover/arrows:flex items-center justify-center text-h2 hover:bg-neutral-900/90 transition-all text-white"
+ className="absolute left-0 top-4 bottom-6 md:bottom-10 z-40 bg-white/10 w-12 hidden md:group-hover/arrows:flex items-center justify-center text-h2 hover:bg-neutral-900/90 transition-all text-white"
  >
  <BoxyChevron direction="left" size={32} />
  </button>
@@ -63,43 +63,43 @@ const TopTenRow = React.memo(({ title ="Top 10 Trending", data = [], loading = f
  exit={{ opacity: 0 }}
  className="flex gap-4 w-full flex-shrink-0"
  >
-                {[...Array(10)].map((_, index) => {
-                  const number = index + 1;
-                  const isFirst = index === 0;
-                  const isTen = index === 9;
-                  
-                  let marginClass = 'ml-14 md:ml-24 lg:ml-28';
-                  let scrollClass = 'scroll-ml-4 md:scroll-ml-16';
-          
-                  if (isFirst) {
-                    marginClass = 'ml-14 md:ml-32 lg:ml-40';
-                    scrollClass = 'scroll-ml-14 md:scroll-ml-32 lg:scroll-ml-40';
-                  } else if (isTen) {
-                    marginClass = 'ml-20 md:ml-36 lg:ml-44';
-                  }
+ {[...Array(10)].map((_, index) => {
+ const number = index + 1;
+ const isFirst = index === 0;
+ const isTen = index === 9;
+ 
+ let marginClass = 'ml-14 md:ml-24 lg:ml-28';
+ let scrollClass = 'scroll-ml-4 md:scroll-ml-16';
+ 
+ if (isFirst) {
+ marginClass = 'ml-[72px] md:ml-[160px] lg:ml-[192px]';
+ scrollClass = 'scroll-ml-[72px] md:scroll-ml-[160px] lg:scroll-ml-[192px]';
+ } else if (isTen) {
+ marginClass = 'ml-20 md:ml-36 lg:ml-44';
+ }
 
-                  return (
-                    <div key={index} className={`relative flex-shrink-0 ${marginClass} mr-2 md:mr-4 lg:mr-6 snap-start ${scrollClass}`}>
-                      {/* Giant Number Ghost */}
-                      <div className="absolute -left-12 md:-left-24 lg:-left-32 bottom-[-10px] md:bottom-[-20px] lg:bottom-[-30px] z-0 select-none pointer-events-none">
-                        <span 
-                          className="text-[100px] md:text-[180px] lg:text-[220px] font-black leading-none"
-                          style={{
-                            WebkitTextStroke: '3px rgba(255,255,255,0.1)',
-                            color: 'transparent',
-                            fontFamily: 'Impact, sans-serif'
-                          }}
-                        >
-                          {number}
-                        </span>
-                      </div>
-                      
-                      <div className="relative z-10 w-[calc((100vw-50px)/2.5)] md:w-[calc((100vw-216px)/5.5)] lg:w-[calc((100vw-216px)/6.5)] aspect-[2/3] overflow-hidden transition-transform duration-300 bg-white/5 backdrop-blur-md rounded-xl border border-white/10 border-none">
-                        <SkeletonCard />
-                      </div>
-                    </div>
-                  );
-                })}
+ return (
+ <div key={index} className={`relative flex-shrink-0 ${marginClass} mr-2 md:mr-4 lg:mr-6 snap-start ${scrollClass}`}>
+ {/* Giant Number Ghost */}
+ <div className="absolute -left-12 md:-left-24 lg:-left-32 bottom-[-10px] md:bottom-[-20px] lg:bottom-[-30px] z-0 select-none pointer-events-none">
+ <span 
+ className="text-[100px] md:text-[180px] lg:text-[220px] font-medium leading-none"
+ style={{
+ WebkitTextStroke: '3px rgba(255,255,255,0.1)',
+ color: 'transparent',
+ fontFamily: 'Impact, sans-serif'
+ }}
+ >
+ {number}
+ </span>
+ </div>
+ 
+ <div className="relative z-10 w-[calc((100vw-50px)/2.5)] md:w-[calc((100vw-216px)/5.5)] lg:w-[calc((100vw-216px)/6.5)] aspect-[2/3] overflow-hidden transition-transform duration-300 bg-white/5 backdrop-blur-md rounded-md border border-white/10 border-none">
+ <SkeletonCard />
+ </div>
+ </div>
+ );
+ })}
  </motion.div>
  ) : (
  <motion.div
@@ -124,17 +124,17 @@ const TopTenRow = React.memo(({ title ="Top 10 Trending", data = [], loading = f
  const textSize = 'text-[120px] md:text-[200px] lg:text-[260px]';
  const letterSpacing = isTen ? '-8px' : '-5px';
  const positioning = isTen
-   ? 'right-[calc(100%-60px)] md:right-[calc(100%-90px)] lg:right-[calc(100%-130px)]'
-   : 'right-[calc(100%-20px)] md:right-[calc(100%-35px)] lg:right-[calc(100%-45px)]';
+ ? 'right-[calc(100%-60px)] md:right-[calc(100%-90px)] lg:right-[calc(100%-130px)]'
+ : 'right-[calc(100%-20px)] md:right-[calc(100%-35px)] lg:right-[calc(100%-45px)]';
 
  let marginClass = 'ml-14 md:ml-24 lg:ml-28';
  let scrollClass = 'scroll-ml-4 md:scroll-ml-16';
 
  if (isFirst) {
-   marginClass = 'ml-14 md:ml-32 lg:ml-40';
-   scrollClass = 'scroll-ml-14 md:scroll-ml-32 lg:scroll-ml-40';
+ marginClass = 'ml-[72px] md:ml-[160px] lg:ml-[192px]';
+ scrollClass = 'scroll-ml-[72px] md:scroll-ml-[160px] lg:scroll-ml-[192px]';
  } else if (isTen) {
-   marginClass = 'ml-20 md:ml-36 lg:ml-44';
+ marginClass = 'ml-20 md:ml-36 lg:ml-44';
  }
 
  return (
@@ -165,18 +165,18 @@ const TopTenRow = React.memo(({ title ="Top 10 Trending", data = [], loading = f
 
  {/* Fade shadow between number and card */}
  {!isFirst && (
-   <div className="absolute inset-y-[-10px] left-0 w-16 md:w-24 bg-gradient-to-r from-transparent to-black/90 -translate-x-full z-[5] pointer-events-none blur-sm" />
+ <div className="absolute inset-y-[-10px] left-0 w-16 md:w-24 bg-gradient-to-r from-transparent to-black/90 -translate-x-full z-[5] pointer-events-none blur-sm" />
  )}
 
  {/* The Anime Poster */}
- <div className="relative z-10 w-[calc((100vw-50px)/2.5)] md:w-[calc((100vw-216px)/5.5)] lg:w-[calc((100vw-216px)/6.5)] aspect-[2/3] overflow-hidden transition-transform duration-300 bg-white/5 backdrop-blur-md rounded-xl border border-white/10 border-none shadow-[-20px_0_30px_rgba(0,0,0,0.9)]">
+ <div className="relative z-10 w-[calc((100vw-50px)/2.5)] md:w-[calc((100vw-216px)/5.5)] lg:w-[calc((100vw-216px)/6.5)] aspect-[2/3] overflow-hidden transition-transform duration-300 bg-white/5 backdrop-blur-md rounded-md border border-white/10 border-none shadow-[-20px_0_30px_rgba(0,0,0,0.9)]">
  {isNavigating === anime.id && (
  <div className="absolute inset-0 z-[100] bg-white/5 flex items-center justify-center backdrop-blur-[2px]">
  <div className="w-8 h-8 border-2 border-white border-t-transparent rounded-full animate-spin" />
  </div>
  )}
  {isNewEpisode && (
- <div className="absolute bottom-3 left-1/2 -translate-x-1/2 z-40 bg-primary text-black text-micro font-bold px-2.5 py-1 rounded-xl shadow-lg whitespace-nowrap group-hover:opacity-0 transition-opacity duration-300">
+ <div className="absolute bottom-3 left-1/2 -translate-x-1/2 z-40 bg-primary text-black text-micro font-medium px-2.5 py-1 rounded-xl shadow-lg whitespace-nowrap group-hover:opacity-0 transition-opacity duration-300">
  New Episode
  </div>
  )}
@@ -194,19 +194,19 @@ const TopTenRow = React.memo(({ title ="Top 10 Trending", data = [], loading = f
 
  <div className="flex flex-col gap-1.5 mb-4">
  <div className="flex items-center gap-2">
- <span className="text-white/90 font-medium text-body">{anime.rating || '0.0'}</span>
- <BoxyStar size={12} fill="currentColor" className="text-white/90" />
- <span className="text-white/90 text-micro font-medium">({anime.votes || '0'})</span>
+ <span className="text-white font-medium text-body">{anime.rating || '0.0'}</span>
+ <BoxyStar size={12} fill="currentColor" className="text-white" />
+ <span className="text-white text-micro font-medium">({anime.votes || '0'})</span>
  </div>
 
- <div className="flex flex-col text-micro font-medium text-white/90 tracking-tight">
+ <div className="flex flex-col text-micro font-medium text-white">
  <span>{anime.type || 'Series'}</span>
  <span>{anime.episodes?.toString().toLowerCase().includes('episodes') ? anime.episodes : `${anime.episodes || '0'} episodes`}</span>
  </div>
  </div>
 
  <div className="hidden md:block">
- <p className="text-white/90 text-micro leading-relaxed line-clamp-3 mb-2 font-medium">
+ <p className="text-white text-micro leading-relaxed line-clamp-3 mb-2 font-medium">
  {anime.description || 'No description available for this title.'}
  </p>
  </div>
@@ -222,7 +222,7 @@ const TopTenRow = React.memo(({ title ="Top 10 Trending", data = [], loading = f
 
  <button
  onClick={() => slide('right')}
- className="absolute right-0 top-0 bottom-0 z-40 bg-white/10 w-12 hidden md:group-hover/arrows:flex items-center justify-center text-h2 hover:bg-neutral-900/90 transition-all text-white"
+ className="absolute right-0 top-4 bottom-6 md:bottom-10 z-40 bg-white/10 w-12 hidden md:group-hover/arrows:flex items-center justify-center text-h2 hover:bg-neutral-900/90 transition-all text-white"
  >
  <BoxyChevron direction="right" size={32} />
  </button>

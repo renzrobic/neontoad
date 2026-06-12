@@ -334,76 +334,92 @@ export const AuthProvider = ({ children }) => {
  }
  }, [user, activeProfile, profiles]);
 
-  const createCustomList = useCallback(async (name) => {
-    if (!user || !activeProfile) return;
-    const customLists = activeProfile.customLists || [];
-    
-    if (customLists.some(l => l.name.toLowerCase() === name.trim().toLowerCase())) {
-      throw new Error("A list with this name already exists");
-    }
+ const createCustomList = useCallback(async (name) => {
+ if (!user || !activeProfile) return;
+ const customLists = activeProfile.customLists || [];
+ 
+ if (customLists.some(l => l.name.toLowerCase() === name.trim().toLowerCase())) {
+ throw new Error("A list with this name already exists");
+ }
 
-    const newList = {
-      id: 'list_' + Date.now().toString(),
-      name: name.trim(),
-      createdAt: Date.now(),
-      items: []
-    };
+ const newList = {
+ id: 'list_' + Date.now().toString(),
+ name: name.trim(),
+ createdAt: Date.now(),
+ items: []
+ };
 
-    const newActive = { ...activeProfile, customLists: [...customLists, newList] };
-    setActiveProfile(newActive);
-    localStorage.setItem('activeProfile', JSON.stringify(newActive));
+ const newActive = { ...activeProfile, customLists: [...customLists, newList] };
+ setActiveProfile(newActive);
+ localStorage.setItem('activeProfile', JSON.stringify(newActive));
 
-    const updatedProfiles = profiles.map(p => p.id === activeProfile.id ? newActive : p);
-    try {
-      await updateDoc(doc(db, 'users', user.uid), { profiles: updatedProfiles });
-      return newList;
-    } catch (e) {
-      console.error("Failed to create custom list:", e);
-      throw e;
-    }
-  }, [user, activeProfile, profiles]);
+ const updatedProfiles = profiles.map(p => p.id === activeProfile.id ? newActive : p);
+ try {
+ await updateDoc(doc(db, 'users', user.uid), { profiles: updatedProfiles });
+ return newList;
+ } catch (e) {
+ console.error("Failed to create custom list:", e);
+ throw e;
+ }
+ }, [user, activeProfile, profiles]);
 
-  const toggleAnimeInCustomList = useCallback(async (listId, anime) => {
-    if (!user || !activeProfile) return;
-    
-    const customLists = activeProfile.customLists || [];
-    const listIndex = customLists.findIndex(l => l.id === listId);
-    if (listIndex === -1) return;
+ const toggleAnimeInCustomList = useCallback(async (listId, anime) => {
+ if (!user || !activeProfile) return;
+ 
+ const customLists = activeProfile.customLists || [];
+ const listIndex = customLists.findIndex(l => l.id === listId);
+ if (listIndex === -1) return;
 
-    const list = customLists[listIndex];
-    const items = list.items || [];
-    const isAdded = items.some(i => i.id === anime.id);
+ const list = customLists[listIndex];
+ const items = list.items || [];
+ const isAdded = items.some(i => i.id === anime.id);
 
-    let newItems;
-    if (isAdded) {
-      newItems = items.filter(i => i.id !== anime.id);
-    } else {
-      const animeData = {
-        id: anime.id,
-        title: anime.title,
-        image: anime.image || anime.coverImage || '',
-        addedAt: Date.now()
-      };
-      newItems = [animeData, ...items];
-    }
+ let newItems;
+ if (isAdded) {
+ newItems = items.filter(i => i.id !== anime.id);
+ } else {
+ const animeData = {
+ id: anime.id,
+ title: anime.title,
+ image: anime.image || anime.coverImage || '',
+ addedAt: Date.now()
+ };
+ newItems = [animeData, ...items];
+ }
 
-    const updatedList = { ...list, items: newItems };
-    const newCustomLists = [...customLists];
-    newCustomLists[listIndex] = updatedList;
+ const updatedList = { ...list, items: newItems };
+ const newCustomLists = [...customLists];
+ newCustomLists[listIndex] = updatedList;
 
-    const newActive = { ...activeProfile, customLists: newCustomLists };
-    setActiveProfile(newActive);
-    localStorage.setItem('activeProfile', JSON.stringify(newActive));
+ const newActive = { ...activeProfile, customLists: newCustomLists };
+ setActiveProfile(newActive);
+ localStorage.setItem('activeProfile', JSON.stringify(newActive));
 
-    const updatedProfiles = profiles.map(p => p.id === activeProfile.id ? newActive : p);
-    try {
-      await updateDoc(doc(db, 'users', user.uid), { profiles: updatedProfiles });
-      return !isAdded;
-    } catch (e) {
-      console.error("Failed to toggle anime in custom list:", e);
-      throw e;
-    }
-  }, [user, activeProfile, profiles]);
+ const updatedProfiles = profiles.map(p => p.id === activeProfile.id ? newActive : p);
+ try {
+ await updateDoc(doc(db, 'users', user.uid), { profiles: updatedProfiles });
+ return !isAdded;
+ } catch (e) {
+ console.error("Failed to toggle anime in custom list:", e);
+ throw e;
+ }
+ }, [user, activeProfile, profiles]);
+
+ const updateProfileSettings = useCallback(async (settingsData) => {
+ if (!user || !activeProfile) return;
+ 
+ const newActive = { ...activeProfile, ...settingsData };
+ setActiveProfile(newActive);
+ localStorage.setItem('activeProfile', JSON.stringify(newActive));
+
+ const updatedProfiles = profiles.map(p => p.id === activeProfile.id ? newActive : p);
+ try {
+ await updateDoc(doc(db, 'users', user.uid), { profiles: updatedProfiles });
+ } catch (e) {
+ console.error("Failed to update profile settings:", e);
+ throw e;
+ }
+ }, [user, activeProfile, profiles]);
 
  const value = useMemo(() => ({
  user,
@@ -421,12 +437,13 @@ export const AuthProvider = ({ children }) => {
  toggleFollow,
  createCustomList,
  toggleAnimeInCustomList,
+ updateProfileSettings,
  login,
  register,
  logout,
  loginWithGoogle,
  loading
- }), [user, profiles, activeProfile, isBanned, isAdmin, selectProfile, addProfile, updateProfile, deleteProfile, deleteAccount, updateWatchProgress, toggleFavorite, toggleFollow, createCustomList, toggleAnimeInCustomList, login, register, logout, loginWithGoogle, loading]);
+ }), [user, profiles, activeProfile, isBanned, isAdmin, selectProfile, addProfile, updateProfile, deleteProfile, deleteAccount, updateWatchProgress, toggleFavorite, toggleFollow, createCustomList, toggleAnimeInCustomList, updateProfileSettings, login, register, logout, loginWithGoogle, loading]);
 
  return (
  <AuthContext.Provider value={value}>

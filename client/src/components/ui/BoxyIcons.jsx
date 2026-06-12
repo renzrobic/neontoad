@@ -212,7 +212,8 @@ export const BoxyMail = ({ size = 24, className ="" }) => (
 
 export const BoxyKey = ({ size = 24, className ="" }) => (
  <svg {...commonProps(size, className)}>
- <path d="M21 2l-2 2m-7.61 7.61a5.5 5.5 0 1 1-7.78 7.78 5.5 5.5 0 0 1 7.78-7.78zM15 10.5l4 4m-2.5-2.5l4 4" />
+ <path d="M2 18v3c0 .6.4 1 1 1h4v-3h3v-3h2l1.4-1.4a6.5 6.5 0 1 0-4-4Z" />
+ <circle cx="16.5" cy="7.5" r=".5" fill="currentColor" />
  </svg>
 );
 
@@ -337,18 +338,18 @@ export const BoxyMoreVertical = ({ size = 24, className ="" }) => (
  </svg>
 );
 
-export const BoxyRotateCcw = ({ size = 24, className = "" }) => (
-  <svg {...commonProps(size, className)}>
-    <path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8" />
-    <path d="M3 3v5h5" />
-  </svg>
+export const BoxyRotateCcw = ({ size = 24, className ="" }) => (
+ <svg {...commonProps(size, className)}>
+ <path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8" />
+ <path d="M3 3v5h5" />
+ </svg>
 );
 
-export const BoxyRotateCw = ({ size = 24, className = "" }) => (
-  <svg {...commonProps(size, className)}>
-    <path d="M21 12a9 9 0 1 1-9-9 9.75 9.75 0 0 1 6.74 2.74L21 8" />
-    <path d="M21 3v5h-5" />
-  </svg>
+export const BoxyRotateCw = ({ size = 24, className ="" }) => (
+ <svg {...commonProps(size, className)}>
+ <path d="M21 12a9 9 0 1 1-9-9 9.75 9.75 0 0 1 6.74 2.74L21 8" />
+ <path d="M21 3v5h-5" />
+ </svg>
 );
 
 export const BoxySkipForward = ({ size = 24, className ="", fill }) => (

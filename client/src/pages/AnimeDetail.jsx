@@ -89,21 +89,21 @@ const AnimeDetail = () => {
  } catch (err) { toast.error("Error disliking:" + err.message); }
  };
 
-  const handleFavorite = async () => {
-    if (!user) { toast.error('Please login to favorite!'); return; }
-    await toggleFavorite(anime);
-    toast.success(isFavorite ? 'Removed from your list' : 'Added to your list');
-  };
+ const handleFavorite = async () => {
+ if (!user) { toast.error('Please login to favorite!'); return; }
+ await toggleFavorite(anime);
+ toast.success(isFavorite ? 'Removed from your list' : 'Added to your list');
+ };
 
-  const handleShare = () => {
-    navigator.clipboard.writeText(window.location.href);
-    toast.success('Link copied to clipboard');
-  };
+ const handleShare = () => {
+ navigator.clipboard.writeText(window.location.href);
+ toast.success('Link copied to clipboard');
+ };
 
-  const handlePlus = () => {
-    if (!user) { toast.error('Please login to create lists!'); return; }
-    setIsListModalOpen(true);
-  };
+ const handlePlus = () => {
+ if (!user) { toast.error('Please login to create lists!'); return; }
+ setIsListModalOpen(true);
+ };
 
  useEffect(() => {
  const fetchDetails = async () => {
@@ -149,12 +149,12 @@ const AnimeDetail = () => {
 
  // Fetch Similar Anime
  if (animeData?.genres?.length > 0) {
-   const similarQuery = query(collection(db, 'anime'), where('genres', 'array-contains', animeData.genres[0]), limit(15));
-   const similarSnap = await getDocs(similarQuery);
-   const similarFetched = similarSnap.docs
-     .map(d => ({ id: d.id, ...d.data() }))
-     .filter(a => a.id !== animeData.id);
-   setSimilarAnime(similarFetched);
+ const similarQuery = query(collection(db, 'anime'), where('genres', 'array-contains', animeData.genres[0]), limit(15));
+ const similarSnap = await getDocs(similarQuery);
+ const similarFetched = similarSnap.docs
+ .map(d => ({ id: d.id, ...d.data() }))
+ .filter(a => a.id !== animeData.id);
+ setSimilarAnime(similarFetched);
  }
 
 
@@ -229,8 +229,8 @@ const AnimeDetail = () => {
  animate={{ opacity: 1, y: 0 }}
  className="max-w-4xl"
  >
- <span className="text-micro font-medium text-white/90 tracking-widest mb-4 block uppercase">Featured stream</span>
- <h1 className="text-h2 md:text-h1 font-bold text-white mb-8 tracking-tighter drop-shadow-2xl leading-none">{anime.title}</h1>
+ <span className="text-micro font-medium text-white mb-4 block uppercase">Featured stream</span>
+ <h1 className="text-h2 md:text-h1 font-medium text-white mb-8 drop-shadow-2xl leading-none">{anime.title}</h1>
  <div className="flex flex-wrap items-center gap-3 my-8">
  <button
  disabled={isNavigating}
@@ -249,7 +249,7 @@ const AnimeDetail = () => {
  }
  }, 0);
  }}
- className="w-full sm:w-auto bg-primary text-black px-8 py-3 h-12 rounded-xl font-semibold flex items-center justify-center gap-3 hover:bg-primary/90 transition-all active:scale-95 shadow-[0_0_20px_rgba(134,233,92,0.2)] text-body tracking-tight disabled:opacity-70 disabled:cursor-wait"
+ className="w-full sm:w-auto btn-accent h-12 text-body active:scale-95 shadow-[0_0_20px_rgba(134,233,92,0.2)] disabled:opacity-70 disabled:cursor-wait"
  >
  {isNavigating ? (
  <div className="w-5 h-5 border-2 border-black border-t-transparent rounded-full animate-spin" />
@@ -257,38 +257,38 @@ const AnimeDetail = () => {
  <><BoxyPlay size={18} /> Play</>
  )}
  </button>
-              
-              <button 
-                onClick={handleFavorite} 
-                className="bg-white/10 backdrop-blur-md rounded-xl text-primary h-12 w-12 rounded-xl hover:bg-neutral-700 hover:text-white transition-all flex items-center justify-center shadow-lg"
-                title={isFavorite ? "Remove from List" : "Add to List"}
-              >
-                <BoxyBookmark size={18} className={isFavorite ? 'fill-primary text-primary' : ''} />
-              </button>
-              
-              <button 
-                onClick={handlePlus} 
-                className="bg-white/10 backdrop-blur-md rounded-xl text-primary h-12 w-12 rounded-xl hover:bg-neutral-700 hover:text-white transition-all flex items-center justify-center shadow-lg"
-                title="Add to Custom List"
-              >
-                <BoxyPlus size={22} />
-              </button>
-              
-              <button 
-                onClick={handleShare} 
-                className="bg-white/10 backdrop-blur-md rounded-xl text-primary h-12 w-12 rounded-xl hover:bg-neutral-700 hover:text-white transition-all flex items-center justify-center shadow-lg"
-                title="Share"
-              >
-                <BoxyShare size={18} />
-              </button>
+ 
+ <button 
+ onClick={handleFavorite} 
+ className="bg-white/10 backdrop-blur-md rounded-full text-white h-12 w-12 hover:bg-white/20 hover:text-white transition-all flex items-center justify-center shadow-lg"
+ title={isFavorite ?"Remove from List" :"Add to List"}
+ >
+ <BoxyBookmark size={18} className={isFavorite ? 'fill-primary text-primary' : ''} />
+ </button>
+ 
+ <button 
+ onClick={handlePlus} 
+ className="bg-white/10 backdrop-blur-md rounded-full text-white h-12 w-12 hover:bg-white/20 hover:text-white transition-all flex items-center justify-center shadow-lg"
+ title="Add to Custom List"
+ >
+ <BoxyPlus size={22} />
+ </button>
+ 
+ <button 
+ onClick={handleShare} 
+ className="bg-white/10 backdrop-blur-md rounded-full text-white h-12 w-12 hover:bg-white/20 hover:text-white transition-all flex items-center justify-center shadow-lg"
+ title="Share"
+ >
+ <BoxyShare size={18} />
+ </button>
  </div>
 
  <div className="mt-8 flex flex-wrap items-center gap-4">
  <div className="flex items-center gap-2 bg-white/10 backdrop-blur-md rounded-xl px-3 py-1 rounded-xl">
- <BoxyStar className="text-white/90" size={14} fill="currentColor" />
- <span className="text-white/90 text-micro font-medium tracking-tight">{anime.rating || '0.0'} Score</span>
+ <BoxyStar className="text-white" size={14} fill="currentColor" />
+ <span className="text-white text-micro font-medium">{anime.rating || '0.0'} Score</span>
  </div>
- <div className="flex items-center gap-4 text-micro font-medium text-white/90 tracking-tight">
+ <div className="flex items-center gap-4 text-micro font-medium text-white">
  <span>{likesCount} Likes</span>
  <span>•</span>
  <span>{dislikesCount} Dislikes</span>
@@ -299,13 +299,13 @@ const AnimeDetail = () => {
 
  <div className="mt-8 space-y-4 max-w-2xl">
  <div className="relative">
- <p className={`text-white/90 leading-relaxed text-body font-medium transition-all ${!isExpanded ? 'line-clamp-2' : ''}`}>
+ <p className={`text-white leading-relaxed text-body font-medium transition-all ${!isExpanded ? 'line-clamp-2' : ''}`}>
  {anime.description}
  </p>
  {anime.description?.length > 150 && (
  <button
  onClick={() => setIsExpanded(!isExpanded)}
- className="text-white/90 hover:text-white font-semibold text-micro mt-2 flex items-center gap-2 transition-colors hover: pb-0.5 max-w-max"
+ className="text-white hover:text-white font-semibold text-micro mt-2 flex items-center gap-2 transition-colors hover: pb-0.5 max-w-max"
  >
  {isExpanded ? 'Read less' : 'Read more'}
  </button>
@@ -337,7 +337,7 @@ const AnimeDetail = () => {
  <div className="flex-grow space-y-4 min-w-0 lg:pt-1">
  <div className="space-y-4">
  <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between pb-4 gap-4">
- <h2 className="text-h3 font-semibold text-white flex items-center gap-3 tracking-tight leading-none">
+ <h2 className="text-h3 font-semibold text-white flex items-center gap-3 leading-none">
  Episodes
  </h2>
  <div className="relative group w-full sm:w-auto flex items-center">
@@ -348,11 +348,11 @@ const AnimeDetail = () => {
  <>
  <button
  onClick={() => availableSeasons.length > 1 && setIsSeasonDropdownOpen(!isSeasonDropdownOpen)}
- className={`w-full sm:w-auto bg-transparent border-none py-1 rounded-xl font-semibold transition-all text-h3 text-white outline-none text-left flex items-center gap-3 ${availableSeasons.length > 1 ? 'hover:text-white/90 cursor-pointer' : 'cursor-default'}`}
+ className={`w-full sm:w-auto bg-transparent border-none py-1 rounded-xl font-semibold transition-all text-h3 text-white outline-none text-left flex items-center gap-3 ${availableSeasons.length > 1 ? 'hover:text-white cursor-pointer' : 'cursor-default'}`}
  >
  Season {selectedSeason}
  {availableSeasons.length > 1 && (
- <BoxyChevron direction={isSeasonDropdownOpen ?"up" :"down"} size={16} className="pointer-events-none text-white/90 group-hover:text-white/90 transition-colors" />
+ <BoxyChevron direction={isSeasonDropdownOpen ?"up" :"down"} size={16} className="pointer-events-none text-white group-hover:text-white transition-colors" />
  )}
  </button>
  {isSeasonDropdownOpen && availableSeasons.length > 1 && (
@@ -368,7 +368,7 @@ const AnimeDetail = () => {
  setSelectedSeason(season);
  setIsSeasonDropdownOpen(false);
  }}
- className={`text-left px-4 py-3 text-body font-medium transition-colors ${selectedSeason === season ? 'bg-white/10 backdrop-blur-md rounded-xl text-white' : 'text-white/90 hover:bg-white/5 backdrop-blur-md rounded-xl border border-white/10 hover:text-white'}`}
+ className={`text-left px-4 py-3 text-body font-medium transition-colors ${selectedSeason === season ? 'bg-white/10 backdrop-blur-md rounded-xl text-white' : 'text-white hover:bg-white/5 backdrop-blur-md rounded-xl border border-white/10 hover:text-white'}`}
  >
  Season {season}
  </button>
@@ -389,48 +389,48 @@ const AnimeDetail = () => {
  
  return (
  <motion.div
-                key={ep.id}
-                onClick={() => {
-                  setIsNavigating(true);
-                  setTimeout(() => {
-                    navigate(`/watch/${ep.id}${history ? `?t=${Math.floor(history.time)}` : ''}`);
-                  }, 0);
-                }}
-                className="flex flex-col md:flex-row md:items-center gap-4 md:gap-6 group cursor-pointer border-t border-white/10 p-4 md:p-6 hover:bg-white/10 backdrop-blur-md rounded-xl transition-colors rounded-xl"
-              >
-                {/* Episode Number */}
-                <div className="hidden md:flex flex-shrink-0 w-8 md:w-12 justify-center items-center text-h2 font-bold text-white/60 group-hover:text-white transition-colors tracking-tighter">
-                  {ep.episodeNumber}
-                </div>
+ key={ep.id}
+ onClick={() => {
+ setIsNavigating(true);
+ setTimeout(() => {
+ navigate(`/watch/${ep.id}${history ? `?t=${Math.floor(history.time)}` : ''}`);
+ }, 0);
+ }}
+ className="flex flex-col md:flex-row md:items-center gap-4 md:gap-6 group cursor-pointer border-t border-white/10 p-4 md:p-6 hover:bg-white/10 backdrop-blur-md rounded-xl transition-colors rounded-xl"
+ >
+ {/* Episode Number */}
+ <div className="hidden md:flex flex-shrink-0 w-8 md:w-12 justify-center items-center text-h2 font-medium text-netflixLight group-hover:text-white transition-colors">
+ {ep.episodeNumber}
+ </div>
 
-                <div className="relative w-full md:w-48 lg:w-56 flex-shrink-0 aspect-video bg-white/5 backdrop-blur-md border border-white/10 rounded-none overflow-hidden shadow-xl">
-                  <img loading="lazy" src={ep.thumbnail} alt="" className="w-full h-full object-cover transition-transform duration-700" />
-                  <div className="absolute inset-0 bg-background/40 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
-                    {isNavigating ? (
-                      <div className="w-8 h-8 border-2 border-white border-t-transparent rounded-full animate-spin" />
-                    ) : (
-                      <BoxyPlay fill="white" size={40} />
-                    )}
-                  </div>
-                  {progress > 0 && (
-                    <div className="absolute bottom-0 left-0 w-full h-1 bg-neutral-700 z-40">
-                      <div className="h-full bg-primary" style={{ width: `${progress}%` }} />
-                    </div>
-                  )}
-                </div>
-                
-                <div className="flex flex-col justify-center flex-grow min-w-0 md:py-2">
-                  <div className="flex items-start justify-between gap-4 mb-1 md:mb-2">
-                    <h3 className="text-[15px] md:text-[16px] font-bold text-white tracking-tight leading-tight group-hover:text-white transition-colors">{ep.title || `Episode ${ep.episodeNumber}`}</h3>
-                    <span className="text-[13px] md:text-[14px] font-semibold text-white/90 tracking-tight flex-shrink-0">{ep.duration || '24m'}</span>
-                  </div>
-                  {ep.description && (
-                    <p className="text-[12px] md:text-[13px] text-white/60 leading-relaxed line-clamp-3 md:line-clamp-2 tracking-tight font-medium">
-                      {ep.description}
-                    </p>
-                  )}
-                </div>
-              </motion.div>
+ <div className="relative w-full md:w-48 lg:w-56 flex-shrink-0 aspect-video bg-white/5 backdrop-blur-md border border-white/10 rounded-none overflow-hidden shadow-xl">
+ <img loading="lazy" src={ep.thumbnail} alt="" className="w-full h-full object-cover transition-transform duration-700" />
+ <div className="absolute inset-0 bg-background/40 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
+ {isNavigating ? (
+ <div className="w-8 h-8 border-2 border-white border-t-transparent rounded-full animate-spin" />
+ ) : (
+ <BoxyPlay fill="white" size={40} />
+ )}
+ </div>
+ {progress > 0 && (
+ <div className="absolute bottom-0 left-0 w-full h-1 bg-neutral-700 z-40">
+ <div className="h-full bg-primary" style={{ width: `${progress}%` }} />
+ </div>
+ )}
+ </div>
+ 
+ <div className="flex flex-col justify-center flex-grow min-w-0 md:py-2">
+ <div className="flex items-start justify-between gap-4 mb-1 md:mb-2">
+ <h3 className="text-[15px] md:text-[16px] font-medium text-white leading-tight group-hover:text-white transition-colors">{ep.title || `Episode ${ep.episodeNumber}`}</h3>
+ <span className="text-[13px] md:text-[14px] font-semibold text-white flex-shrink-0">{ep.duration || '24m'}</span>
+ </div>
+ {ep.description && (
+ <p className="text-[12px] md:text-[13px] text-netflixLight leading-relaxed line-clamp-3 md:line-clamp-2 font-medium">
+ {ep.description}
+ </p>
+ )}
+ </div>
+ </motion.div>
  )}) : (
  <EmptyState message="No episodes available yet" />
  )}
@@ -446,12 +446,12 @@ const AnimeDetail = () => {
  <AnimeRow title="More Like This" data={similarAnime} />
  </div>
  )}
-      {/* Modals */}
-      <AddToListModal
-        isOpen={isListModalOpen}
-        onClose={() => setIsListModalOpen(false)}
-        anime={anime}
-      />
+ {/* Modals */}
+ <AddToListModal
+ isOpen={isListModalOpen}
+ onClose={() => setIsListModalOpen(false)}
+ anime={anime}
+ />
  </div>
  );
 };

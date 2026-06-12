@@ -80,15 +80,15 @@ const AdminAvatars = () => {
  return (
  <div className="space-y-12">
  <div className="flex justify-between items-center pb-8">
- <h2 className="text-h3 font-bold text-white tracking-tight">{editingSeries.id ? 'Edit Avatar Series' : 'New Avatar Series'}</h2>
- <button onClick={() => setEditingSeries(null)} className="text-white/90 hover:text-white transition-colors">
+ <h2 className="text-h3 font-medium text-white">{editingSeries.id ? 'Edit Avatar Series' : 'New Avatar Series'}</h2>
+ <button onClick={() => setEditingSeries(null)} className="text-white hover:text-white transition-colors">
  Cancel
  </button>
  </div>
 
  <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
  <div className="space-y-4">
- <p className="text-[10px] font-bold text-white/90 tracking-widest uppercase">Series ID (e.g., 'naruto')</p>
+ <p className="text-[10px] font-medium text-white uppercase">Series ID (e.g., 'naruto')</p>
  <input 
  type="text" 
  value={editingSeries.id} 
@@ -98,7 +98,7 @@ const AdminAvatars = () => {
  />
  </div>
  <div className="space-y-4">
- <p className="text-[10px] font-bold text-white/90 tracking-widest uppercase">Series Name</p>
+ <p className="text-[10px] font-medium text-white uppercase">Series Name</p>
  <input 
  type="text" 
  value={editingSeries.name} 
@@ -111,13 +111,13 @@ const AdminAvatars = () => {
 
  <div className="space-y-6 pt-8">
  <div className="flex justify-between items-center">
- <h3 className="text-h4 font-medium text-white tracking-tight">Characters</h3>
+ <h3 className="text-h4 font-medium text-white">Characters</h3>
  <button 
  onClick={() => setEditingSeries({
  ...editingSeries, 
  characters: [...editingSeries.characters, { id: '', name: '', image: '' }]
  })}
- className="text-micro font-bold text-white hover:text-white/90 transition-colors flex items-center gap-2"
+ className="text-micro font-medium text-white hover:text-white transition-colors flex items-center gap-2"
  >
  <BoxyPlus size={16} /> Add Character
  </button>
@@ -130,7 +130,7 @@ const AdminAvatars = () => {
  {char.image ? (
  <img src={char.image} alt="preview" className="w-full h-full object-cover" />
  ) : (
- <BoxyUser size={24} className="text-white/90" />
+ <BoxyUser size={24} className="text-white" />
  )}
  </div>
  <div className="grid grid-cols-3 gap-4 flex-grow">
@@ -173,7 +173,7 @@ const AdminAvatars = () => {
  const chars = editingSeries.characters.filter((_, i) => i !== index);
  setEditingSeries({...editingSeries, characters: chars});
  }}
- className="p-3 text-white/90 hover:text-white hover:bg-white/10 backdrop-blur-md rounded-xl transition-all flex-shrink-0"
+ className="p-3 text-white hover:text-white hover:bg-white/10 backdrop-blur-md rounded-xl transition-all flex-shrink-0"
  >
  <BoxyX size={16} />
  </button>
@@ -184,7 +184,7 @@ const AdminAvatars = () => {
 
  <div className="pt-8 flex justify-end">
  <button onClick={handleSaveSeries}
- className="bg-white/90 text-black px-10 py-3.5 text-micro font-semibold tracking-tight hover:bg-white transition-all rounded-xl"
+ className="bg-white/90 text-black px-10 py-3.5 text-micro font-semibold hover:bg-white transition-all rounded-xl"
  >
  Save Avatar Series
  </button>
@@ -198,18 +198,18 @@ const AdminAvatars = () => {
  <div className="flex justify-end">
  <button 
  onClick={() => setEditingSeries({ id: '', name: '', characters: [] })}
- className="bg-white/5 backdrop-blur-md rounded-xl border border-white/10 text-white px-8 py-3 text-micro font-bold tracking-widest uppercase hover:bg-white hover:text-black transition-all flex items-center gap-2"
+ className="bg-white/5 backdrop-blur-md rounded-xl border border-white/10 text-white px-8 py-3 text-micro font-medium uppercase hover:bg-white hover:text-black transition-all flex items-center gap-2"
  >
  <BoxyPlus size={16} /> New Series
  </button>
  </div>
 
  {loading ? (
- <div className="py-24 text-center text-white/90 font-medium">Loading Avatars...</div>
+ <div className="py-24 text-center text-white font-medium">Loading Avatars...</div>
  ) : seriesList.length === 0 ? (
  <div className="py-24 text-center bg-white/[0.02] flex flex-col items-center justify-center gap-2">
- <BoxyUser size={32} className="text-white/90 mb-2" />
- <p className="text-white/90 font-medium tracking-tight">No avatar series found</p>
+ <BoxyUser size={32} className="text-white mb-2" />
+ <p className="text-white font-medium">No avatar series found</p>
  </div>
  ) : (
  <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
@@ -217,12 +217,12 @@ const AdminAvatars = () => {
  <div key={series.id} className="group bg-white/[0.02] p-6 hover:bg-white/[0.04] transition-all">
  <div className="flex justify-between items-start mb-6">
  <div>
- <h3 className="text-h4 font-bold text-white tracking-tight">{series.name}</h3>
- <span className="text-[10px] text-white/90 font-mono tracking-wider">{series.id}</span>
+ <h3 className="text-h4 font-medium text-white">{series.name}</h3>
+ <span className="text-[10px] text-white font-mono tracking-wider">{series.id}</span>
  </div>
  <div className="flex gap-2">
- <button onClick={() => setEditingSeries(series)} className="text-micro font-medium text-white/90 hover:text-white transition-colors">Edit</button>
- <button onClick={() => handleDeleteSeries(series.id)} className="text-micro font-medium text-white/90 hover:text-white transition-colors">Del</button>
+ <button onClick={() => setEditingSeries(series)} className="text-micro font-medium text-white hover:text-white transition-colors">Edit</button>
+ <button onClick={() => handleDeleteSeries(series.id)} className="text-micro font-medium text-white hover:text-white transition-colors">Del</button>
  </div>
  </div>
  
@@ -233,7 +233,7 @@ const AdminAvatars = () => {
  </div>
  ))}
  {series.characters?.length > 5 && (
- <div className="w-10 h-10 rounded-full bg-white/5 backdrop-blur-md rounded-xl border border-white/10 flex items-center justify-center text-[10px] font-bold text-white/90">
+ <div className="w-10 h-10 rounded-full bg-white/5 backdrop-blur-md rounded-xl border border-white/10 flex items-center justify-center text-[10px] font-medium text-white">
  +{series.characters.length - 5}
  </div>
  )}

@@ -17,6 +17,8 @@ export default {
         darkSurface: "var(--color-dark-surface)",
         darkerSurface: "var(--color-darker-surface)",
         almostBlack: "var(--color-almost-black)",
+        netflixGray: "#d4d4d4",
+        netflixLight: "#e5e5e5",
       },
       fontSize: {
         'micro': ['13px', { lineHeight: '140%', fontWeight: '500' }],
@@ -33,6 +35,17 @@ export default {
       maxWidth: {
         'reading': '680px',
         'ultrawide': '1600px',
+      },
+      borderRadius: {
+        'none': '0',
+        'sm': '2px',
+        DEFAULT: '4px',
+        'md': '4px',
+        'lg': '6px',
+        'xl': '6px',
+        '2xl': '8px',
+        '3xl': '12px',
+        'full': '9999px',
       },
     },
   },

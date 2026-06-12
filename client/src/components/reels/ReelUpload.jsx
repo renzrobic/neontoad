@@ -315,7 +315,7 @@ const ReelUpload = ({ onClose, onComplete }) => {
  <div className="w-full h-full lg:h-auto lg:max-h-[90vh] lg:max-w-5xl bg-[#0a0a0a] relative flex flex-col lg:flex-row border-0 lg: lg: shadow-2xl overflow-y-auto lg:overflow-hidden">
  <button
  onClick={onClose}
- className="absolute top-6 right-6 z-[300] text-white/90 hover:text-white transition-colors p-2 bg-white/5 backdrop-blur-md rounded-xl border border-white/10 hover:bg-white/10 backdrop-blur-md rounded-xl"
+ className="absolute top-6 right-6 z-[300] text-white hover:text-white transition-colors p-2 bg-white/5 backdrop-blur-md rounded-xl border border-white/10 hover:bg-white/10 backdrop-blur-md rounded-xl"
  >
  <BoxyX size={14} />
  </button>
@@ -323,11 +323,11 @@ const ReelUpload = ({ onClose, onComplete }) => {
  {/* Studio Viewport */}
  <div className="w-full lg:w-1/2 bg-transparent flex flex-col items-center justify-center p-8 lg:p-12 lg:border-b-0 lg: relative flex-shrink-0 min-h-[500px] lg:min-h-0">
  <div className="absolute top-8 left-8 lg:top-12 lg:left-12 space-y-1 z-50">
- <h2 className="text-h4 lg:text-h3 font-medium text-white tracking-tight">Studio</h2>
- <p className="text-[10px] font-medium text-white/90 tracking-tight">Final cut</p>
+ <h2 className="text-h4 lg:text-h3 font-medium text-white">Studio</h2>
+ <p className="text-[10px] font-medium text-white">Final cut</p>
  </div>
 
- <div className="relative aspect-[9/16] w-full max-w-[260px] lg:max-w-[300px] bg-neutral-900/50 backdrop-blur-md rounded-2xl overflow-hidden shadow-2xl mt-12 lg:mt-16">
+ <div className="relative aspect-[9/16] w-full max-w-[260px] lg:max-w-[300px] bg-neutral-900/50 backdrop-blur-md rounded-xl overflow-hidden shadow-2xl mt-12 lg:mt-16">
  {file ? (
  <div className="w-full h-full relative">
  <video
@@ -343,7 +343,7 @@ const ReelUpload = ({ onClose, onComplete }) => {
  <div className="absolute inset-x-0 bottom-0 p-6 bg-gradient-to-t from-black/80 via-black/20 to-transparent z-20">
  <button
  onClick={togglePlay}
- className="w-full py-4 bg-white/5 backdrop-blur-md rounded-xl border border-white/10 rounded-xl text-[11px] font-semibold text-white hover:bg-white hover:text-background transition-all tracking-tight"
+ className="w-full py-4 bg-white/5 backdrop-blur-md rounded-xl border border-white/10 rounded-xl text-[11px] font-semibold text-white hover:bg-white hover:text-background transition-all"
  >
  {isPlaying ? 'Pause' : 'Play Preview'}
  </button>
@@ -352,12 +352,12 @@ const ReelUpload = ({ onClose, onComplete }) => {
  ) : (
  <div className="w-full h-full flex flex-col items-center justify-center gap-6 group cursor-pointer bg-white/[0.01]">
  <div className="w-16 h-16 flex items-center justify-center group-hover: transition-all rounded-full bg-white/[0.02]">
- <BoxyPlus size={24} className="text-white/90 group-hover:text-white" />
+ <BoxyPlus size={24} className="text-white group-hover:text-white" />
  </div>
  <input type="file" accept="video/*" onChange={handleFileChange} className="absolute inset-0 opacity-0 cursor-pointer rounded-xl bg-white/5 backdrop-blur-md border border-white/10" />
  <div className="text-center space-y-2">
- <p className="text-[11px] font-medium text-white tracking-tight">Import Footage</p>
- <p className="text-[9px] text-white/90 tracking-tight">Record or pick video</p>
+ <p className="text-[11px] font-medium text-white">Import Footage</p>
+ <p className="text-[9px] text-white">Record or pick video</p>
  </div>
  </div>
  )}
@@ -370,7 +370,7 @@ const ReelUpload = ({ onClose, onComplete }) => {
  {file && (
  <div className="space-y-8 lg:space-y-10">
  <div className="space-y-4">
- <div className="flex justify-between text-[10px] font-medium text-white/90 tracking-tight uppercase">
+ <div className="flex justify-between text-[10px] font-medium text-white uppercase">
  <span>Pan Focus (Landscape)</span>
  <span className="text-white font-medium">{panX}%</span>
  </div>
@@ -379,7 +379,7 @@ const ReelUpload = ({ onClose, onComplete }) => {
  onChange={(e) => setPanX(parseFloat(e.target.value))}
  className="w-full h-1 bg-white/5 backdrop-blur-md rounded-xl border border-white/10 appearance-none cursor-pointer accent-white"
  />
- <div className="flex justify-between text-[9px] text-white/90">
+ <div className="flex justify-between text-[9px] text-white">
  <span>Left</span>
  <span>Center</span>
  <span>Right</span>
@@ -387,7 +387,7 @@ const ReelUpload = ({ onClose, onComplete }) => {
  </div>
 
  <div className="space-y-4">
- <div className="flex justify-between text-[10px] font-medium text-white/90 tracking-tight uppercase">
+ <div className="flex justify-between text-[10px] font-medium text-white uppercase">
  <span>Clip Duration</span>
  <span className="text-white font-medium">{trimDuration.toFixed(1)}s</span>
  </div>
@@ -397,7 +397,7 @@ const ReelUpload = ({ onClose, onComplete }) => {
  className="w-full h-1 bg-white/5 backdrop-blur-md rounded-xl border border-white/10 appearance-none cursor-pointer accent-white"
  />
  </div> <div className="space-y-4">
- <div className="flex justify-between text-[9px] font-medium tracking-tight text-white/90">
+ <div className="flex justify-between text-[9px] font-medium text-white">
  <span>Start Time: {startOffset.toFixed(1)}s</span>
  </div>
  <div className="relative h-12 bg-transparent rounded-xl overflow-hidden">
@@ -423,13 +423,13 @@ const ReelUpload = ({ onClose, onComplete }) => {
 
  <div className="space-y-8">
  <div className="space-y-4 relative">
- <label className="text-[10px] font-medium text-white/90 tracking-tight uppercase">Link anime</label>
+ <label className="text-[10px] font-medium text-white uppercase">Link anime</label>
  <input
  type="text" value={animeTitle}
  onChange={(e) => handleAnimeSearch(e.target.value)}
  onFocus={() => animeTitle && setShowSuggestions(true)}
  placeholder="Which series?"
- className="w-full bg-transparent py-3 text-body lg:text-h4 text-white font-medium focus: focus:outline-none transition-all placeholder:text-white/90 tracking-tight"
+ className="w-full bg-transparent py-3 text-body lg:text-h4 text-white font-medium focus: focus:outline-none transition-all placeholder:text-white"
  />
  <AnimatePresence>
  {showSuggestions && suggestions.length > 0 && (
@@ -443,7 +443,7 @@ const ReelUpload = ({ onClose, onComplete }) => {
  <button
  key={anime.id}
  onClick={() => selectAnime(anime)}
- className="w-full p-4 text-left text-micro font-medium text-white/90 hover:text-white hover:bg-white/5 backdrop-blur-md rounded-xl border border-white/10 transition-all flex justify-between items-center tracking-tight"
+ className="w-full p-4 text-left text-micro font-medium text-white hover:text-white hover:bg-white/5 backdrop-blur-md rounded-xl border border-white/10 transition-all flex justify-between items-center"
  >
  {anime.title}
  <BoxyCheck size={14} className="opacity-0 group-hover:opacity-100 transition-opacity" />
@@ -455,11 +455,11 @@ const ReelUpload = ({ onClose, onComplete }) => {
  </div>
 
  <div className="space-y-4">
- <label className="text-[10px] font-medium text-white/90 tracking-tight uppercase">Caption</label>
+ <label className="text-[10px] font-medium text-white uppercase">Caption</label>
  <textarea
  value={caption} onChange={(e) => setCaption(e.target.value)}
  placeholder="What's the context?"
- className="w-full bg-white/5 backdrop-blur-md rounded-xl border border-white/10 p-5 text-white font-medium h-32 lg:h-44 focus: focus:outline-none transition-all resize-none placeholder:text-white/90 rounded-xl text-body tracking-tight"
+ className="w-full bg-white/5 backdrop-blur-md rounded-xl border border-white/10 p-5 text-white font-medium h-32 lg:h-44 focus: focus:outline-none transition-all resize-none placeholder:text-white rounded-xl text-body"
  />
  </div>
  </div>
@@ -475,13 +475,13 @@ const ReelUpload = ({ onClose, onComplete }) => {
  className="bg-white/80 h-full shadow-xl"
  />
  </div>
- <p className="text-[10px] font-semibold text-white/90 text-center animate-pulse tracking-tight">Performing its magic... {Math.round(progress)}%</p>
- <p className="text-[10px] font-medium text-yellow-500/80 text-center tracking-tight mt-1">Please do not switch tabs while processing.</p>
+ <p className="text-[10px] font-semibold text-white text-center animate-pulse">Performing its magic... {Math.round(progress)}%</p>
+ <p className="text-[10px] font-medium text-yellow-500/80 text-center mt-1">Please do not switch tabs while processing.</p>
  </div>
  ) : (
  <button onClick={handleUpload}
  disabled={!file || !caption || !animeTitle}
- className="w-full bg-white/90 text-background font-semibold py-5 hover:bg-white transition-all disabled:opacity-5 disabled:cursor-not-allowed text-micro shadow-xl tracking-tight rounded-xl"
+ className="w-full bg-white/90 text-background font-semibold py-5 hover:bg-white transition-all disabled:opacity-5 disabled:cursor-not-allowed text-micro shadow-xl rounded-xl"
  >
  Publish to feed
  </button>

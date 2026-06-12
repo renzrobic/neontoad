@@ -130,7 +130,7 @@ const ReleaseCalendar = () => {
 
  return (
  <div className="px-6 md:px-16 pt-0 pb-10 md:pb-[72px] relative z-20">
- <h2 className="text-h4 md:text-h3 font-bold text-white mb-6 tracking-tight">Upcoming Releases</h2>
+ <h2 className="text-h4 md:text-h3 font-medium text-white mb-6">Upcoming Releases</h2>
  
  <div className="relative">
  <div className="flex overflow-x-auto gap-4 md:gap-6 pb-6 scrollbar-hide snap-x">
@@ -149,8 +149,8 @@ const ReleaseCalendar = () => {
  className={`min-w-[280px] md:min-w-[320px] bg-white/[0.02] p-4 rounded-xl flex items-center gap-4 snap-start transition-all hover:bg-white/[0.05] ${schedule.animeId ? 'cursor-pointer' : ''}`}
  >
  <div className="flex flex-col items-center justify-center min-w-[60px] p-2 bg-white/5 backdrop-blur-md rounded-xl border border-white/10 rounded-xl">
- <span className="text-[#86E95C] text-[10px] font-bold uppercase tracking-widest">{dayName}</span>
- <span className="text-white text-h4 font-black tracking-tighter">{monthDay.split(' ')[1]}</span>
+ <span className="text-[#86E95C] text-[10px] font-medium uppercase">{dayName}</span>
+ <span className="text-white text-h4 font-medium">{monthDay.split(' ')[1]}</span>
  </div>
  
  {schedule.image && (
@@ -159,7 +159,7 @@ const ReleaseCalendar = () => {
  
  <div className="flex flex-col flex-1 overflow-hidden">
  <span className="text-white font-semibold text-micro truncate">{schedule.animeTitle || schedule.title}</span>
- <span className="text-white/90 text-[11px] font-medium tracking-tight mt-1">Releases at {schedule.time}</span>
+ <span className="text-white text-[11px] font-medium mt-1">Releases at {schedule.time}</span>
  </div>
  </motion.div>
  );

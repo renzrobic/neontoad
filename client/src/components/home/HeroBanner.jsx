@@ -179,76 +179,76 @@ const HeroBanner = () => {
  <div className="relative h-full px-6 md:px-16 w-full flex flex-col justify-end pt-24 md:pt-40 pb-20 md:pb-32 gap-3 md:gap-4 z-10">
  {!loading && featuredAnime && (
  <motion.div
-  initial={{ opacity: 0, x: -50 }}
-  animate={{ opacity: 1, x: 0 }}
-  transition={{ duration: 0.8, delay: 0.2 }}
-  className="z-10"
-  >
-  {featuredAnime.customTitleLogo ? (
-  <img 
-  src={featuredAnime.customTitleLogo} 
-  alt={featuredAnime.title} 
-  className="max-h-[120px] md:max-h-[160px] lg:max-h-[200px] w-auto object-contain mb-4 md:mb-6 drop-shadow-2xl" 
-  />
-  ) : (
-  <h1 className="text-5xl md:text-7xl font-extrabold text-white tracking-tighter leading-tight mb-3 md:mb-5 max-w-4xl drop-shadow-2xl">
-  {featuredAnime.title}
-  </h1>
-  )}
+ initial={{ opacity: 0, x: -50 }}
+ animate={{ opacity: 1, x: 0 }}
+ transition={{ duration: 0.8, delay: 0.2 }}
+ className="z-10"
+ >
+ {featuredAnime.customTitleLogo ? (
+ <img 
+ src={featuredAnime.customTitleLogo} 
+ alt={featuredAnime.title} 
+ className="max-h-[120px] md:max-h-[160px] lg:max-h-[200px] w-auto object-contain mb-4 md:mb-6 drop-shadow-2xl" 
+ />
+ ) : (
+ <h1 className="text-5xl md:text-7xl font-bold text-white leading-tight mb-3 md:mb-5 max-w-4xl drop-shadow-2xl">
+ {featuredAnime.title}
+ </h1>
+ )}
 
-  <div className="flex flex-wrap items-center gap-2 md:gap-4 mb-5 md:mb-6 text-sm font-semibold text-white/80 uppercase tracking-widest">
-  {featuredAnime.customTagline && (
-  <span className="text-primary font-bold">
-  {featuredAnime.customTagline}
-  </span>
-  )}
-  {featuredAnime.customTagline && <span className="text-white/30">•</span>}
-  <span>{featuredAnime.rating ? `${featuredAnime.rating} Score` : '8.9 Score'}</span>
-  <span className="text-white/30">•</span>
-  <span>{featuredAnime.type || 'Series'}</span>
-  <span className="text-white/30">•</span>
-  <span>{featuredAnime.genres?.join(', ') || 'Action'}</span>
-  </div>
+ <div className="flex flex-wrap items-center gap-2 md:gap-4 mb-5 md:mb-6 text-sm font-semibold text-white uppercase">
+ {featuredAnime.customTagline && (
+ <span className="text-primary font-medium">
+ {featuredAnime.customTagline}
+ </span>
+ )}
+ {featuredAnime.customTagline && <span className="text-netflixGray">•</span>}
+ <span>{featuredAnime.rating ? `${featuredAnime.rating} Score` : '8.9 Score'}</span>
+ <span className="text-netflixGray">•</span>
+ <span>{featuredAnime.type || 'Series'}</span>
+ <span className="text-netflixGray">•</span>
+ <span>{featuredAnime.genres?.join(', ') || 'Action'}</span>
+ </div>
 
-  <p className="text-white/70 text-base md:text-lg font-medium mb-8 md:mb-10 max-w-2xl leading-relaxed drop-shadow-md line-clamp-3">
-  {featuredAnime.description}
-  </p>
+ <p className="text-netflixLight text-base md:text-lg font-medium mb-8 md:mb-10 max-w-2xl leading-relaxed drop-shadow-md line-clamp-3">
+ {featuredAnime.description}
+ </p>
 
-  <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-4">
-  <button
-  disabled={isNavigating !== null}
-  onClick={() => {
-  setIsNavigating('watch');
-  setTimeout(() => {
-  navigate(featuredAnime.latestEpisodeId ? `/watch/${featuredAnime.latestEpisodeId}` : `/watch/${featuredAnime.id}`);
-  }, 0);
-  }}
-  className="w-full sm:w-auto group flex items-center justify-center gap-3 bg-primary text-background px-10 py-3.5 md:py-4 rounded-full hover:bg-primary/90 hover:scale-105 transition-all active:scale-95 shadow-2xl disabled:opacity-70 disabled:cursor-wait font-bold tracking-wide text-base md:text-lg"
-  >
-  {isNavigating === 'watch' ? (
-  <div className="w-6 h-6 border-2 border-background border-t-transparent rounded-full animate-spin" />
-  ) : (
-  <><BoxyPlay className="fill-background w-5 h-5 md:w-6 md:h-6" size={24} /><span>WATCH NOW</span></>
-  )}
-  </button>
-  <button
-  disabled={isNavigating !== null}
-  onClick={() => {
-  setIsNavigating('info');
-  setTimeout(() => {
-  navigate(`/anime/${featuredAnime.id}`);
-  }, 0);
-  }}
-  className="w-full sm:w-auto justify-center bg-white/5 backdrop-blur-md border border-white/20 text-white px-10 py-3.5 md:py-4 rounded-full font-bold flex items-center gap-3 hover:bg-white/10 hover:border-white/40 hover:scale-105 active:scale-95 transition-all disabled:opacity-70 disabled:cursor-wait text-base md:text-lg shadow-xl"
-  >
-  {isNavigating === 'info' ? (
-  <div className="w-6 h-6 border-2 border-white border-t-transparent rounded-full animate-spin" />
-  ) : (
-  <><BoxyInfo className="w-5 h-5 md:w-6 md:h-6" size={24} /><span>More info</span></>
-  )}
-  </button>
-  </div>
-  </motion.div>
+ <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-4">
+ <button
+ disabled={isNavigating !== null}
+ onClick={() => {
+ setIsNavigating('watch');
+ setTimeout(() => {
+ navigate(featuredAnime.latestEpisodeId ? `/watch/${featuredAnime.latestEpisodeId}` : `/watch/${featuredAnime.id}`);
+ }, 0);
+ }}
+ className="w-full sm:w-auto btn-accent px-10 py-3.5 md:py-4 text-base md:text-lg tracking-wide group disabled:opacity-70 disabled:cursor-wait active:scale-95 hover:scale-105"
+ >
+ {isNavigating === 'watch' ? (
+ <div className="w-6 h-6 border-2 border-background border-t-transparent rounded-full animate-spin" />
+ ) : (
+ <><BoxyPlay className="fill-background w-5 h-5 md:w-6 md:h-6" size={24} /><span>WATCH NOW</span></>
+ )}
+ </button>
+ <button
+ disabled={isNavigating !== null}
+ onClick={() => {
+ setIsNavigating('info');
+ setTimeout(() => {
+ navigate(`/anime/${featuredAnime.id}`);
+ }, 0);
+ }}
+ className="w-full sm:w-auto btn-secondary bg-white/5 backdrop-blur-md px-10 py-3.5 md:py-4 text-base md:text-lg tracking-wide disabled:opacity-70 disabled:cursor-wait active:scale-95 hover:scale-105"
+ >
+ {isNavigating === 'info' ? (
+ <div className="w-6 h-6 border-2 border-white border-t-transparent rounded-full animate-spin" />
+ ) : (
+ <><BoxyInfo className="w-5 h-5 md:w-6 md:h-6" size={24} /><span>More info</span></>
+ )}
+ </button>
+ </div>
+ </motion.div>
  )}
  </div>
  </div>

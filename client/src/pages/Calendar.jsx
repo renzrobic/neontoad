@@ -12,13 +12,13 @@ const Calendar = () => {
  const navigate = useNavigate();
 
  const dayThemes = {
- 'Monday': { headerBg: 'glass', headerText: 'text-white/90', cardBg: 'glass-card', accent: 'text-white/90', border: '' },
- 'Tuesday': { headerBg: 'glass', headerText: 'text-white/90', cardBg: 'glass-card', accent: 'text-white/90', border: '' },
- 'Wednesday': { headerBg: 'glass', headerText: 'text-white/90', cardBg: 'glass-card', accent: 'text-white/90', border: '' },
- 'Thursday': { headerBg: 'glass', headerText: 'text-white/90', cardBg: 'glass-card', accent: 'text-white/90', border: '' },
- 'Friday': { headerBg: 'glass', headerText: 'text-white/90', cardBg: 'glass-card', accent: 'text-white/90', border: '' },
- 'Saturday': { headerBg: 'glass', headerText: 'text-white/90', cardBg: 'glass-card', accent: 'text-white/90', border: '' },
- 'Sunday': { headerBg: 'glass', headerText: 'text-white/90', cardBg: 'glass-card', accent: 'text-white/90', border: '' },
+ 'Monday': { headerBg: 'glass', headerText: 'text-white', cardBg: 'glass-card', accent: 'text-white', border: '' },
+ 'Tuesday': { headerBg: 'glass', headerText: 'text-white', cardBg: 'glass-card', accent: 'text-white', border: '' },
+ 'Wednesday': { headerBg: 'glass', headerText: 'text-white', cardBg: 'glass-card', accent: 'text-white', border: '' },
+ 'Thursday': { headerBg: 'glass', headerText: 'text-white', cardBg: 'glass-card', accent: 'text-white', border: '' },
+ 'Friday': { headerBg: 'glass', headerText: 'text-white', cardBg: 'glass-card', accent: 'text-white', border: '' },
+ 'Saturday': { headerBg: 'glass', headerText: 'text-white', cardBg: 'glass-card', accent: 'text-white', border: '' },
+ 'Sunday': { headerBg: 'glass', headerText: 'text-white', cardBg: 'glass-card', accent: 'text-white', border: '' },
  };
 
  useEffect(() => {
@@ -109,10 +109,10 @@ const Calendar = () => {
  <div className="pt-24 min-h-screen bg-transparent px-6 md:px-16 pb-20">
  <div className="mb-12 flex items-end justify-between">
  <div className="space-y-2">
- <h1 className="text-h2 md:text-h1 font-semibold text-white flex items-center tracking-tight">
+ <h1 className="text-h2 md:text-h1 font-semibold text-white flex items-center">
  Release Calendar
  </h1>
- <p className="text-white/90 font-medium text-body md:text-h4 tracking-tight">Never miss a beat of your favorite weekly episodes.</p>
+ <p className="text-white font-medium text-body md:text-h4">Never miss a beat of your favorite weekly episodes.</p>
  </div>
  </div>
 
@@ -127,7 +127,7 @@ const Calendar = () => {
  transition={{ delay: idx * 0.1 }}
  className="flex flex-col gap-3"
  >
- <div className={`${theme.headerBg} ${theme.headerText} p-3 text-center font-medium text-micro transition-all cursor-default tracking-tight`}>
+ <div className={`${theme.headerBg} ${theme.headerText} p-3 text-center font-medium text-micro transition-all cursor-default `}>
  {day}
  </div>
  <div className="flex flex-col gap-3">
@@ -140,19 +140,19 @@ const Calendar = () => {
  <div className="h-28 relative overflow-hidden">
  <img loading="lazy" src={anime.image} className="w-full h-full object-cover transition-transform duration-700" alt="" />
  <div className="absolute inset-0 bg-gradient-to-t from-background/90 to-transparent" />
- <div className="absolute top-2 right-2 bg-white/10 backdrop-blur-md rounded-xl text-white backdrop-blur-md font-medium text-[10px] px-2 py-1 tracking-tight">
+ <div className="absolute top-2 right-2 bg-white/10 backdrop-blur-md rounded-xl text-white backdrop-blur-md font-medium text-[10px] px-2 py-1">
  New Episode
  </div>
  </div>
  <div className="p-3.5 space-y-2">
  <div className={`flex items-center gap-1.5 ${theme.accent} group-hover:text-white transition-colors`}>
  <BoxyClock size={12} />
- <span className="text-[11px] font-medium tracking-tight">{anime.broadcastTime || '12:00'}</span>
+ <span className="text-[11px] font-medium">{anime.broadcastTime || '12:00'}</span>
  </div>
- <h3 className="font-medium text-micro text-white/90 line-clamp-1 group-hover:text-white transition-colors tracking-tight">{anime.title}</h3>
+ <h3 className="font-medium text-micro text-white line-clamp-1 group-hover:text-white transition-colors">{anime.title}</h3>
  <div className="flex items-center justify-between pt-2">
- <span className="text-[10px] font-medium text-white/90 tracking-tight">{anime.episodes ? `EP ${anime.episodes.split(' ')[0]}` : 'Ongoing'}</span>
- <BoxyChevron size={12} className="text-white/90 group-hover:text-white transition-colors group-hover:translate-x-1" />
+ <span className="text-[10px] font-medium text-white">{anime.episodes ? `EP ${anime.episodes.split(' ')[0]}` : 'Ongoing'}</span>
+ <BoxyChevron size={12} className="text-white group-hover:text-white transition-colors group-hover:translate-x-1" />
  </div>
  </div>
  </div>
@@ -160,7 +160,7 @@ const Calendar = () => {
  {(!schedule[day] || schedule[day].length === 0) && (
  <div className={`flex flex-col items-center justify-center py-20 ${theme.cardBg}/20 text-white/5 group`}>
  <BoxyClock size={32} className="opacity-10 mb-2" />
- <span className="text-[10px] font-medium opacity-20 tracking-tight">Empty</span>
+ <span className="text-[10px] font-medium opacity-20">Empty</span>
  </div>
  )}
  </div>

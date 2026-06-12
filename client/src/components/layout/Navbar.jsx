@@ -34,7 +34,7 @@ const Navbar = () => {
  };
 
  return (
- <nav className={`fixed top-0 w-full z-[100] transition-all duration-500 pt-[env(safe-area-inset-top)] ${isScrolled ? 'bg-background/80 backdrop-blur-2xl' : 'bg-gradient-to-b from-background/80 to-transparent'}`}>
+ <nav className={`fixed top-0 w-full z-[100] transition-all duration-500 pt-[env(safe-area-inset-top)] ${isScrolled ? 'bg-background/90 backdrop-blur-2xl' : 'bg-gradient-to-b from-black/80 via-black/40 to-transparent'}`}>
  {/* Mobile menu backdrop */}
  {isMobileMenuOpen && (
  <div
@@ -42,7 +42,7 @@ const Navbar = () => {
  onClick={() => setIsMobileMenuOpen(false)}
  />
  )}
- <div className={`w-full px-6 md:px-16 flex items-center justify-between transition-all duration-500 ${isScrolled ? 'py-2 md:py-3' : 'py-4 md:py-6'}`}>
+ <div className={`w-full px-6 md:px-16 flex items-center justify-between transition-all duration-500 ${isScrolled ? 'py-1.5 md:py-2' : 'py-3 md:py-4'}`}>
  <div className="flex items-center gap-12">
  <Link
  to="/"
@@ -51,13 +51,14 @@ const Navbar = () => {
  <img loading="lazy"
  src={logoFull}
  alt="NeonToad"
- className={`h-[40px] md:h-[64px] w-auto transition-all duration-500 ${isSearchOpen ? 'md:flex' : ''}`}
+ className={`h-[28px] md:h-[36px] w-auto transition-all duration-500 ${isSearchOpen ? 'md:flex' : ''}`}
  />
  </Link>
- <div className="hidden md:flex items-center gap-10 text-sm font-semibold tracking-wide text-white/70">
+ <div className="hidden md:flex items-center gap-6 lg:gap-10 text-sm font-semibold tracking-wide text-netflixLight">
  <Link to="/" className="hover:text-white transition-colors">Home</Link>
  <Link to="/library" className="hover:text-white transition-colors">Library</Link>
  <Link to="/calendar" className="hover:text-white transition-colors">Calendar</Link>
+ <Link to="/mylist" className="hover:text-white transition-colors">My List</Link>
  <Link to="/reel" className="hover:text-white transition-colors">Clips</Link>
  </div>
  </div>
@@ -87,7 +88,7 @@ const Navbar = () => {
  onBlur={() => {
  if (!searchQuery) setIsSearchOpen(false);
  }}
- className="bg-white/10 backdrop-blur-2xl px-4 py-2 text-body font-medium focus: outline-none w-[160px] md:w-[280px] tracking-tight rounded-xl shadow-2xl"
+ className="bg-white/10 backdrop-blur-2xl px-4 py-2 text-body font-medium focus: outline-none w-[160px] md:w-[280px] rounded-xl shadow-2xl"
  />
  </motion.div>
  )}
@@ -122,7 +123,7 @@ const Navbar = () => {
  )}
 
  {/* Clips Shortcut (Mobile Only) */}
- <Link to="/reel" className="md:hidden p-2 text-white/90 hover:text-white transition-colors">
+ <Link to="/reel" className="md:hidden p-2 text-white hover:text-white transition-colors">
  <BoxyReels size={22} />
  </Link>
 
@@ -135,7 +136,7 @@ const Navbar = () => {
  className="hidden md:block"
  onClick={() => {}}
  >
- <div className={`w-9 h-9 md:w-10 md:h-10 rounded-xl overflow-hidden transition-all cursor-pointer border-transparent hover:`}>
+ <div className={`w-8 h-8 md:w-9 md:h-9 rounded-md overflow-hidden transition-all cursor-pointer border-transparent hover:`}>
  <SafeImage
  src={activeProfile?.avatarUrl ||"https://wallpapers-clan.com/wp-content/uploads/2023/02/jujutsu-kaisen-satoru-gojo-pfp-1.jpg"}
  alt="Profile"
@@ -147,24 +148,24 @@ const Navbar = () => {
  {/* Desktop Dropdown Menu */}
  <div className="hidden md:block absolute top-full right-0 mt-4 w-64 bg-neutral-900/80 backdrop-blur-3xl shadow-2xl opacity-0 invisible group-hover/profile:opacity-100 group-hover/profile:visible transition-all duration-300 z-[110] rounded-xl">
  <div className="p-4">
- <p className="text-body font-bold text-white truncate tracking-tight">{activeProfile?.name || 'User'}</p>
- <p className="text-micro font-medium text-white/90 truncate tracking-tight mt-0.5">{user.email}</p>
+ <p className="text-body font-medium text-white truncate">{activeProfile?.name || 'User'}</p>
+ <p className="text-micro font-medium text-white truncate mt-0.5">{user.email}</p>
  </div>
  <div className="p-2 space-y-1">
  {isAdmin && (
- <Link to="/admin" className="flex items-center gap-3 px-3 py-2 text-body font-medium text-[#86E95C] hover:bg-white/5 backdrop-blur-md rounded-xl border border-white/10 rounded-xl transition-colors tracking-tight">
+ <Link to="/admin" className="flex items-center gap-3 px-3 py-2 text-body font-medium text-[#86E95C] hover:bg-white/5 backdrop-blur-md rounded-xl border border-white/10 rounded-xl transition-colors">
  <BoxyShield size={16} /> Admin Dashboard
  </Link>
  )}
- <Link to="/profiles" className="flex items-center gap-3 px-3 py-2 text-body font-medium hover:bg-white/5 backdrop-blur-md rounded-xl border border-white/10 rounded-xl transition-colors tracking-tight">
+ <Link to="/profiles" className="flex items-center gap-3 px-3 py-2 text-body font-medium hover:bg-white/5 backdrop-blur-md rounded-xl border border-white/10 rounded-xl transition-colors">
  <BoxyUser size={16} /> Switch profile
  </Link>
- <Link to="/account" className="flex items-center gap-3 px-3 py-2 text-body font-medium hover:bg-white/5 backdrop-blur-md rounded-xl border border-white/10 rounded-xl transition-colors tracking-tight">
+ <Link to="/account" className="flex items-center gap-3 px-3 py-2 text-body font-medium hover:bg-white/5 backdrop-blur-md rounded-xl border border-white/10 rounded-xl transition-colors">
  <BoxyShield size={16} /> Account settings
  </Link>
  <button
  onClick={handleLogout}
- className="w-full flex items-center gap-3 px-3 py-2 text-body font-medium text-white/90 hover:text-white hover:bg-white/5 backdrop-blur-md rounded-xl border border-white/10 rounded-xl transition-colors tracking-tight"
+ className="w-full flex items-center gap-3 px-3 py-2 text-body font-medium text-white hover:text-white hover:bg-white/5 backdrop-blur-md rounded-xl border border-white/10 rounded-xl transition-colors"
  >
  <BoxyLogOut size={16} /> Sign out
  </button>
@@ -172,7 +173,7 @@ const Navbar = () => {
  </div>
 
  {/* Mobile hamburger button */}
- <button className="md:hidden p-2 text-white/90 hover:text-white transition-colors rounded-xl"
+ <button className="md:hidden p-2 text-white hover:text-white transition-colors rounded-xl"
  onClick={() => {
  const newVal = !isMobileMenuOpen;
  setIsMobileMenuOpen(newVal);
@@ -205,32 +206,33 @@ const Navbar = () => {
  >
  {user && (
  <div className="p-6 bg-white/5 backdrop-blur-md rounded-xl border border-white/10 flex items-center gap-4">
- <div className="w-12 h-12 overflow-hidden">
+ <div className="w-12 h-12 overflow-hidden rounded-md">
  <img loading="lazy" src={activeProfile?.avatarUrl} className="w-full h-full object-cover" alt="" />
  </div>
  <div>
- <p className="text-micro font-medium text-white tracking-tight">{activeProfile?.name}</p>
- <p className="text-micro font-medium text-white/90 tracking-tight">Active profile</p>
+ <p className="text-micro font-medium text-white">{activeProfile?.name}</p>
+ <p className="text-micro font-medium text-white">Active profile</p>
  </div>
  </div>
  )}
  <div className="flex flex-col p-8 gap-8">
- <Link to="/" onClick={() => setIsMobileMenuOpen(false)} className="text-h4 font-medium hover:text-white transition-colors tracking-tight">Home</Link>
- <Link to="/library" onClick={() => setIsMobileMenuOpen(false)} className="text-h4 font-medium hover:text-white transition-colors tracking-tight">Library</Link>
- <Link to="/calendar" onClick={() => setIsMobileMenuOpen(false)} className="text-h4 font-medium hover:text-white transition-colors tracking-tight">Calendar</Link>
- <Link to="/reel" onClick={() => setIsMobileMenuOpen(false)} className="text-h4 font-medium hover:text-white transition-colors tracking-tight">Clips</Link>
+ <Link to="/" onClick={() => setIsMobileMenuOpen(false)} className="text-h4 font-medium hover:text-white transition-colors">Home</Link>
+ <Link to="/library" onClick={() => setIsMobileMenuOpen(false)} className="text-h4 font-medium hover:text-white transition-colors">Library</Link>
+ <Link to="/calendar" onClick={() => setIsMobileMenuOpen(false)} className="text-h4 font-medium hover:text-white transition-colors">Calendar</Link>
+ <Link to="/mylist" onClick={() => setIsMobileMenuOpen(false)} className="text-h4 font-medium hover:text-white transition-colors">My List</Link>
+ <Link to="/reel" onClick={() => setIsMobileMenuOpen(false)} className="text-h4 font-medium hover:text-white transition-colors">Clips</Link>
  <hr className="" />
  {user ? (
  <div className="flex flex-col gap-8">
  {isAdmin && (
- <Link to="/admin" onClick={() => setIsMobileMenuOpen(false)} className="text-h4 font-medium text-[#86E95C] hover:text-[#86E95C]/80 transition-colors tracking-tight">Admin Dashboard</Link>
+ <Link to="/admin" onClick={() => setIsMobileMenuOpen(false)} className="text-h4 font-medium text-[#86E95C] hover:text-[#86E95C]/80 transition-colors">Admin Dashboard</Link>
  )}
- <Link to="/account" onClick={() => setIsMobileMenuOpen(false)} className="text-h4 font-medium hover:text-white transition-colors tracking-tight">Account settings</Link>
- <Link to="/profiles" onClick={() => setIsMobileMenuOpen(false)} className="text-h4 font-medium hover:text-white transition-colors tracking-tight">Switch profile</Link>
- <button onClick={handleLogout} className="text-left text-h4 font-medium text-white/90 hover:text-white transition-colors tracking-tight rounded-xl">Sign out</button>
+ <Link to="/account" onClick={() => setIsMobileMenuOpen(false)} className="text-h4 font-medium hover:text-white transition-colors">Account settings</Link>
+ <Link to="/profiles" onClick={() => setIsMobileMenuOpen(false)} className="text-h4 font-medium hover:text-white transition-colors">Switch profile</Link>
+ <button onClick={handleLogout} className="text-left text-h4 font-medium text-white hover:text-white transition-colors rounded-xl">Sign out</button>
  </div>
  ) : (
- <Link to="/login" onClick={() => setIsMobileMenuOpen(false)} className="text-h4 font-medium text-white tracking-tight">Login / register</Link>
+ <Link to="/login" onClick={() => setIsMobileMenuOpen(false)} className="text-h4 font-medium text-white">Login / register</Link>
  )}
  </div>
  </motion.div>

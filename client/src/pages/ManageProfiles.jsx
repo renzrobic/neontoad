@@ -15,7 +15,7 @@ const ManageProfiles = () => {
  <motion.h1
  initial={{ opacity: 0, y: -10 }}
  animate={{ opacity: 1, y: 0 }}
- className="text-[40px] md:text-[56px] font-bold text-white tracking-tighter"
+ className="text-[40px] md:text-[56px] font-medium text-white"
  >
  Manage profiles
  </motion.h1>
@@ -40,7 +40,7 @@ const ManageProfiles = () => {
  </div>
  </div>
  </div>
- <span className="text-white/90 group-hover:text-white text-body font-semibold transition-colors tracking-tight mt-2">
+ <span className="text-white group-hover:text-white text-body font-semibold transition-colors mt-2">
  {profile.name}
  </span>
  </div>
@@ -49,9 +49,9 @@ const ManageProfiles = () => {
  {profiles.length < 5 && (
  <Link to="/profiles/create" className="flex flex-col items-center gap-5 group">
  <div className="w-28 h-28 md:w-36 md:h-36 rounded-xl flex items-center justify-center transition-all group-hover:bg-white/5 backdrop-blur-md rounded-xl border border-white/10 border-2 group-hover:ring-white/80">
- <BoxyPlus size={64} className="text-white/90 group-hover:text-white transition-colors" />
+ <BoxyPlus size={64} className="text-white group-hover:text-white transition-colors" />
  </div>
- <span className="text-white/90 group-hover:text-white text-body font-semibold transition-colors tracking-tight mt-2">
+ <span className="text-white group-hover:text-white text-body font-semibold transition-colors mt-2">
  Add Profile
  </span>
  </Link>
@@ -66,7 +66,7 @@ const ManageProfiles = () => {
  >
  <button
  onClick={() => navigate('/profiles')}
- className="bg-white text-black px-8 py-2 font-bold hover:bg-white/90 transition-all text-sm tracking-wide uppercase rounded-xl shadow-[0_0_20px_rgba(255,255,255,0.1)]"
+ className="bg-white text-black px-8 py-2 font-medium hover:bg-white/90 transition-all text-sm tracking-wide uppercase rounded-xl shadow-[0_0_20px_rgba(255,255,255,0.1)]"
  >
  Finish Configuration
  </button>

@@ -54,10 +54,10 @@ const Login = () => {
  >
  <div className="text-center mb-8 md:mb-10">
  <div className="mb-6 md:mb-8 flex justify-center items-center">
- <img loading="lazy" src={logoFull} alt="NeonToad" className="h-24 md:h-32 w-auto object-contain transition-all duration-500" />
+ <img loading="lazy" src={logoFull} alt="NeonToad" className="h-12 md:h-16 w-auto object-contain transition-all duration-500" />
  </div>
  <div className="w-full h-px bg-white/5 backdrop-blur-md rounded-xl border border-white/10 mb-6 md:mb-8" />
- <h1 className="text-h1 text-white tracking-tight mb-1">
+ <h1 className="text-h1 text-white mb-1">
  {isLogin ? 'Sign in' : 'Sign up'}
  </h1>
  </div>
@@ -89,55 +89,55 @@ const Login = () => {
  ) : (
  <form onSubmit={handleSubmit} className="space-y-5 md:space-y-6">
  <div className="space-y-2">
-  <input
-  type="email"
-  required
-  value={email}
-  onChange={(e) => setEmail(e.target.value)}
-  className="w-full h-12 bg-black/20 border border-white/10 rounded-xl px-4 text-white font-medium focus:border-primary focus:bg-white/5 transition-all placeholder:text-white/50 text-body outline-none"
-  placeholder="Enter email"
-  />
+ <input
+ type="email"
+ required
+ value={email}
+ onChange={(e) => setEmail(e.target.value)}
+ className="w-full h-12 bg-black/20 border border-white/10 rounded-xl px-4 text-white font-medium focus:border-primary focus:bg-white/5 transition-all placeholder:text-netflixGray text-body outline-none"
+ placeholder="Enter email"
+ />
  </div>
 
  <div className="space-y-2">
-  <input
-  type="password"
-  required
-  value={password}
-  onChange={(e) => setPassword(e.target.value)}
-  className="w-full h-12 bg-black/20 border border-white/10 rounded-xl px-4 text-white font-medium focus:border-primary focus:bg-white/5 transition-all placeholder:text-white/50 text-body outline-none"
-  placeholder="Password"
-  />
+ <input
+ type="password"
+ required
+ value={password}
+ onChange={(e) => setPassword(e.target.value)}
+ className="w-full h-12 bg-black/20 border border-white/10 rounded-xl px-4 text-white font-medium focus:border-primary focus:bg-white/5 transition-all placeholder:text-netflixGray text-body outline-none"
+ placeholder="Password"
+ />
  </div>
 
-  <button
-  type="submit"
-  disabled={loading}
-  className="w-full min-h-[44px] md:min-h-[48px] px-6 py-3 bg-white text-black rounded-xl font-bold text-lg hover:bg-white/90 transition-all disabled:opacity-50 mt-2 tracking-wide shadow-[0_0_20px_rgba(255,255,255,0.15)]"
-  >
-  {isLogin ? 'Sign in' : 'Sign up'}
-  </button>
+ <button
+ type="submit"
+ disabled={loading}
+ className="w-full min-h-[44px] md:min-h-[48px] px-6 py-3 bg-white text-black rounded-xl font-medium text-lg hover:bg-white/90 transition-all disabled:opacity-50 mt-2 tracking-wide shadow-[0_0_20px_rgba(255,255,255,0.15)]"
+ >
+ {isLogin ? 'Sign in' : 'Sign up'}
+ </button>
 
  <div className="relative py-4 md:py-6 flex items-center">
  <div className="flex-grow"></div>
- <span className="flex-shrink mx-4 text-white/90 text-micro font-medium tracking-tight">social connect</span>
+ <span className="flex-shrink mx-4 text-white text-micro font-medium">social connect</span>
  <div className="flex-grow"></div>
  </div>
 
  <div className="space-y-4">
-  <button
-  type="button"
-  onClick={handleGoogleLogin}
-  className="w-full min-h-[44px] md:min-h-[48px] px-6 py-3 bg-white/5 backdrop-blur-md border border-white/10 text-white font-medium text-body rounded-xl flex items-center justify-center gap-3 hover:bg-white/10 transition-all"
-  >
-  <BoxyGoogle size={18} />
-  {isLogin ? 'Sign in with Google' : 'Sign up with Google'}
-  </button>
+ <button
+ type="button"
+ onClick={handleGoogleLogin}
+ className="w-full min-h-[44px] md:min-h-[48px] px-6 py-3 bg-white/5 backdrop-blur-md border border-white/10 text-white font-medium text-body rounded-xl flex items-center justify-center gap-3 hover:bg-white/10 transition-all"
+ >
+ <BoxyGoogle size={18} />
+ {isLogin ? 'Sign in with Google' : 'Sign up with Google'}
+ </button>
  </div>
  </form>
  )}
 
- <p className="mt-8 md:mt-12 text-center text-textSecondary text-body tracking-tight">
+ <p className="mt-8 md:mt-12 text-center text-textSecondary text-body">
  {isLogin ?"New to the pond?" :"Already a member?"}
  <button
  onClick={() => setIsLogin(!isLogin)}

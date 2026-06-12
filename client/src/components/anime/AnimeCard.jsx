@@ -12,36 +12,36 @@ const AnimeCard = React.memo(({ anime }) => {
  const [isListModalOpen, setIsListModalOpen] = useState(false);
  const navigate = useNavigate();
 
-  const { activeProfile, toggleFavorite } = useAuth();
-  
-  const isFavorite = activeProfile?.favorites?.some(f => f.id === anime.id);
+ const { activeProfile, toggleFavorite } = useAuth();
+ 
+ const isFavorite = activeProfile?.favorites?.some(f => f.id === anime.id);
 
-  const handlePlay = (e) => {
-    e.stopPropagation();
-    if (isNavigating) return;
-    setIsNavigating(true);
-    const url = anime.episodes?.[0]?.id ? `/watch/${anime.episodes[0].id}` : `/anime/${anime.id}`;
-    setTimeout(() => navigate(url), 0);
-  };
+ const handlePlay = (e) => {
+ e.stopPropagation();
+ if (isNavigating) return;
+ setIsNavigating(true);
+ const url = anime.episodes?.[0]?.id ? `/watch/${anime.episodes[0].id}` : `/anime/${anime.id}`;
+ setTimeout(() => navigate(url), 0);
+ };
 
-  const handleBookmark = async (e) => {
-    e.stopPropagation();
-    if (!activeProfile) {
-      toast.error('Please select a profile first');
-      return;
-    }
-    await toggleFavorite(anime);
-    toast.success(isFavorite ? 'Removed from your list' : 'Added to your list');
-  };
+ const handleBookmark = async (e) => {
+ e.stopPropagation();
+ if (!activeProfile) {
+ toast.error('Please select a profile first');
+ return;
+ }
+ await toggleFavorite(anime);
+ toast.success(isFavorite ? 'Removed from your list' : 'Added to your list');
+ };
 
-  const handlePlus = (e) => {
-    e.stopPropagation();
-    if (!activeProfile) {
-      toast.error('Please select a profile first');
-      return;
-    }
-    setIsListModalOpen(true);
-  };
+ const handlePlus = (e) => {
+ e.stopPropagation();
+ if (!activeProfile) {
+ toast.error('Please select a profile first');
+ return;
+ }
+ setIsListModalOpen(true);
+ };
 
  const isTouch = typeof window !== 'undefined' && ('ontouchstart' in window || navigator.maxTouchPoints > 0);
 
@@ -57,7 +57,7 @@ const AnimeCard = React.memo(({ anime }) => {
  return (
  <motion.div
  transition={{ duration: 0.3, ease:"easeOut" }}
- className="relative cursor-pointer aspect-[2/3] w-full bg-white/5 backdrop-blur-md rounded-none border border-white/10 overflow-hidden group shadow-lg hover:shadow-2xl transition-all duration-300"
+ className="relative cursor-pointer aspect-[2/3] w-full bg-white/5 backdrop-blur-md rounded-md border border-white/10 overflow-hidden group shadow-lg hover:shadow-2xl transition-all duration-300"
  onClick={() => {
  if (isNavigating) return;
  setIsNavigating(true);
@@ -77,7 +77,7 @@ const AnimeCard = React.memo(({ anime }) => {
  )}
  
  {isNewEpisode && (
- <div className="absolute bottom-3 left-1/2 -translate-x-1/2 z-40 bg-primary text-black text-micro font-bold px-3 py-1 rounded-full shadow-xl whitespace-nowrap group-hover:opacity-0 transition-opacity duration-300">
+ <div className="absolute bottom-3 left-1/2 -translate-x-1/2 z-40 bg-primary text-black text-micro font-medium px-3 py-1 rounded-full shadow-xl whitespace-nowrap group-hover:opacity-0 transition-opacity duration-300">
  New Episode
  </div>
  )}
@@ -96,35 +96,35 @@ const AnimeCard = React.memo(({ anime }) => {
 
  <div className="flex flex-col gap-1 md:gap-1.5 mb-2 md:mb-4">
  <div className="flex items-center gap-1.5 md:gap-2">
- <span className="text-white/90 font-medium text-[10px] md:text-body">{anime.rating || '0.0'}</span>
- <BoxyStar size={10} fill="currentColor" className="text-white/90 md:w-3 md:h-3" />
- <span className="text-white/90 text-[9px] md:text-micro font-medium">({anime.votes || '0'})</span>
+ <span className="text-white font-medium text-[10px] md:text-body">{anime.rating || '0.0'}</span>
+ <BoxyStar size={10} fill="currentColor" className="text-white md:w-3 md:h-3" />
+ <span className="text-white text-[9px] md:text-micro font-medium">({anime.votes || '0'})</span>
  </div>
 
- <div className="flex flex-col text-[9px] md:text-micro font-medium text-white/90 tracking-tight">
+ <div className="flex flex-col text-[9px] md:text-micro font-medium text-white">
  <span>{anime.type || 'Series'}</span>
  <span>{anime.episodes?.toString().toLowerCase().includes('episodes') ? anime.episodes : `${anime.episodes || '0'} episodes`}</span>
  </div>
  </div>
 
-  <div className="hidden md:block">
-    <p className="text-white/90 text-micro leading-relaxed line-clamp-3 mb-2 font-medium">
-      {anime.description || 'No description available for this title.'}
-    </p>
-  </div>
+ <div className="hidden md:block">
+ <p className="text-white text-micro leading-relaxed line-clamp-3 mb-2 font-medium">
+ {anime.description || 'No description available for this title.'}
+ </p>
+ </div>
 
-  <div className="flex items-center gap-4 mt-1 md:mt-2">
-    <button onClick={handlePlay} className="text-primary hover:text-white transition-colors rounded-xl" title="Play">
-      <BoxyPlay size={20} className="md:w-6 md:h-6" />
-    </button>
-    <button onClick={handleBookmark} className="text-primary hover:text-white transition-colors rounded-xl" title={isFavorite ? "Remove from List" : "Add to List"}>
-      <BoxyBookmark size={20} className={`md:w-6 md:h-6 ${isFavorite ? 'fill-primary' : ''}`} />
-    </button>
-    <button onClick={handlePlus} className="text-primary hover:text-white transition-colors rounded-xl" title="Add to Collection">
-      <BoxyPlus size={24} className="md:w-7 md:h-7" />
-    </button>
-  </div>
-  </div>
+ <div className="flex items-center gap-4 mt-1 md:mt-2">
+ <button onClick={handlePlay} className="text-primary hover:text-white transition-colors rounded-xl" title="Play">
+ <BoxyPlay size={20} className="md:w-6 md:h-6" />
+ </button>
+ <button onClick={handleBookmark} className="text-primary hover:text-white transition-colors rounded-xl" title={isFavorite ?"Remove from List" :"Add to List"}>
+ <BoxyBookmark size={20} className={`md:w-6 md:h-6 ${isFavorite ? 'fill-primary' : ''}`} />
+ </button>
+ <button onClick={handlePlus} className="text-primary hover:text-white transition-colors rounded-xl" title="Add to Collection">
+ <BoxyPlus size={24} className="md:w-7 md:h-7" />
+ </button>
+ </div>
+ </div>
 
 
  {/* Always-visible subtle bottom shadow */}
@@ -138,11 +138,11 @@ const AnimeCard = React.memo(({ anime }) => {
  </div>
  )}
 
-  <AddToListModal
-    isOpen={isListModalOpen}
-    onClose={() => setIsListModalOpen(false)}
-    anime={anime}
-  />
+ <AddToListModal
+ isOpen={isListModalOpen}
+ onClose={() => setIsListModalOpen(false)}
+ anime={anime}
+ />
  </motion.div>
  );
 });

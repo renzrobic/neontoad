@@ -133,17 +133,17 @@ const Library = () => {
  <meta name="description" content="Browse the entire NeonToad anime library." />
  </Helmet>
  <div className="mb-6">
- <h1 className="text-h3 md:text-h2 font-medium text-white tracking-tight mb-4">Full Library</h1>
+ <h1 className="text-h3 md:text-h2 font-medium text-white mb-4">Full Library</h1>
 
  {/* Genre Filters */}
- <div className="flex overflow-x-auto pb-4 gap-3 no-scrollbar scroll-smooth -mx-4 px-4 md:mx-0 md:px-0 flex-nowrap md:flex-wrap">
+ <div className="flex overflow-x-auto pb-4 gap-3 no-scrollbar scroll-smooth flex-nowrap md:flex-wrap">
  {genres.map(genre => (
  <button
  key={genre}
  onClick={() => setActiveGenre(genre)}
- className={`px-6 py-2.5 text-xs md:text-sm font-bold tracking-widest uppercase transition-all flex-shrink-0 rounded-full ${activeGenre === genre
+ className={`px-6 py-2.5 text-xs md:text-sm font-medium uppercase transition-all flex-shrink-0 rounded-full ${activeGenre === genre
  ? 'bg-white text-black shadow-[0_0_20px_rgba(255,255,255,0.3)] border-white'
- : 'bg-white/5 backdrop-blur-md border border-white/10 text-white/90 hover:text-white hover:bg-white/10 shadow-xl'
+ : 'bg-white/5 backdrop-blur-md border border-white/10 text-white hover:text-white hover:bg-white/10 shadow-xl'
  }`}
  >
  {genre}
@@ -191,16 +191,16 @@ const Library = () => {
 
  {!hasMore && !loading && animeList.length > 0 && (
  <div className="text-center mt-12 py-8">
- <p className="text-white/90 font-medium text-micro mx-auto">End of results</p>
+ <p className="text-white font-medium text-micro mx-auto">End of results</p>
  </div>
  )}
 
  {!loading && animeList.length === 0 && (
- <div className="flex flex-col items-center justify-center py-32 text-white/90 gap-6">
+ <div className="flex flex-col items-center justify-center py-32 text-white gap-6">
  <svg width="80" height="80" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1" strokeLinecap="square" strokeLinejoin="miter" className="opacity-10"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
  <div className="text-center">
- <h2 className="text-h3 font-medium text-white/90 mb-2 tracking-tight">No anime found</h2>
- <p className="text-micro font-medium max-w-xs mx-auto tracking-tight">We couldn't find any anime in this category.</p>
+ <h2 className="text-h3 font-medium text-white mb-2">No anime found</h2>
+ <p className="text-micro font-medium max-w-xs mx-auto">We couldn't find any anime in this category.</p>
  </div>
  </div>
  )}

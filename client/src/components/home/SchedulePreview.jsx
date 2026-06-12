@@ -41,7 +41,7 @@ const SchedulePreview = React.memo(() => {
  <div className="px-6 md:px-16 py-12 md:py-20">
  <div className="flex items-center gap-4 mb-10">
  <div className="w-1.5 h-6 bg-white/10 backdrop-blur-md rounded-xl" />
- <h2 className="text-h2 md:text-h2 font-medium text-white tracking-tight">Today's schedule</h2>
+ <h2 className="text-h2 md:text-h2 font-medium text-white">Today's schedule</h2>
  </div>
 
  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
@@ -55,21 +55,21 @@ const SchedulePreview = React.memo(() => {
  className="glass-card p-6 group"
  >
  <div className="flex justify-between items-start mb-4">
- <span className="text-white/90 font-medium text-micro">{item.time}</span>
+ <span className="text-white font-medium text-micro">{item.time}</span>
  {item.status === 'Live now' && (
- <span className="bg-white/10 backdrop-blur-md rounded-xl text-white text-[10px] font-medium px-2 py-0.5 animate-pulse tracking-tight">
+ <span className="bg-white/10 backdrop-blur-md rounded-xl text-white text-[10px] font-medium px-2 py-0.5 animate-pulse">
  Live now
  </span>
  )}
  </div>
- <h3 className="text-h4 font-medium text-white group-hover:text-white transition-colors mb-1 truncate tracking-tight">
+ <h3 className="text-h4 font-medium text-white group-hover:text-white transition-colors mb-1 truncate">
  {item.title}
  </h3>
- <p className="text-[11px] font-medium text-white/90 tracking-tight">{item.episode}</p>
+ <p className="text-[11px] font-medium text-white">{item.episode}</p>
 
  <div className="mt-6 flex items-center gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
  <div className="w-full h-px bg-white/5 backdrop-blur-md rounded-xl border border-white/10" />
- <button className="flex-shrink-0 text-[10px] font-medium text-white/90 hover:text-white transition-colors tracking-tight rounded-xl">Set reminder</button>
+ <button className="flex-shrink-0 text-[10px] font-medium text-white hover:text-white transition-colors rounded-xl">Set reminder</button>
  </div>
  </motion.div>
  ))}

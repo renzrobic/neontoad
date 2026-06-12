@@ -44,9 +44,9 @@ const NewsDetail = () => {
 
  if (!article) return (
  <div className="min-h-screen bg-transparent flex flex-col items-center justify-center gap-6 p-10 text-center">
- <h1 className="text-h4 md:text-h3 font-medium text-white tracking-tight">Article not found</h1>
- <p className="text-white/90 text-micro max-w-xs">The requested news article does not exist or has been removed from the core database.</p>
- <button onClick={() => navigate('/')} className="bg-white/90 text-background px-10 py-4 text-micro font-semibold hover:bg-white transition-all tracking-tight">Return home</button>
+ <h1 className="text-h4 md:text-h3 font-medium text-white">Article not found</h1>
+ <p className="text-white text-micro max-w-xs">The requested news article does not exist or has been removed from the core database.</p>
+ <button onClick={() => navigate('/')} className="bg-white/90 text-background px-10 py-4 text-micro font-semibold hover:bg-white transition-all">Return home</button>
  </div>
  );
 
@@ -69,15 +69,15 @@ const NewsDetail = () => {
  >
  <button
  onClick={() => navigate(-1)}
- className="flex items-center gap-3 text-white/90 font-medium text-micro hover:text-white transition-colors mb-6 tracking-tight"
+ className="flex items-center gap-3 text-white font-medium text-micro hover:text-white transition-colors mb-6"
  >
  <BoxyChevron direction="left" size={16} /> Back to feed
  </button>
  <div className="flex items-center gap-4">
- <span className="bg-white/10 backdrop-blur-md rounded-xl text-white px-3 py-1 text-[11px] font-medium tracking-widest">{article.category}</span>
- <span className="text-white/90 text-micro font-medium">{formatDate(article.date)}</span>
+ <span className="bg-white/10 backdrop-blur-md rounded-xl text-white px-3 py-1 text-[11px] font-medium">{article.category}</span>
+ <span className="text-white text-micro font-medium">{formatDate(article.date)}</span>
  </div>
- <h1 className="text-h2 md:text-h1 font-semibold text-white leading-tight tracking-tight max-w-3xl">
+ <h1 className="text-h2 md:text-h1 font-semibold text-white leading-tight max-w-3xl">
  {article.title}
  </h1>
  </motion.div>
@@ -93,8 +93,8 @@ const NewsDetail = () => {
  <span className="text-white font-semibold text-micro">NT</span>
  </div>
  <div>
- <p className="text-micro font-medium text-white tracking-tight">NeonToad editorial team</p>
- <p className="text-micro font-medium text-white/90 tracking-tight">Verified industry source</p>
+ <p className="text-micro font-medium text-white">NeonToad editorial team</p>
+ <p className="text-micro font-medium text-white">Verified industry source</p>
  </div>
  </div>
 
@@ -103,7 +103,7 @@ const NewsDetail = () => {
  {/* Use dangerouslySetInnerHTML because we have rich text from admin */}
  <div
  dangerouslySetInnerHTML={{ __html: article.content }}
- className="article-content text-white/90 text-h4 md:text-h4 leading-relaxed font-normal space-y-8 
+ className="article-content text-white text-h4 md:text-h4 leading-relaxed font-normal space-y-8 
  [&>p]:mb-8 
  [&>blockquote]:border-l-2 [&>blockquote]: [&>blockquote]:pl-8 [&>blockquote]:py-4 [&>blockquote]:my-12 [&>blockquote]:text-white [&>blockquote]:italic [&>blockquote]:bg-white/[0.04]
  [&>ul]:list-disc [&>ul]:pl-6 [&>ul]:space-y-4 [&>ul]:my-8
@@ -123,7 +123,7 @@ const NewsDetail = () => {
  <div className="flex-grow h-px bg-white/5 backdrop-blur-md rounded-xl border border-white/10" />
  </div>
 
- <p className="text-white/90 text-micro tracking-tight leading-loose font-medium">
+ <p className="text-white text-micro leading-loose font-medium">
  Additional reporting and industry analysis for this story are being continuously updated in real-time. NeonToad remains committed to providing the fastest and most accurate anime news in the sector. All data is synchronized via the central database.
  </p>
  </div>
@@ -131,16 +131,16 @@ const NewsDetail = () => {
  {/* Footer Actions */}
  <div className="pt-20 flex flex-col md:flex-row justify-between items-center gap-10">
  <div className="text-center md:text-left space-y-3">
- <p className="text-[11px] font-medium text-white/90 tracking-widest">LATEST NEWS</p>
+ <p className="text-[11px] font-medium text-white">LATEST NEWS</p>
  <div className="flex gap-6 justify-center md:justify-start">
  {['Twitter', 'Discord', 'Share'].map(link => (
- <button key={link} className="text-micro font-medium text-white/90 hover:text-white transition-colors rounded-xl">{link}</button>
+ <button key={link} className="text-micro font-medium text-white hover:text-white transition-colors rounded-xl">{link}</button>
  ))}
  </div>
  </div>
  <button
  onClick={() => navigate('/')}
- className="w-full md:w-auto bg-white/5 backdrop-blur-md rounded-xl border border-white/10 px-12 py-5 text-micro font-semibold hover:bg-white/10 backdrop-blur-md rounded-xl transition-all tracking-tight"
+ className="w-full md:w-auto bg-white/5 backdrop-blur-md rounded-xl border border-white/10 px-12 py-5 text-micro font-semibold hover:bg-white/10 backdrop-blur-md rounded-xl transition-all"
  >
  Back to news
  </button>

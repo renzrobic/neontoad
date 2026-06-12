@@ -123,7 +123,7 @@ const SeedData = () => {
  <div className="min-h-screen bg-transparent flex flex-col items-center justify-center p-8 text-white">
  <h1 className="text-h2 font-medium text-primary mb-8">Data Injection Portal</h1>
  <div className="glass-card bg-white/5 backdrop-blur-md rounded-xl border border-white/10 p-8 w-full max-w-md text-center">
- <p className="mb-4 font-medium text-white/90">Status: <span className="text-primary">{status}</span></p>
+ <p className="mb-4 font-medium text-white">Status: <span className="text-primary">{status}</span></p>
  <div className="w-full bg-white/5 backdrop-blur-md rounded-xl border border-white/10 h-2 mb-8">
  <div
  className="bg-primary h-full transition-all duration-300"
@@ -141,7 +141,7 @@ const SeedData = () => {
  >
  Inject Avatar Series
  </button>
- <p className="text-micro text-white/90 font-medium opacity-80">
+ <p className="text-micro text-white font-medium opacity-80">
  Warning: This will delete the entire existing library and episodes. It will take ~3-4 minutes to complete. Do not close this page until finished.
  </p>
  </div>

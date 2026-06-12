@@ -73,10 +73,10 @@ const EditProfile = () => {
  className="w-full max-w-md glass-card bg-white/5 backdrop-blur-md rounded-xl border border-white/10 p-6 md:p-12 space-y-8 md:space-y-10"
  >
  <div className="space-y-2 text-center">
- <h1 className="text-[40px] md:text-[48px] font-bold text-white leading-none tracking-tighter">
+ <h1 className="text-[40px] md:text-[48px] font-medium text-white leading-none">
  {isEditing ? 'Modify profile' : 'Create profile'}
  </h1>
- <p className="text-body text-white/90 font-medium tracking-tight">Name your hero.</p>
+ <p className="text-body text-white font-medium">Name your hero.</p>
  </div>
 
  <div className="flex flex-col items-center gap-10">
@@ -91,12 +91,12 @@ const EditProfile = () => {
 
  <div className="w-full space-y-6">
  <div className="space-y-2">
- <label className="text-body font-semibold text-white/90 ml-1 tracking-tight">Profile name</label>
+ <label className="text-body font-semibold text-white ml-1">Profile name</label>
  <input
  type="text"
  value={name}
  onChange={(e) => setName(e.target.value)}
- className="w-full h-12 md:h-14 bg-white/5 backdrop-blur-md rounded-xl border border-white/10 px-4 text-white font-medium focus:bg-white/10 focus:border-white/30 transition-all placeholder:text-white/50 text-body shadow-lg outline-none"
+ className="w-full h-12 md:h-14 bg-white/5 backdrop-blur-md rounded-xl border border-white/10 px-4 text-white font-medium focus:bg-white/10 focus:border-white/30 transition-all placeholder:text-netflixGray text-body shadow-lg outline-none"
  />
  </div>
  </div>
@@ -105,19 +105,19 @@ const EditProfile = () => {
  <div className="flex flex-col gap-3">
  <button
  onClick={handleSave}
- className="w-full min-h-[48px] md:min-h-[56px] px-6 py-3 bg-white text-black rounded-full font-bold text-body hover:scale-[1.02] active:scale-[0.98] transition-all shadow-[0_0_30px_rgba(255,255,255,0.2)]"
+ className="w-full min-h-[48px] md:min-h-[56px] px-6 py-3 bg-white text-black rounded-md font-medium text-body hover:scale-[1.02] active:scale-[0.98] transition-all shadow-[0_0_30px_rgba(255,255,255,0.2)]"
  >
  {isEditing ? 'Update profile' : 'Create profile'}
  </button>
  <button
  onClick={() => navigate('/profiles')}
- className="w-full min-h-[48px] md:min-h-[56px] px-6 py-3 text-white/90 rounded-full font-semibold text-body hover:bg-white/10 hover:border-white/30 backdrop-blur-md border border-white/10 transition-all"
+ className="w-full min-h-[48px] md:min-h-[56px] px-6 py-3 text-white rounded-md font-semibold text-body hover:bg-white/10 hover:border-white/30 backdrop-blur-md border border-white/10 transition-all"
  >
  Cancel
  </button>
  {isEditing && (
  <button onClick={handleDelete}
- className="mt-4 text-micro font-medium text-white/90 hover:text-white text-center transition-colors rounded-xl"
+ className="mt-4 text-micro font-medium text-white hover:text-white text-center transition-colors rounded-xl"
  >
  Delete profile sequence
  </button>
@@ -136,11 +136,11 @@ const EditProfile = () => {
  >
  <div className="max-w-6xl mx-auto w-full">
  <div className="flex items-center justify-between mb-8 md:mb-10">
- <h2 className="text-h2 font-medium text-white/90 leading-tight tracking-tight">
+ <h2 className="text-h2 font-medium text-white leading-tight">
  {selectedSeries ? `Pick a character: ${selectedSeries.name}` : 'Pick a series'}
  </h2>
  <button onClick={() => { setShowAvatarPicker(false); setSelectedSeries(null); }} className="min-h-[44px] px-4 rounded-xl hover:bg-white/10 backdrop-blur-md rounded-xl transition-colors flex items-center justify-center">
- <BoxyX size={20} className="text-white/90" />
+ <BoxyX size={20} className="text-white" />
  </button>
  </div>
 
@@ -156,7 +156,7 @@ const EditProfile = () => {
  >
  <SafeImage src={series.characters[0].image} className="w-full h-full object-cover opacity-40 group-hover:opacity-70 transition-all duration-700" />
  <div className="absolute inset-x-0 bottom-0 p-4 bg-gradient-to-t from-background to-transparent">
- <span className="text-body font-semibold text-white/90 group-hover:text-white transition-colors tracking-tight leading-tight">{series.name}</span>
+ <span className="text-body font-semibold text-white group-hover:text-white transition-colors leading-tight">{series.name}</span>
  </div>
  </motion.div>
  ))}
@@ -165,7 +165,7 @@ const EditProfile = () => {
  <div className="space-y-8 md:space-y-12">
  <button
  onClick={() => setSelectedSeries(null)}
- className="flex items-center gap-2 text-white/90 text-body font-semibold hover:text-white transition-all py-2 tracking-tight"
+ className="flex items-center gap-2 text-white text-body font-semibold hover:text-white transition-all py-2"
  >
  <BoxyChevron direction="left" size={14} /> Back to series
  </button>
@@ -185,7 +185,7 @@ const EditProfile = () => {
  <div className="w-full aspect-square bg-white/5 backdrop-blur-md rounded-xl border border-white/10 overflow-hidden rounded-xl group-hover: transition-all shadow-2xl">
  <SafeImage src={char.image} className="w-full h-full object-cover" />
  </div>
- <span className="text-body mt-1 text-center font-semibold text-white/90 group-hover:text-white transition-colors leading-tight line-clamp-1 tracking-tight">{char.name}</span>
+ <span className="text-body mt-1 text-center font-semibold text-white group-hover:text-white transition-colors leading-tight line-clamp-1">{char.name}</span>
  </motion.div>
  ))}
  </div>

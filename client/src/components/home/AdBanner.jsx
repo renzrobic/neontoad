@@ -67,12 +67,12 @@ const AdBanner = React.memo(({ id = 'ad1' }) => {
  className="space-y-4 max-w-xl"
  >
  {adData.title && (
- <h3 className="text-h3 md:text-h2 font-bold text-white tracking-tight leading-none shadow-black drop-shadow-lg">
+ <h3 className="text-h3 md:text-h2 font-medium text-white leading-none shadow-black drop-shadow-lg">
  {adData.title}
  </h3>
  )}
  {adData.description && (
- <p className="text-micro md:text-body text-white/90 shadow-black drop-shadow-md">
+ <p className="text-micro md:text-body text-white shadow-black drop-shadow-md">
  {adData.description}
  </p>
  )}
@@ -82,7 +82,7 @@ const AdBanner = React.memo(({ id = 'ad1' }) => {
  onClick={handleButtonClick}
  target={adData.buttonLink?.startsWith('/') ? undefined :"_blank"}
  rel="noopener noreferrer"
- className="inline-flex bg-white text-black px-10 py-3.5 md:px-12 md:py-4 text-micro font-bold hover:bg-white/90 transition-all shadow-xl tracking-widest uppercase items-center"
+ className="inline-flex bg-white text-black px-10 py-3.5 md:px-12 md:py-4 text-micro font-medium hover:bg-white/90 transition-all shadow-xl uppercase items-center"
  >
  {adData.buttonText ||"WATCH NOW"}
  </a>
