@@ -229,7 +229,7 @@ const AnimeDetail = () => {
  animate={{ opacity: 1, y: 0 }}
  className="max-w-4xl"
  >
- <span className="text-micro font-medium text-white mb-4 block uppercase">Featured stream</span>
+
  <h1 className="text-h2 md:text-h1 font-medium text-white mb-8 drop-shadow-2xl leading-none">{anime.title}</h1>
  <div className="flex flex-wrap items-center gap-3 my-8">
  <button
@@ -319,19 +319,6 @@ const AnimeDetail = () => {
  {/* Main Content */}
  <div className="mt-4 md:mt-8 px-6 md:px-16 pb-16 relative z-20">
  <div className="flex flex-col lg:flex-row gap-8 lg:-mt-16">
- {/* Left: Poster Column */}
- <div className="w-[160px] md:w-[200px] mx-auto lg:mx-0 lg:w-60 flex-shrink-0 relative z-30 space-y-4 md:space-y-6">
- <div className="rounded-none overflow-hidden shadow-2xl aspect-[2/3] bg-white/5 backdrop-blur-md border border-white/10 w-full">
- <img loading="lazy"
- src={anime.coverImage || anime.image}
- className="w-full h-full object-cover"
- alt={anime.title}
- onError={(e) => {
- e.target.src = anime.image;
- }}
- />
- </div>
- </div>
 
  {/* Right: Info & Episodes */}
  <div className="flex-grow space-y-4 min-w-0 lg:pt-1">
