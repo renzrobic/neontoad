@@ -1,33 +1,35 @@
-const admin = require('firebase-admin');
+const { initializeApp, cert } = require('firebase-admin/app');
+const { getFirestore, FieldValue } = require('firebase-admin/firestore');
+const { getAuth } = require('firebase-admin/auth');
 require('dotenv').config();
 
-// To fully securely connect the Admin SDK, you need a Service Account Key
-// Download it from Firebase Console -> Project Settings -> Service Accounts
-// and save it as 'serviceAccountKey.json' in the server directory, or set env vars.
+let db = null;
+let auth = null;
 
-// Initialize Firebase Admin using Environment Variables
 try {
   if (process.env.FIREBASE_PROJECT_ID && process.env.FIREBASE_PRIVATE_KEY) {
-    admin.initializeApp({
-      credential: admin.credential.cert({
+    const app = initializeApp({
+      credential: cert({
         projectId: process.env.FIREBASE_PROJECT_ID,
         clientEmail: process.env.FIREBASE_CLIENT_EMAIL,
         // Replace escaped newline characters so the private key is valid
         privateKey: process.env.FIREBASE_PRIVATE_KEY.replace(/\\n/g, '\n')
       })
     });
+    db = getFirestore(app);
+    auth = getAuth(app);
     console.log("Firebase Admin initialized via Environment Variables");
   } else {
     console.warn("WARNING: Missing FIREBASE_PROJECT_ID or FIREBASE_PRIVATE_KEY in environment.");
     console.log("Attempting default initialization...");
-    admin.initializeApp();
+    const app = initializeApp();
+    db = getFirestore(app);
+    auth = getAuth(app);
     console.log("Firebase Admin initialized with default credentials");
   }
 } catch (error) {
   console.error("Firebase Admin initialization failed:", error.message);
 }
 
-const db = admin.firestore ? admin.firestore() : null;
-const auth = admin.auth ? admin.auth() : null;
-
-module.exports = { admin, db, auth };
+// We export FieldValue here so other routes can use it directly
+module.exports = { db, auth, FieldValue };

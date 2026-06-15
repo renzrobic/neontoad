@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const { verifyToken } = require('../middleware/auth');
-const { db, admin } = require('../config/firebase');
+const { db, FieldValue } = require('../config/firebase');
 
 // Helper to get user profile
 const getActiveProfile = async (uid, profileId) => {
@@ -126,9 +126,9 @@ router.post('/follow', verifyToken, async (req, res) => {
 
     const targetUserRef = db.collection('users').doc(targetUserId);
     if (isFollowing) {
-      batch.update(targetUserRef, { followers: admin.firestore.FieldValue.arrayRemove(uid) });
+      batch.update(targetUserRef, { followers: FieldValue.arrayRemove(uid) });
     } else {
-      batch.update(targetUserRef, { followers: admin.firestore.FieldValue.arrayUnion(uid) });
+      batch.update(targetUserRef, { followers: FieldValue.arrayUnion(uid) });
     }
 
     await batch.commit();
