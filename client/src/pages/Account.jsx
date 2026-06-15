@@ -16,14 +16,17 @@ import {
  BoxyAlert
 } from '../components/ui/BoxyIcons';
 import toast from 'react-hot-toast';
+import PinModal from '../components/ui/PinModal';
+import { apiRequest } from '../utils/api';
 
-const ToggleSwitch = ({ checked, onChange, label, description }) => (
- <div className="flex items-center justify-between py-4 border-b border-white/5 last:border-0">
+const ToggleSwitch = ({ checked, onChange, label, description, disabled }) => (
+ <div className={`flex items-center justify-between py-4 border-b border-white/5 last:border-0 ${disabled ? 'opacity-50' : ''}`}>
  <div className="pr-4">
  <p className="text-white font-medium text-[14px]">{label}</p>
  {description && <p className="text-netflixGray text-[12px] mt-1">{description}</p>}
  </div>
  <button
+ disabled={disabled}
  onClick={onChange}
  className={`relative inline-flex h-6 w-11 flex-shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none ${checked ? 'bg-primary' : 'bg-neutral-600'}`}
  >
@@ -54,7 +57,61 @@ const Account = () => {
  updates: true,
  });
 
- const [requirePin, setRequirePin] = useState(false);
+ const { activeProfile, updateProfileSettings } = useAuth();
+ 
+ // PIN State
+ const [isPinModalOpen, setIsPinModalOpen] = useState(false);
+ const [pinModalMode, setPinModalMode] = useState('set'); // 'set' or 'remove'
+ const [pinLoading, setPinLoading] = useState(false);
+
+ // Preference State (Synced to activeProfile)
+ const preferences = activeProfile?.preferences || {
+   matureContent: false,
+   autoPlay: true,
+   audioDescription: false,
+   closedCaptions: true,
+ };
+
+ const handlePreferenceChange = async (key) => {
+   const newValue = !preferences[key];
+   await updateProfileSettings({ 
+     preferences: { ...preferences, [key]: newValue } 
+   });
+ };
+
+ const requirePin = activeProfile?.hasPin || false;
+
+ const handlePinSubmit = async (pin) => {
+   setPinLoading(true);
+   try {
+     if (pinModalMode === 'set') {
+       await apiRequest(`/profiles/${activeProfile.id}/pin`, {
+         method: 'POST',
+         body: JSON.stringify({ pin, remove: false })
+       });
+       await updateProfileSettings({ hasPin: true });
+       toast.success('PIN successfully set!');
+     } else {
+       // To remove, we must verify first
+       await apiRequest(`/profiles/${activeProfile.id}/verify-pin`, {
+         method: 'POST',
+         body: JSON.stringify({ pin })
+       });
+       // If verify succeeds, remove it
+       await apiRequest(`/profiles/${activeProfile.id}/pin`, {
+         method: 'POST',
+         body: JSON.stringify({ remove: true })
+       });
+       await updateProfileSettings({ hasPin: false });
+       toast.success('PIN requirement removed.');
+     }
+     setIsPinModalOpen(false);
+   } catch (err) {
+     toast.error(err.message || 'Operation failed');
+   } finally {
+     setPinLoading(false);
+   }
+ };
 
  const handleLogout = async () => {
  await logout();
@@ -204,19 +261,19 @@ const Account = () => {
  label="Auto-Play Next Episode" 
  description="Automatically start the next episode when the current one finishes."
  checked={preferences.autoPlay} 
- onChange={() => setPreferences(p => ({...p, autoPlay: !p.autoPlay}))} 
+ onChange={() => handlePreferenceChange('autoPlay')} 
  />
  <ToggleSwitch 
  label="Closed Captions (CC)" 
  description="Show closed captions by default when available."
  checked={preferences.closedCaptions} 
- onChange={() => setPreferences(p => ({...p, closedCaptions: !p.closedCaptions}))} 
+ onChange={() => handlePreferenceChange('closedCaptions')} 
  />
  <ToggleSwitch 
  label="Audio Description" 
  description="Enable descriptive audio for visually impaired users by default."
  checked={preferences.audioDescription} 
- onChange={() => setPreferences(p => ({...p, audioDescription: !p.audioDescription}))} 
+ onChange={() => handlePreferenceChange('audioDescription')} 
  />
  </div>
 
@@ -226,7 +283,7 @@ const Account = () => {
  label="Show Mature Content (18+)" 
  description="Allow display of mature rated anime in your feed and search results."
  checked={preferences.matureContent} 
- onChange={() => setPreferences(p => ({...p, matureContent: !p.matureContent}))} 
+ onChange={() => handlePreferenceChange('matureContent')} 
  />
  </div>
  </div>
@@ -253,8 +310,8 @@ const Account = () => {
  label="Require PIN for this Profile" 
  checked={requirePin} 
  onChange={() => {
- setRequirePin(!requirePin);
- toast(requirePin ? 'PIN requirement disabled.' : 'Please set up a PIN in the modal.');
+   setPinModalMode(requirePin ? 'remove' : 'set');
+   setIsPinModalOpen(true);
  }} 
  />
  </div>
@@ -476,6 +533,15 @@ const Account = () => {
  </div>
 
  </div>
+
+ <PinModal 
+    isOpen={isPinModalOpen}
+    onClose={() => setIsPinModalOpen(false)}
+    onSubmit={handlePinSubmit}
+    title={pinModalMode === 'set' ? "Set Profile PIN" : "Verify Current PIN"}
+    description={pinModalMode === 'set' ? "Enter a 4-digit PIN to lock this profile." : "Enter your current PIN to remove the lock."}
+    loading={pinLoading}
+  />
  </div>
  );
 };

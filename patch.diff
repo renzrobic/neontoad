@@ -1,0 +1,1425 @@
+﻿diff --git a/client/src/App.jsx b/client/src/App.jsx
+index b0b0dfb..75348f4 100644
+--- a/client/src/App.jsx
++++ b/client/src/App.jsx
+@@ -42,6 +42,7 @@ const Support = lazyLoad(() => import('./pages/Support'));
+ const Admin = lazyLoad(() => import('./pages/Admin'));
+ const NewsDetail = lazyLoad(() => import('./pages/NewsDetail'));
+ const NotFound = lazyLoad(() => import('./pages/NotFound'));
++const MyList = lazyLoad(() => import('./pages/MyList'));
+ import { HelmetProvider, Helmet } from 'react-helmet-async';
+ import { Toaster } from 'react-hot-toast';
+ 
+@@ -131,6 +132,12 @@ function App() {
+  </ProtectedRoute>
+  } />
+  
++ <Route path="/mylist" element={
++ <ProtectedRoute>
++ <MyList />
++ </ProtectedRoute>
++ } />
++ 
+  <Route path="/search" element={<Search />} />
+  <Route path="/anime/:id" element={<AnimeDetail />} />
+  
+diff --git a/client/src/assets/logo/logo-full.svg b/client/src/assets/logo/logo-full.svg
+index e642c3c..fb320e1 100644
+--- a/client/src/assets/logo/logo-full.svg
++++ b/client/src/assets/logo/logo-full.svg
+@@ -1,5 +1,5 @@
+ <?xml version="1.0" encoding="UTF-8"?>
+-<svg id="Layer_1" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 4558.48 3956.68">
++<svg id="Layer_1" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 1100 4558.48 1500">
+   <defs>
+     <style>
+       .cls-1 {
+diff --git a/client/src/components/SkeletonProfile.jsx b/client/src/components/SkeletonProfile.jsx
+index 449d22d..eb91c7e 100644
+--- a/client/src/components/SkeletonProfile.jsx
++++ b/client/src/components/SkeletonProfile.jsx
+@@ -3,8 +3,8 @@ import React from 'react';
+ const SkeletonProfile = () => {
+  return (
+  <div className="flex flex-col items-center gap-5 animate-pulse">
+- <div className="w-28 h-28 md:w-36 md:h-36 rounded-xl bg-white/5 backdrop-blur-md rounded-xl border border-white/10" />
+- <div className="h-3 bg-white/10 backdrop-blur-md rounded-xl rounded-xl w-20" />
++ <div className="w-28 h-28 md:w-36 md:h-36 rounded-md bg-white/5 backdrop-blur-md border border-white/10" />
++ <div className="h-3 bg-white/10 backdrop-blur-md rounded-md rounded-md w-20" />
+  </div>
+  );
+ };
+diff --git a/client/src/components/anime/AnimeCard.jsx b/client/src/components/anime/AnimeCard.jsx
+index c1369d1..f272eec 100644
+--- a/client/src/components/anime/AnimeCard.jsx
++++ b/client/src/components/anime/AnimeCard.jsx
+@@ -57,7 +57,7 @@ const AnimeCard = React.memo(({ anime }) => {
+  return (
+  <motion.div
+  transition={{ duration: 0.3, ease:"easeOut" }}
+- className="relative cursor-pointer aspect-[2/3] w-full bg-white/5 backdrop-blur-md rounded-none border border-white/10 overflow-hidden group shadow-lg hover:shadow-2xl transition-all duration-300"
++ className="relative cursor-pointer aspect-[2/3] w-full bg-white/5 backdrop-blur-md rounded-md border border-white/10 overflow-hidden group shadow-lg hover:shadow-2xl transition-all duration-300"
+  onClick={() => {
+  if (isNavigating) return;
+  setIsNavigating(true);
+diff --git a/client/src/components/anime/TopTenRow.jsx b/client/src/components/anime/TopTenRow.jsx
+index 42b6d54..7c5cfaa 100644
+--- a/client/src/components/anime/TopTenRow.jsx
++++ b/client/src/components/anime/TopTenRow.jsx
+@@ -94,7 +94,7 @@ const TopTenRow = React.memo(({ title ="Top 10 Trending", data = [], loading = f
+                         </span>
+                       </div>
+                       
+-                      <div className="relative z-10 w-[calc((100vw-50px)/2.5)] md:w-[calc((100vw-216px)/5.5)] lg:w-[calc((100vw-216px)/6.5)] aspect-[2/3] overflow-hidden transition-transform duration-300 bg-white/5 backdrop-blur-md rounded-xl border border-white/10 border-none">
++                      <div className="relative z-10 w-[calc((100vw-50px)/2.5)] md:w-[calc((100vw-216px)/5.5)] lg:w-[calc((100vw-216px)/6.5)] aspect-[2/3] overflow-hidden transition-transform duration-300 bg-white/5 backdrop-blur-md rounded-md border border-white/10 border-none">
+                         <SkeletonCard />
+                       </div>
+                     </div>
+@@ -169,7 +169,7 @@ const TopTenRow = React.memo(({ title ="Top 10 Trending", data = [], loading = f
+  )}
+ 
+  {/* The Anime Poster */}
+- <div className="relative z-10 w-[calc((100vw-50px)/2.5)] md:w-[calc((100vw-216px)/5.5)] lg:w-[calc((100vw-216px)/6.5)] aspect-[2/3] overflow-hidden transition-transform duration-300 bg-white/5 backdrop-blur-md rounded-xl border border-white/10 border-none shadow-[-20px_0_30px_rgba(0,0,0,0.9)]">
++ <div className="relative z-10 w-[calc((100vw-50px)/2.5)] md:w-[calc((100vw-216px)/5.5)] lg:w-[calc((100vw-216px)/6.5)] aspect-[2/3] overflow-hidden transition-transform duration-300 bg-white/5 backdrop-blur-md rounded-md border border-white/10 border-none shadow-[-20px_0_30px_rgba(0,0,0,0.9)]">
+  {isNavigating === anime.id && (
+  <div className="absolute inset-0 z-[100] bg-white/5 flex items-center justify-center backdrop-blur-[2px]">
+  <div className="w-8 h-8 border-2 border-white border-t-transparent rounded-full animate-spin" />
+diff --git a/client/src/components/home/HeroBanner.jsx b/client/src/components/home/HeroBanner.jsx
+index 49faee0..61373ae 100644
+--- a/client/src/components/home/HeroBanner.jsx
++++ b/client/src/components/home/HeroBanner.jsx
+@@ -223,7 +223,7 @@ const HeroBanner = () => {
+   navigate(featuredAnime.latestEpisodeId ? `/watch/${featuredAnime.latestEpisodeId}` : `/watch/${featuredAnime.id}`);
+   }, 0);
+   }}
+-  className="w-full sm:w-auto group flex items-center justify-center gap-3 bg-primary text-background px-10 py-3.5 md:py-4 rounded-full hover:bg-primary/90 hover:scale-105 transition-all active:scale-95 shadow-2xl disabled:opacity-70 disabled:cursor-wait font-bold tracking-wide text-base md:text-lg"
++  className="w-full sm:w-auto btn-accent px-10 py-3.5 md:py-4 text-base md:text-lg tracking-wide group disabled:opacity-70 disabled:cursor-wait active:scale-95 hover:scale-105"
+   >
+   {isNavigating === 'watch' ? (
+   <div className="w-6 h-6 border-2 border-background border-t-transparent rounded-full animate-spin" />
+@@ -239,7 +239,7 @@ const HeroBanner = () => {
+   navigate(`/anime/${featuredAnime.id}`);
+   }, 0);
+   }}
+-  className="w-full sm:w-auto justify-center bg-white/5 backdrop-blur-md border border-white/20 text-white px-10 py-3.5 md:py-4 rounded-full font-bold flex items-center gap-3 hover:bg-white/10 hover:border-white/40 hover:scale-105 active:scale-95 transition-all disabled:opacity-70 disabled:cursor-wait text-base md:text-lg shadow-xl"
++  className="w-full sm:w-auto btn-secondary bg-white/5 backdrop-blur-md px-10 py-3.5 md:py-4 text-base md:text-lg tracking-wide disabled:opacity-70 disabled:cursor-wait active:scale-95 hover:scale-105"
+   >
+   {isNavigating === 'info' ? (
+   <div className="w-6 h-6 border-2 border-white border-t-transparent rounded-full animate-spin" />
+diff --git a/client/src/components/layout/Footer.jsx b/client/src/components/layout/Footer.jsx
+index 901a0d1..160257a 100644
+--- a/client/src/components/layout/Footer.jsx
++++ b/client/src/components/layout/Footer.jsx
+@@ -1,77 +1,54 @@
+ import React from 'react';
+ import { Link } from 'react-router-dom';
+ import { BoxyFacebook, BoxyTwitter, BoxyInstagram, BoxyGithub } from '../ui/BoxyIcons';
+-import logoFull from '../../assets/logo/logo-full.svg';
+ 
+ const Footer = () => {
+- return (
+- <footer className="bg-transparent backdrop-blur-2xl pt-20 pb-10">
+- <div className="max-w-7xl mx-auto px-6 md:px-16">
+- <div className="grid grid-cols-1 md:grid-cols-4 gap-12 mb-16">
+- <div className="flex flex-col items-center md:items-start space-y-8">
+- <img loading="lazy" src={logoFull} alt="NeonToad" className="h-16 md:h-[86px] w-auto mx-auto md:mx-0" />
+- <p className="text-white/90 text-body leading-relaxed font-medium max-w-sm text-center md:text-left tracking-tight">
+- The ultimate destination for premium anime streaming. Experience high-quality simulcasts and an ever-growing library of your favorite series.
+- </p>
+- <div className="flex justify-center md:justify-start gap-4">
+- <a href="#" onClick={(e) => e.preventDefault()} className="w-10 h-10 glass flex items-center justify-center text-white/90 hover:text-white hover: transition-all" aria-label="Facebook">
+- <BoxyFacebook size={18} />
+- </a>
+- <a href="#" onClick={(e) => e.preventDefault()} className="w-10 h-10 glass flex items-center justify-center text-white/90 hover:text-white hover: transition-all" aria-label="Twitter">
+- <BoxyTwitter size={18} />
+- </a>
+- <a href="#" onClick={(e) => e.preventDefault()} className="w-10 h-10 glass flex items-center justify-center text-white/90 hover:text-white hover: transition-all" aria-label="Instagram">
+- <BoxyInstagram size={18} />
+- </a>
+- <a href="#" onClick={(e) => e.preventDefault()} className="w-10 h-10 glass flex items-center justify-center text-white/90 hover:text-white hover: transition-all" aria-label="GitHub">
+- <BoxyGithub size={18} />
+- </a>
+- </div>
+- </div>
++  return (
++    <footer className="bg-transparent pt-16 pb-12 mt-12">
++      <div className="max-w-[1000px] mx-auto px-6 md:px-16">
++        
++        {/* Social Icons */}
++        <div className="flex gap-6 mb-8">
++          <a href="#" onClick={(e) => e.preventDefault()} className="text-white/50 hover:text-white transition-colors" aria-label="Facebook">
++            <BoxyFacebook size={24} />
++          </a>
++          <a href="#" onClick={(e) => e.preventDefault()} className="text-white/50 hover:text-white transition-colors" aria-label="Instagram">
++            <BoxyInstagram size={24} />
++          </a>
++          <a href="#" onClick={(e) => e.preventDefault()} className="text-white/50 hover:text-white transition-colors" aria-label="Twitter">
++            <BoxyTwitter size={24} />
++          </a>
++          <a href="#" onClick={(e) => e.preventDefault()} className="text-white/50 hover:text-white transition-colors" aria-label="GitHub">
++            <BoxyGithub size={24} />
++          </a>
++        </div>
+ 
+- <div className="space-y-6">
+- <h4 className="text-white font-medium text-h4 tracking-tight">Navigation</h4>
+- <ul className="space-y-4 text-white/90 font-medium text-body tracking-tight">
+- <li><Link to="/" className="hover:text-white transition-colors">Home</Link></li>
+- <li><Link to="/library" className="hover:text-white transition-colors">Library</Link></li>
+- <li><Link to="/calendar" className="hover:text-white transition-colors">Calendar</Link></li>
+- <li><Link to="/reel" className="hover:text-white transition-colors">Reels</Link></li>
+- <li><Link to="/profiles" className="hover:text-white transition-colors">Profiles</Link></li>
+- </ul>
+- </div>
++        {/* Links Grid */}
++        <div className="grid grid-cols-2 md:grid-cols-4 gap-y-4 gap-x-12 mb-8">
++          <Link to="/" className="text-white/50 hover:underline transition-colors text-[13px] font-medium tracking-tight">Home</Link>
++          <Link to="/library" className="text-white/50 hover:underline transition-colors text-[13px] font-medium tracking-tight">Library</Link>
++          <Link to="/calendar" className="text-white/50 hover:underline transition-colors text-[13px] font-medium tracking-tight">Release Calendar</Link>
++          <Link to="/reel" className="text-white/50 hover:underline transition-colors text-[13px] font-medium tracking-tight">Reels</Link>
++          
++          <Link to="/profiles" className="text-white/50 hover:underline transition-colors text-[13px] font-medium tracking-tight">Profiles</Link>
++          <Link to="/help" className="text-white/50 hover:underline transition-colors text-[13px] font-medium tracking-tight">Help Center</Link>
++          <Link to="/terms" className="text-white/50 hover:underline transition-colors text-[13px] font-medium tracking-tight">Terms Of Service</Link>
++          <Link to="/privacy" className="text-white/50 hover:underline transition-colors text-[13px] font-medium tracking-tight">Privacy Policy</Link>
++          
++          <Link to="/cookies" className="text-white/50 hover:underline transition-colors text-[13px] font-medium tracking-tight">Cookie Preferences</Link>
++          <a href="#" onClick={e => e.preventDefault()} className="text-white/50 hover:underline transition-colors text-[13px] font-medium tracking-tight">Corporate Information</a>
++          <a href="#" onClick={e => e.preventDefault()} className="text-white/50 hover:underline transition-colors text-[13px] font-medium tracking-tight">Legal Notices</a>
++          <a href="#" onClick={e => e.preventDefault()} className="text-white/50 hover:underline transition-colors text-[13px] font-medium tracking-tight">Contact Us</a>
++        </div>
+ 
+- <div className="space-y-6">
+- <h4 className="text-white font-medium text-h4 tracking-tight">Support</h4>
+- <ul className="space-y-4 text-white/90 font-medium text-body tracking-tight">
+- <li><Link to="/help" className="hover:text-white transition-colors">Help Center</Link></li>
+- <li><Link to="/terms" className="hover:text-white transition-colors">Terms Of Service</Link></li>
+- <li><Link to="/privacy" className="hover:text-white transition-colors">Privacy Policy</Link></li>
+- <li><Link to="/cookies" className="hover:text-white transition-colors">Cookie Preferences</Link></li>
+- </ul>
+- </div>
+-
+- <div className="space-y-6">
+- <h4 className="text-white font-medium text-h4 tracking-tight">Experience</h4>
+- <div className="glass-card bg-white/5 backdrop-blur-md rounded-xl border border-white/10 p-6 space-y-4">
+- <p className="text-body text-white/90 font-medium leading-relaxed tracking-tight">
+- Experience the best of anime with NeonToad. Follow us on social media for updates!
+- </p>
+- </div>
+- </div>
+- </div>
+-
+- <div className="pt-8 flex flex-col md:flex-row justify-between items-center gap-6 text-center md:text-left">
+- <p className="text-[11px] font-medium text-white/90 tracking-tight">
+- ┬⌐ 2026 NeonToad Media Inc. All Rights Reserved.
+- </p>
+- <div className="flex flex-wrap justify-center gap-4 md:gap-8 text-[11px] font-medium text-white/90 tracking-tight">
+- <span>Corporate Information</span>
+- <span>Legal Notices</span>
+- </div>
+- </div>
+- </div>
+- </footer>
+- );
++        {/* Copyright */}
++        <p className="text-white/50 text-[11px] font-medium tracking-tight mt-12">
++          ┬⌐ {new Date().getFullYear()} NeonToad Media Inc.
++        </p>
++        
++      </div>
++    </footer>
++  );
+ };
+ 
+ export default Footer;
+diff --git a/client/src/components/layout/Navbar.jsx b/client/src/components/layout/Navbar.jsx
+index 549899c..e21400d 100644
+--- a/client/src/components/layout/Navbar.jsx
++++ b/client/src/components/layout/Navbar.jsx
+@@ -34,7 +34,7 @@ const Navbar = () => {
+  };
+ 
+  return (
+- <nav className={`fixed top-0 w-full z-[100] transition-all duration-500 pt-[env(safe-area-inset-top)] ${isScrolled ? 'bg-background/80 backdrop-blur-2xl' : 'bg-gradient-to-b from-background/80 to-transparent'}`}>
++ <nav className={`fixed top-0 w-full z-[100] transition-all duration-500 pt-[env(safe-area-inset-top)] ${isScrolled ? 'bg-background/90 backdrop-blur-2xl' : 'bg-gradient-to-b from-black/80 via-black/40 to-transparent'}`}>
+  {/* Mobile menu backdrop */}
+  {isMobileMenuOpen && (
+  <div
+@@ -42,7 +42,7 @@ const Navbar = () => {
+  onClick={() => setIsMobileMenuOpen(false)}
+  />
+  )}
+- <div className={`w-full px-6 md:px-16 flex items-center justify-between transition-all duration-500 ${isScrolled ? 'py-2 md:py-3' : 'py-4 md:py-6'}`}>
++ <div className={`w-full px-4 md:px-10 lg:px-14 flex items-center justify-between transition-all duration-500 ${isScrolled ? 'py-1.5 md:py-2' : 'py-3 md:py-4'}`}>
+  <div className="flex items-center gap-12">
+  <Link
+  to="/"
+@@ -51,13 +51,14 @@ const Navbar = () => {
+  <img loading="lazy"
+  src={logoFull}
+  alt="NeonToad"
+- className={`h-[40px] md:h-[64px] w-auto transition-all duration-500 ${isSearchOpen ? 'md:flex' : ''}`}
++ className={`h-[28px] md:h-[36px] w-auto transition-all duration-500 ${isSearchOpen ? 'md:flex' : ''}`}
+  />
+  </Link>
+- <div className="hidden md:flex items-center gap-10 text-sm font-semibold tracking-wide text-white/70">
++ <div className="hidden md:flex items-center gap-6 lg:gap-10 text-sm font-semibold tracking-wide text-white/70">
+  <Link to="/" className="hover:text-white transition-colors">Home</Link>
+  <Link to="/library" className="hover:text-white transition-colors">Library</Link>
+  <Link to="/calendar" className="hover:text-white transition-colors">Calendar</Link>
++ <Link to="/mylist" className="hover:text-white transition-colors">My List</Link>
+  <Link to="/reel" className="hover:text-white transition-colors">Clips</Link>
+  </div>
+  </div>
+@@ -135,7 +136,7 @@ const Navbar = () => {
+  className="hidden md:block"
+  onClick={() => {}}
+  >
+- <div className={`w-9 h-9 md:w-10 md:h-10 rounded-xl overflow-hidden transition-all cursor-pointer border-transparent hover:`}>
++ <div className={`w-8 h-8 md:w-9 md:h-9 rounded-md overflow-hidden transition-all cursor-pointer border-transparent hover:`}>
+  <SafeImage
+  src={activeProfile?.avatarUrl ||"https://wallpapers-clan.com/wp-content/uploads/2023/02/jujutsu-kaisen-satoru-gojo-pfp-1.jpg"}
+  alt="Profile"
+@@ -205,7 +206,7 @@ const Navbar = () => {
+  >
+  {user && (
+  <div className="p-6 bg-white/5 backdrop-blur-md rounded-xl border border-white/10 flex items-center gap-4">
+- <div className="w-12 h-12 overflow-hidden">
++ <div className="w-12 h-12 overflow-hidden rounded-md">
+  <img loading="lazy" src={activeProfile?.avatarUrl} className="w-full h-full object-cover" alt="" />
+  </div>
+  <div>
+@@ -218,6 +219,7 @@ const Navbar = () => {
+  <Link to="/" onClick={() => setIsMobileMenuOpen(false)} className="text-h4 font-medium hover:text-white transition-colors tracking-tight">Home</Link>
+  <Link to="/library" onClick={() => setIsMobileMenuOpen(false)} className="text-h4 font-medium hover:text-white transition-colors tracking-tight">Library</Link>
+  <Link to="/calendar" onClick={() => setIsMobileMenuOpen(false)} className="text-h4 font-medium hover:text-white transition-colors tracking-tight">Calendar</Link>
++ <Link to="/mylist" onClick={() => setIsMobileMenuOpen(false)} className="text-h4 font-medium hover:text-white transition-colors tracking-tight">My List</Link>
+  <Link to="/reel" onClick={() => setIsMobileMenuOpen(false)} className="text-h4 font-medium hover:text-white transition-colors tracking-tight">Clips</Link>
+  <hr className="" />
+  {user ? (
+diff --git a/client/src/components/skeletons/SectionSkeletons.jsx b/client/src/components/skeletons/SectionSkeletons.jsx
+index 00880ea..8d3cc76 100644
+--- a/client/src/components/skeletons/SectionSkeletons.jsx
++++ b/client/src/components/skeletons/SectionSkeletons.jsx
+@@ -3,7 +3,7 @@ import React from 'react';
+ export const AdSkeleton = () => (
+  <div className="px-6 md:px-16 my-12 md:my-20 animate-pulse relative overflow-hidden">
+  <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/5 to-transparent -translate-x-full animate-[shimmer_2s_infinite] pointer-events-none z-[150]" />
+- <div className="w-full h-[250px] md:h-[400px] bg-white/5 backdrop-blur-md rounded-xl border border-white/10" />
++ <div className="w-full h-[250px] md:h-[400px] bg-white/5 backdrop-blur-md rounded-md border border-white/10" />
+  </div>
+ );
+ 
+@@ -12,21 +12,21 @@ export const NewsSkeleton = () => (
+  <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/5 to-transparent -translate-x-full animate-[shimmer_2s_infinite] pointer-events-none z-[150]" />
+  <div className="flex justify-between items-end mb-12">
+  <div className="space-y-4">
+- <div className="h-10 bg-white/5 backdrop-blur-md rounded-xl border border-white/10 w-64" />
+- <div className="h-4 bg-white/5 backdrop-blur-md rounded-xl border border-white/10 w-32" />
++ <div className="h-10 bg-white/5 backdrop-blur-md rounded-md border border-white/10 w-64" />
++ <div className="h-4 bg-white/5 backdrop-blur-md rounded-md border border-white/10 w-32" />
+  </div>
+- <div className="h-6 bg-white/5 backdrop-blur-md rounded-xl border border-white/10 w-24" />
++ <div className="h-6 bg-white/5 backdrop-blur-md rounded-md border border-white/10 w-24" />
+  </div>
+  <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+- <div className="lg:col-span-2 h-[300px] md:h-[500px] bg-white/5 backdrop-blur-md rounded-xl border border-white/10" />
++ <div className="lg:col-span-2 h-[300px] md:h-[500px] bg-white/5 backdrop-blur-md rounded-md border border-white/10" />
+  <div className="space-y-6">
+  {[1,2,3].map(i => (
+  <div key={i} className="flex gap-4">
+- <div className="w-24 md:w-32 h-24 md:h-32 bg-white/5 backdrop-blur-md rounded-xl border border-white/10" />
++ <div className="w-24 md:w-32 h-24 md:h-32 bg-white/5 backdrop-blur-md rounded-md border border-white/10" />
+  <div className="flex-grow space-y-3">
+- <div className="h-3 bg-white/5 backdrop-blur-md rounded-xl border border-white/10 w-16" />
+- <div className="h-4 bg-white/5 backdrop-blur-md rounded-xl border border-white/10 w-full" />
+- <div className="h-4 bg-white/5 backdrop-blur-md rounded-xl border border-white/10 w-2/3" />
++ <div className="h-3 bg-white/5 backdrop-blur-md rounded-md border border-white/10 w-16" />
++ <div className="h-4 bg-white/5 backdrop-blur-md rounded-md border border-white/10 w-full" />
++ <div className="h-4 bg-white/5 backdrop-blur-md rounded-md border border-white/10 w-2/3" />
+  </div>
+  </div>
+  ))}
+@@ -38,10 +38,10 @@ export const NewsSkeleton = () => (
+ export const ScheduleSkeleton = () => (
+  <div className="px-6 md:px-16 py-12 md:py-20 animate-pulse relative overflow-hidden">
+  <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/5 to-transparent -translate-x-full animate-[shimmer_2s_infinite] pointer-events-none z-[150]" />
+- <div className="h-8 bg-white/5 backdrop-blur-md rounded-xl border border-white/10 w-48 mb-10" />
++ <div className="h-8 bg-white/5 backdrop-blur-md rounded-md border border-white/10 w-48 mb-10" />
+  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+  {[1,2,3,4].map(i => (
+- <div key={i} className="h-40 bg-white/5 backdrop-blur-md rounded-xl border border-white/10" />
++ <div key={i} className="h-40 bg-white/5 backdrop-blur-md rounded-md border border-white/10" />
+  ))}
+  </div>
+  </div>
+diff --git a/client/src/components/skeletons/SkeletonCard.jsx b/client/src/components/skeletons/SkeletonCard.jsx
+index c2690ac..c1aaea1 100644
+--- a/client/src/components/skeletons/SkeletonCard.jsx
++++ b/client/src/components/skeletons/SkeletonCard.jsx
+@@ -2,7 +2,7 @@ import React from 'react';
+ 
+ const SkeletonCard = () => {
+  return (
+- <div className="relative aspect-[2/3] w-full rounded-none overflow-hidden bg-white/5 backdrop-blur-md border border-white/10 animate-pulse">
++ <div className="relative aspect-[2/3] w-full rounded-md overflow-hidden bg-white/5 backdrop-blur-md border border-white/10 animate-pulse">
+  <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/5 to-transparent -translate-x-full animate-[shimmer_2s_infinite]" />
+  </div>
+  );
+diff --git a/client/src/components/skeletons/SkeletonDetails.jsx b/client/src/components/skeletons/SkeletonDetails.jsx
+index c243f78..145a292 100644
+--- a/client/src/components/skeletons/SkeletonDetails.jsx
++++ b/client/src/components/skeletons/SkeletonDetails.jsx
+@@ -6,30 +6,30 @@ const SkeletonDetails = () => {
+  <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/5 to-transparent -translate-x-full animate-[shimmer_2s_infinite] pointer-events-none z-[150]" />
+  {/* Ghost Banner Outer */}
+  <div className="relative min-h-[40vh] md:min-h-[60vh] w-full flex flex-col justify-end pt-[env(safe-area-inset-top)]">
+- <div className="absolute inset-0 bg-white/5 backdrop-blur-md rounded-xl border border-white/10" />
++ <div className="absolute inset-0 bg-white/5 backdrop-blur-md rounded-md border border-white/10" />
+  
+  {/* Ghost Header Content */}
+  <div className="relative w-full px-6 md:px-16 pt-64 pb-24 md:pb-32 z-10">
+  <div className="max-w-4xl">
+  <div className="h-3 w-32 bg-primary/10 mb-4 block" />
+- <div className="h-12 md:h-[60px] w-3/4 bg-white/10 backdrop-blur-md rounded-xl mb-8" />
++ <div className="h-12 md:h-[60px] w-3/4 bg-white/10 backdrop-blur-md rounded-md mb-8" />
+  
+  <div className="flex flex-wrap items-center gap-3 my-8">
+  <div className="h-12 w-[140px] bg-neutral-700" />
+- <div className="h-12 w-12 bg-white/10 backdrop-blur-md rounded-xl" />
+- <div className="h-12 w-[120px] bg-white/5 backdrop-blur-md rounded-xl border border-white/10" />
++ <div className="h-12 w-12 bg-white/10 backdrop-blur-md rounded-md" />
++ <div className="h-12 w-[120px] bg-white/5 backdrop-blur-md rounded-md border border-white/10" />
+  </div>
+ 
+  <div className="mt-8 flex flex-wrap items-center gap-4">
+- <div className="h-7 w-20 bg-white/10 backdrop-blur-md rounded-xl" />
+- <div className="h-5 w-16 bg-white/5 backdrop-blur-md rounded-xl border border-white/10" />
+- <div className="h-5 w-20 bg-white/5 backdrop-blur-md rounded-xl border border-white/10" />
++ <div className="h-7 w-20 bg-white/10 backdrop-blur-md rounded-md" />
++ <div className="h-5 w-16 bg-white/5 backdrop-blur-md rounded-md border border-white/10" />
++ <div className="h-5 w-20 bg-white/5 backdrop-blur-md rounded-md border border-white/10" />
+  </div>
+ 
+  <div className="mt-8 space-y-3 max-w-2xl">
+- <div className="h-4 w-full bg-white/5 backdrop-blur-md rounded-xl border border-white/10" />
+- <div className="h-4 w-full bg-white/5 backdrop-blur-md rounded-xl border border-white/10" />
+- <div className="h-4 w-3/4 bg-white/5 backdrop-blur-md rounded-xl border border-white/10" />
++ <div className="h-4 w-full bg-white/5 backdrop-blur-md rounded-md border border-white/10" />
++ <div className="h-4 w-full bg-white/5 backdrop-blur-md rounded-md border border-white/10" />
++ <div className="h-4 w-3/4 bg-white/5 backdrop-blur-md rounded-md border border-white/10" />
+  </div>
+  </div>
+  </div>
+@@ -39,19 +39,19 @@ const SkeletonDetails = () => {
+  <div className="flex flex-col lg:flex-row gap-10 lg:-mt-16">
+  {/* Left: Poster Column */}
+  <div className="w-[160px] md:w-[200px] mx-auto lg:mx-0 lg:w-60 flex-shrink-0 relative z-30 space-y-6">
+- <div className="rounded-xl overflow-hidden shadow-2xl aspect-[2/3] bg-surface w-full" />
+- <div className="glass-panel p-5 rounded-xl space-y-6 w-full">
++ <div className="rounded-md overflow-hidden shadow-2xl aspect-[2/3] bg-surface w-full" />
++ <div className="glass-panel p-5 rounded-md space-y-6 w-full">
+  <div className="flex justify-between items-center py-2">
+- <div className="h-3 w-12 bg-white/5 backdrop-blur-md rounded-xl border border-white/10" />
+- <div className="h-3 w-20 bg-white/10 backdrop-blur-md rounded-xl" />
++ <div className="h-3 w-12 bg-white/5 backdrop-blur-md rounded-md border border-white/10" />
++ <div className="h-3 w-20 bg-white/10 backdrop-blur-md rounded-md" />
+  </div>
+  <div className="flex justify-between items-center py-2">
+- <div className="h-3 w-12 bg-white/5 backdrop-blur-md rounded-xl border border-white/10" />
+- <div className="h-3 w-16 bg-white/10 backdrop-blur-md rounded-xl" />
++ <div className="h-3 w-12 bg-white/5 backdrop-blur-md rounded-md border border-white/10" />
++ <div className="h-3 w-16 bg-white/10 backdrop-blur-md rounded-md" />
+  </div>
+  <div className="flex justify-between items-center py-2">
+- <div className="h-3 w-12 bg-white/5 backdrop-blur-md rounded-xl border border-white/10" />
+- <div className="h-3 w-24 bg-white/10 backdrop-blur-md rounded-xl" />
++ <div className="h-3 w-12 bg-white/5 backdrop-blur-md rounded-md border border-white/10" />
++ <div className="h-3 w-24 bg-white/10 backdrop-blur-md rounded-md" />
+  </div>
+  </div>
+  </div>
+@@ -60,20 +60,20 @@ const SkeletonDetails = () => {
+  <div className="flex-grow space-y-4 min-w-0 lg:pt-1">
+  <div className="space-y-4">
+  <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between pb-4 gap-4">
+- <div className="h-8 w-32 bg-white/10 backdrop-blur-md rounded-xl" />
+- <div className="h-10 w-full sm:w-32 bg-white/5 backdrop-blur-md rounded-xl border border-white/10" />
++ <div className="h-8 w-32 bg-white/10 backdrop-blur-md rounded-md" />
++ <div className="h-10 w-full sm:w-32 bg-white/5 backdrop-blur-md rounded-md border border-white/10" />
+  </div>
+ 
+  <div className="grid grid-cols-1 gap-6 pt-4">
+  {[...Array(3)].map((_, i) => (
+  <div key={i} className="flex flex-col md:flex-row gap-4 md:gap-8 group">
+- <div className="relative w-full md:w-48 lg:w-56 flex-shrink-0 aspect-video bg-surface rounded-xl overflow-hidden shadow-2xl" />
++ <div className="relative w-full md:w-48 lg:w-56 flex-shrink-0 aspect-video bg-surface rounded-md overflow-hidden shadow-2xl" />
+  <div className="flex flex-col justify-center gap-3 flex-grow">
+- <div className="h-3 w-24 bg-white/5 backdrop-blur-md rounded-xl border border-white/10" />
+- <div className="h-5 w-3/4 bg-white/10 backdrop-blur-md rounded-xl" />
++ <div className="h-3 w-24 bg-white/5 backdrop-blur-md rounded-md border border-white/10" />
++ <div className="h-5 w-3/4 bg-white/10 backdrop-blur-md rounded-md" />
+  <div className="space-y-2 mt-2">
+- <div className="h-3 w-full bg-white/5 backdrop-blur-md rounded-xl border border-white/10" />
+- <div className="h-3 w-2/3 bg-white/5 backdrop-blur-md rounded-xl border border-white/10" />
++ <div className="h-3 w-full bg-white/5 backdrop-blur-md rounded-md border border-white/10" />
++ <div className="h-3 w-2/3 bg-white/5 backdrop-blur-md rounded-md border border-white/10" />
+  </div>
+  </div>
+  </div>
+diff --git a/client/src/components/skeletons/SkeletonHero.jsx b/client/src/components/skeletons/SkeletonHero.jsx
+index ee6b6e9..2259e75 100644
+--- a/client/src/components/skeletons/SkeletonHero.jsx
++++ b/client/src/components/skeletons/SkeletonHero.jsx
+@@ -9,26 +9,26 @@ const SkeletonHero = () => {
+  <div className="relative h-full px-6 md:px-16 w-full flex flex-col justify-end pt-24 md:pt-40 pb-20 md:pb-32 gap-3 md:gap-4 z-10">
+  <div className="z-10">
+  {/* Title */}
+- <div className="h-12 md:h-[72px] w-3/4 max-w-4xl bg-white/10 backdrop-blur-md rounded-xl mb-4 md:mb-6" />
++ <div className="h-12 md:h-[72px] w-3/4 max-w-4xl bg-white/10 backdrop-blur-md rounded-md mb-4 md:mb-6" />
+ 
+  {/* Metadata */}
+  <div className="flex flex-wrap items-center gap-4 mb-6">
+- <div className="h-6 w-32 bg-white/10 backdrop-blur-md rounded-xl" />
+- <div className="h-6 w-20 bg-white/5 backdrop-blur-md rounded-xl border border-white/10" />
+- <div className="h-4 w-24 bg-white/5 backdrop-blur-md rounded-xl border border-white/10" />
++ <div className="h-6 w-32 bg-white/10 backdrop-blur-md rounded-md" />
++ <div className="h-6 w-20 bg-white/5 backdrop-blur-md rounded-md border border-white/10" />
++ <div className="h-4 w-24 bg-white/5 backdrop-blur-md rounded-md border border-white/10" />
+  </div>
+ 
+  {/* Description */}
+  <div className="space-y-3 mb-6 md:mb-8 max-w-xl">
+- <div className="h-4 w-full bg-white/5 backdrop-blur-md rounded-xl border border-white/10" />
+- <div className="h-4 w-full bg-white/5 backdrop-blur-md rounded-xl border border-white/10" />
+- <div className="h-4 w-2/3 bg-white/5 backdrop-blur-md rounded-xl border border-white/10" />
++ <div className="h-4 w-full bg-white/5 backdrop-blur-md rounded-md border border-white/10" />
++ <div className="h-4 w-full bg-white/5 backdrop-blur-md rounded-md border border-white/10" />
++ <div className="h-4 w-2/3 bg-white/5 backdrop-blur-md rounded-md border border-white/10" />
+  </div>
+ 
+  {/* Buttons */}
+  <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-4 md:gap-6">
+- <div className="h-12 w-full sm:w-[160px] bg-neutral-700 rounded-full" />
+- <div className="h-12 w-full sm:w-[160px] bg-white/5 backdrop-blur-md rounded-full border border-white/10" />
++ <div className="h-12 w-full sm:w-[160px] bg-neutral-700 rounded-md" />
++ <div className="h-12 w-full sm:w-[160px] bg-white/5 backdrop-blur-md rounded-md border border-white/10" />
+  </div>
+  </div>
+  </div>
+diff --git a/client/src/components/skeletons/SkeletonReel.jsx b/client/src/components/skeletons/SkeletonReel.jsx
+index 00dcd1e..11e454a 100644
+--- a/client/src/components/skeletons/SkeletonReel.jsx
++++ b/client/src/components/skeletons/SkeletonReel.jsx
+@@ -9,17 +9,17 @@ const SkeletonReel = () => (
+  <div className="hidden lg:flex absolute inset-0 z-10 items-center justify-center gap-5 px-10">
+  {/* Top-left nav dots */}
+  <div className="absolute top-4 left-4 flex flex-col gap-3 z-[60]">
+- <div className="w-12 h-11 rounded-full bg-white/8" />
+- <div className="w-12 h-11 rounded-full bg-white/8" />
++ <div className="w-12 h-11 rounded-md bg-white/8" />
++ <div className="w-12 h-11 rounded-md bg-white/8" />
+  </div>
+ 
+  {/* 9:16 video ghost */}
+  <div className="relative h-[96vh] aspect-[9/16] bg-[#111] flex-shrink-0 overflow-hidden shadow-2xl">
+  {/* Unified Top Controls Ghost */}
+  <div className="absolute top-4 left-1/2 -translate-x-1/2 z-20 flex items-center gap-2">
+- <div className="w-9 h-9 rounded-full bg-white/10 backdrop-blur-md" />
+- <div className="w-12 h-9 rounded-full bg-white/10 backdrop-blur-md" />
+- <div className="w-32 h-8 bg-white/10 backdrop-blur-md rounded-full" />
++ <div className="w-9 h-9 rounded-md bg-white/10 backdrop-blur-md" />
++ <div className="w-12 h-9 rounded-md bg-white/10 backdrop-blur-md" />
++ <div className="w-32 h-8 bg-white/10 backdrop-blur-md rounded-md" />
+  </div>
+ 
+  {/* Gradient */}
+@@ -28,7 +28,7 @@ const SkeletonReel = () => (
+  {/* Bottom metadata ghost */}
+  <div className="absolute bottom-0 left-0 right-0 px-4 pt-4 pb-10 flex flex-col gap-2">
+  <div className="flex items-center gap-2.5">
+- <div className="w-9 h-9 rounded-full bg-white/12 flex-shrink-0" />
++ <div className="w-9 h-9 rounded-md bg-white/12 flex-shrink-0" />
+  <div className="h-3.5 w-24 bg-white/12 rounded" />
+  <div className="h-3.5 w-16 bg-white/8 rounded px-2" />
+  </div>
+@@ -46,11 +46,11 @@ const SkeletonReel = () => (
+  <div className="flex flex-col items-center gap-5 pb-10 self-end">
+  {[...Array(3)].map((_, i) => (
+  <div key={i} className="flex flex-col items-center gap-1">
+- <div className="w-12 h-12 rounded-full bg-white/8" />
++ <div className="w-12 h-12 rounded-md bg-white/8" />
+  <div className="h-2.5 w-6 bg-white/8 rounded" />
+  </div>
+  ))}
+- <div className="w-12 h-12 rounded-full bg-white/8 mt-1" />
++ <div className="w-12 h-12 rounded-md bg-white/8 mt-1" />
+  </div>
+  </div>
+ 
+@@ -58,9 +58,9 @@ const SkeletonReel = () => (
+  <div className="lg:hidden relative h-[100dvh] w-full bg-[#0a0a0a] overflow-hidden">
+  {/* Top bar ghost */}
+  <div className="absolute top-0 inset-x-0 z-40 px-4 pt-[40px] md:pt-[60px] pb-4 flex justify-center items-center">
+- <div className="absolute left-4 w-9 h-9 rounded-full bg-white/10 backdrop-blur-md" />
+- <div className="w-28 h-7 bg-white/10 backdrop-blur-md rounded-full" />
+- <div className="absolute right-4 w-9 h-9 bg-white/8 rounded-full" />
++ <div className="absolute left-4 w-9 h-9 rounded-md bg-white/10 backdrop-blur-md" />
++ <div className="w-28 h-7 bg-white/10 backdrop-blur-md rounded-md" />
++ <div className="absolute right-4 w-9 h-9 bg-white/8 rounded-md" />
+  </div>
+ 
+  {/* Gradient overlay */}
+@@ -80,7 +80,7 @@ const SkeletonReel = () => (
+  {/* Bottom metadata ghost (bottom-[55px] baseline) */}
+  <div className="absolute left-0 right-[72px] bottom-[55px] z-30 px-4 flex flex-col gap-2">
+  <div className="flex items-center gap-2">
+- <div className="w-9 h-9 rounded-full bg-white/15 flex-shrink-0" />
++ <div className="w-9 h-9 rounded-md bg-white/15 flex-shrink-0" />
+  <div className="h-3.5 w-20 bg-white/15 rounded" />
+  <div className="h-6 w-14 bg-white/8 rounded" />
+  </div>
+diff --git a/client/src/components/skeletons/SkeletonWatch.jsx b/client/src/components/skeletons/SkeletonWatch.jsx
+index c65316a..58dbd82 100644
+--- a/client/src/components/skeletons/SkeletonWatch.jsx
++++ b/client/src/components/skeletons/SkeletonWatch.jsx
+@@ -7,16 +7,16 @@ const SkeletonWatch = () => {
+  {/* Top Bar Ghost */}
+  <div className="absolute top-0 inset-x-0 p-6 md:p-10 flex items-start justify-between z-[100] bg-gradient-to-b from-black via-black/40 to-transparent">
+  <div className="flex items-center gap-6">
+- <div className="w-10 h-10 md:w-12 md:h-12 bg-white/5 rounded-xl border border-white/10 backdrop-blur-3xl" />
++ <div className="w-10 h-10 md:w-12 md:h-12 bg-white/5 rounded-md border border-white/10 backdrop-blur-3xl" />
+  <div className="space-y-2">
+- <div className="h-3 w-24 bg-white/5 backdrop-blur-md rounded-xl border border-white/10" />
+- <div className="h-5 w-48 md:w-64 bg-white/10 backdrop-blur-md rounded-xl" />
++ <div className="h-3 w-24 bg-white/5 backdrop-blur-md rounded-md border border-white/10" />
++ <div className="h-5 w-48 md:w-64 bg-white/10 backdrop-blur-md rounded-md" />
+  </div>
+  </div>
+  <div className="flex gap-3">
+- <div className="hidden md:block w-10 h-10 md:w-12 md:h-12 bg-white/5 backdrop-blur-md rounded-xl border border-white/10" />
+- <div className="w-10 h-10 md:w-12 md:h-12 bg-white/5 backdrop-blur-md rounded-xl border border-white/10" />
+- <div className="w-10 h-10 md:w-12 md:h-12 bg-white/5 backdrop-blur-md rounded-xl border border-white/10" />
++ <div className="hidden md:block w-10 h-10 md:w-12 md:h-12 bg-white/5 backdrop-blur-md rounded-md border border-white/10" />
++ <div className="w-10 h-10 md:w-12 md:h-12 bg-white/5 backdrop-blur-md rounded-md border border-white/10" />
++ <div className="w-10 h-10 md:w-12 md:h-12 bg-white/5 backdrop-blur-md rounded-md border border-white/10" />
+  </div>
+  </div>
+ 
+diff --git a/client/src/components/ui/BoxyIcons.jsx b/client/src/components/ui/BoxyIcons.jsx
+index 838f162..5477ede 100644
+--- a/client/src/components/ui/BoxyIcons.jsx
++++ b/client/src/components/ui/BoxyIcons.jsx
+@@ -212,7 +212,8 @@ export const BoxyMail = ({ size = 24, className ="" }) => (
+ 
+ export const BoxyKey = ({ size = 24, className ="" }) => (
+  <svg {...commonProps(size, className)}>
+- <path d="M21 2l-2 2m-7.61 7.61a5.5 5.5 0 1 1-7.78 7.78 5.5 5.5 0 0 1 7.78-7.78zM15 10.5l4 4m-2.5-2.5l4 4" />
++ <path d="M2 18v3c0 .6.4 1 1 1h4v-3h3v-3h2l1.4-1.4a6.5 6.5 0 1 0-4-4Z" />
++ <circle cx="16.5" cy="7.5" r=".5" fill="currentColor" />
+  </svg>
+ );
+ 
+diff --git a/client/src/components/ui/SafeImage.jsx b/client/src/components/ui/SafeImage.jsx
+index 5149118..1ef570f 100644
+--- a/client/src/components/ui/SafeImage.jsx
++++ b/client/src/components/ui/SafeImage.jsx
+@@ -18,7 +18,7 @@ const SafeImage = ({ src, alt, className, skeletonClass ="" }) => {
+  <div className={`relative ${className} bg-white/5 backdrop-blur-md rounded-xl border border-white/10 overflow-hidden flex items-center justify-center`}>
+  {/* Skeleton / Loading State */}
+  {loading && !error && (
+- <div className={`absolute inset-0 animate-pulse bg-white/10 backdrop-blur-md rounded-xl z-10 ${skeletonClass}`} />
++ <div className={`absolute inset-0 animate-pulse bg-white/10 backdrop-blur-md rounded-md z-10 ${skeletonClass}`} />
+  )}
+ 
+  {/* Error / Fallback State */}
+diff --git a/client/src/context/AuthContext.jsx b/client/src/context/AuthContext.jsx
+index 1b5f6cc..3b8eea0 100644
+--- a/client/src/context/AuthContext.jsx
++++ b/client/src/context/AuthContext.jsx
+@@ -405,6 +405,22 @@ export const AuthProvider = ({ children }) => {
+     }
+   }, [user, activeProfile, profiles]);
+ 
++  const updateProfileSettings = useCallback(async (settingsData) => {
++    if (!user || !activeProfile) return;
++    
++    const newActive = { ...activeProfile, ...settingsData };
++    setActiveProfile(newActive);
++    localStorage.setItem('activeProfile', JSON.stringify(newActive));
++
++    const updatedProfiles = profiles.map(p => p.id === activeProfile.id ? newActive : p);
++    try {
++      await updateDoc(doc(db, 'users', user.uid), { profiles: updatedProfiles });
++    } catch (e) {
++      console.error("Failed to update profile settings:", e);
++      throw e;
++    }
++  }, [user, activeProfile, profiles]);
++
+  const value = useMemo(() => ({
+  user,
+  profiles,
+@@ -421,12 +437,13 @@ export const AuthProvider = ({ children }) => {
+  toggleFollow,
+  createCustomList,
+  toggleAnimeInCustomList,
++ updateProfileSettings,
+  login,
+  register,
+  logout,
+  loginWithGoogle,
+  loading
+- }), [user, profiles, activeProfile, isBanned, isAdmin, selectProfile, addProfile, updateProfile, deleteProfile, deleteAccount, updateWatchProgress, toggleFavorite, toggleFollow, createCustomList, toggleAnimeInCustomList, login, register, logout, loginWithGoogle, loading]);
++ }), [user, profiles, activeProfile, isBanned, isAdmin, selectProfile, addProfile, updateProfile, deleteProfile, deleteAccount, updateWatchProgress, toggleFavorite, toggleFollow, createCustomList, toggleAnimeInCustomList, updateProfileSettings, login, register, logout, loginWithGoogle, loading]);
+ 
+  return (
+  <AuthContext.Provider value={value}>
+diff --git a/client/src/index.css b/client/src/index.css
+index 30da1f9..47cf195 100644
+--- a/client/src/index.css
++++ b/client/src/index.css
+@@ -15,6 +15,9 @@
+   --color-dark-surface: #0F0F0F;
+   --color-darker-surface: #050505;
+   --color-almost-black: #111111;
++  
++  --radius-button: 4px;
++  --radius-card: 6px;
+ 
+   background-color: var(--color-background);
+   color: #F8F8F8;
+@@ -108,6 +111,23 @@ input:-webkit-autofill:active{
+ }
+ 
+ @layer components {
++  .btn-primary {
++    @apply bg-white text-black px-6 py-3 font-bold hover:bg-white/90 transition-all flex items-center justify-center gap-2 shadow-xl;
++    border-radius: var(--radius-button);
++  }
++  .btn-accent {
++    @apply bg-primary text-background px-6 py-3 font-bold hover:opacity-90 transition-all flex items-center justify-center gap-2 shadow-xl;
++    border-radius: var(--radius-button);
++  }
++  .btn-secondary {
++    @apply bg-white/20 text-white px-6 py-3 font-bold hover:bg-white/30 transition-all flex items-center justify-center gap-2 shadow-xl;
++    border-radius: var(--radius-button);
++  }
++  .card-container {
++    @apply bg-white/5 backdrop-blur-md border border-white/10 hover:border-white/20 transition-all;
++    border-radius: var(--radius-card);
++  }
++
+   .glass {
+     @apply bg-neutral-900/40 backdrop-blur-xl border border-white/10 shadow-2xl rounded-2xl;
+   }
+diff --git a/client/src/pages/Account.jsx b/client/src/pages/Account.jsx
+index 5f8bf8b..4ca9b71 100644
+--- a/client/src/pages/Account.jsx
++++ b/client/src/pages/Account.jsx
+@@ -1,170 +1,483 @@
+-import React from 'react';
++import React, { useState } from 'react';
+ import { useAuth } from '../context/AuthContext';
+-import { motion } from 'framer-motion';
++import { motion, AnimatePresence } from 'framer-motion';
+ import { useNavigate, Link } from 'react-router-dom';
+ import { sendPasswordResetEmail, updateEmail } from 'firebase/auth';
+ import { auth } from '../firebase/config';
+ import {
+- BoxyCreditCard,
+- BoxyUser,
+- BoxyShield,
+- BoxyPlus,
+- BoxyHelp,
+- BoxyExternal,
+- BoxyMail,
+- BoxyKey
++  BoxyCreditCard,
++  BoxyUser,
++  BoxyShield,
++  BoxyMail,
++  BoxyKey,
++  BoxyList,
++  BoxyTV,
++  BoxyCheck,
++  BoxyAlert
+ } from '../components/ui/BoxyIcons';
+ import toast from 'react-hot-toast';
+ 
++const ToggleSwitch = ({ checked, onChange, label, description }) => (
++  <div className="flex items-center justify-between py-4 border-b border-white/5 last:border-0">
++    <div className="pr-4">
++      <p className="text-white font-medium text-[14px]">{label}</p>
++      {description && <p className="text-white/50 text-[12px] mt-1">{description}</p>}
++    </div>
++    <button
++      onClick={onChange}
++      className={`relative inline-flex h-6 w-11 flex-shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none ${checked ? 'bg-primary' : 'bg-neutral-600'}`}
++    >
++      <span
++        aria-hidden="true"
++        className={`pointer-events-none inline-block h-5 w-5 transform rounded-full bg-white shadow ring-0 transition duration-200 ease-in-out ${checked ? 'translate-x-5' : 'translate-x-0'}`}
++      />
++    </button>
++  </div>
++);
++
+ const Account = () => {
+- const { user, profiles, logout, deleteAccount } = useAuth();
+- const navigate = useNavigate();
+-
+- const handleLogout = async () => {
+- await logout();
+- navigate('/login');
+- };
+-
+- const handleDeleteAccount = async () => {
+- const confirmDelete = window.confirm("Are you sure you want to delete your entire account? This will permanently remove all your profiles, reels, comments, and data. This action cannot be undone."
+- );
+- if (!confirmDelete) return;
+-
+- try {
+- await deleteAccount();
+- toast.success("Account successfully deleted.");
+- navigate('/login');
+- } catch (err) {
+- if (err.code === 'auth/requires-recent-login') {
+- toast.error('Security Alert: You must log out and log back in before deleting your account.');
+- } else {
+- toast.error(err.message || 'Failed to delete account.');
+- }
+- }
+- };
+-
+- const handlePasswordReset = async () => {
+- if (!user?.email) return;
+- try {
+- await sendPasswordResetEmail(auth, user.email);
+- toast.success(`Password reset email sent to ${user.email}`);
+- } catch (err) {
+- toast.error(err.message || 'Failed to send reset email.');
+- console.error(err);
+- }
+- };
+-
+- const handleEmailChange = async () => {
+- const newEmail = window.prompt("Enter your new email address:");
+- if (!newEmail || !newEmail.includes('@')) return;
+- 
+- try {
+- await updateEmail(auth.currentUser, newEmail);
+- toast.success("Email address updated successfully!");
+- } catch (err) {
+- console.error(err);
+- if (err.code === 'auth/requires-recent-login') {
+- toast.error('Security Alert: You must log out and log back in before changing your email.');
+- } else {
+- toast.error(err.message || 'Failed to update email.');
+- }
+- }
+- };
+-
+- return (
+- <div className="min-h-screen bg-transparent pt-24 md:pt-32 pb-20 px-6 md:px-16">
+- <div className="w-full">
+- <h1 className="text-[48px] md:text-[64px] font-bold text-white mb-12 tracking-tighter">Account</h1>
+-
+- <div className="space-y-12">
+- {/* Membership & Billing */}
+- <section className="grid grid-cols-1 md:grid-cols-3 gap-8 pb-12">
+- <div className="text-white/90 font-semibold text-body uppercase tracking-widest flex items-center gap-3">
+- <BoxyCreditCard size={20} className="text-white/90" /> Membership & Billing
+- </div>
+- <div className="md:col-span-2 space-y-6">
+- <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+- <div className="space-y-1">
+- <p className="text-white font-medium text-body truncate max-w-[280px]">{user?.email}</p>
+- <p className="text-white/90 text-body font-medium">Password: ********</p>
+- </div>
+-
+- </div>
+- <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center pt-6 gap-4">
+- <div className="flex items-center gap-4">
+- <div className="bg-white/5 backdrop-blur-md rounded-xl border border-white/10 text-white/90 px-4 py-1.5 rounded-xl">
+- <span className="font-medium text-micro tracking-tight">Standard</span>
+- </div>
+- <p className="text-white/90 font-medium text-body">Free tier access active.</p>
+- </div>
+- <button onClick={() => toast('Gift code portal coming soon.')} className="text-white/90 font-medium hover:text-white transition-colors text-body tracking-tight w-full sm:w-auto text-left sm:text-right">Redeem code</button>
+- </div>
+- </div>
+- </section>
+-
+- {/* Plan Details */}
+- <section className="grid grid-cols-1 md:grid-cols-3 gap-8 pb-12">
+- <div className="text-white/90 font-semibold text-body uppercase tracking-widest flex items-center gap-3">
+- <BoxyShield size={20} className="text-white/90" /> Plan Details
+- </div>
+- <div className="md:col-span-2 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+- <div className="flex items-center gap-4">
+- <span className="bg-white/5 backdrop-blur-md rounded-xl border border-white/10 text-white/90 px-4 py-1.5 rounded-xl font-medium text-micro tracking-tight">Standard</span>
+- <p className="text-white/90 font-medium text-body">Community plan (1080p)</p>
+- </div>
+- <button onClick={() => toast('Advanced tiers not yet released.')} className="text-white/90 font-medium hover:text-white transition-colors text-body tracking-tight w-full sm:w-auto text-left sm:text-right">View benefits</button>
+- </div>
+- </section>
+-
+- {/* Profiles */}
+- <section className="grid grid-cols-1 md:grid-cols-3 gap-8 pb-12">
+- <div className="text-white/90 font-semibold text-body uppercase tracking-widest flex items-center gap-3">
+- <BoxyUser size={20} className="text-white/90" /> Profiles
+- </div>
+- <div className="md:col-span-2">
+- <div className="flex flex-wrap gap-8 mb-8">
+- {profiles.map(profile => (
+- <div key={profile.id} className="flex flex-col items-center gap-3 group cursor-pointer" onClick={() => navigate(`/profiles/edit/${profile.id}`)}>
+- <div className="w-16 h-16 rounded-xl overflow-hidden group-hover: transition-all opacity-80 group-hover:opacity-100">
+- <img loading="lazy" src={profile.avatarUrl} className="w-full h-full object-cover" alt="" />
+- </div>
+- <span className="text-white/90 text-body font-semibold tracking-tight group-hover:text-white transition-colors mt-2">{profile.name}</span>
+- </div>
+- ))}
+- {profiles.length < 5 && (
+- <Link to="/profiles/create" className="w-16 h-16 glass-card bg-white/5 backdrop-blur-md rounded-xl border border-white/10 flex items-center justify-center hover:bg-white/10 backdrop-blur-md rounded-xl transition-all group">
+- <BoxyPlus className="text-white/90 group-hover:text-white/90 transition-colors" />
+- </Link>
+- )}
+- </div>
+- <Link to="/profiles/manage" className="text-white/90 font-medium hover:text-white transition-colors text-body tracking-tight">Manage all profiles</Link>
+- </div>
+- </section>
+-
+- {/* Settings */}
+- <section className="grid grid-cols-1 md:grid-cols-3 gap-8 pb-12">
+- <div className="text-white/90 font-semibold text-body uppercase tracking-widest flex items-center gap-3">
+- <BoxyShield size={20} className="text-white/90" /> Settings
+- </div>
+- <div className="md:col-span-2 space-y-4">
+- <button onClick={() => toast('Device synchronization active.')} className="text-white/90 font-medium hover:text-white transition-colors text-body block tracking-tight text-left">Activate a device</button>
+- <button onClick={() => { toast.success('All sessions terminated.'); handleLogout(); }} className="text-white/90 font-medium hover:text-white transition-colors text-body block tracking-tight text-left">Sign out of all devices</button>
+- <button onClick={handleDeleteAccount} className="text-red-500/80 font-medium hover:text-red-500 transition-colors text-body block tracking-tight text-left mt-4 pt-4 w-full sm:w-auto rounded-xl">Delete Account</button>
+- </div>
+- </section>
+- </div>
+-
+- <div className="mt-20 flex justify-center">
+- <button
+- onClick={handleLogout}
+- className="w-full max-w-sm min-h-[44px] md:min-h-[48px] glass-card bg-white/5 backdrop-blur-md rounded-xl border border-white/10 text-white/90 px-16 py-3 font-medium text-body hover:text-white hover:bg-white/10 backdrop-blur-md rounded-xl transition-all tracking-tight flex items-center justify-center"
+- >
+- Sign out of NeonToad
+- </button>
+- </div>
+- </div>
+- </div>
+- );
++  const { user, logout, deleteAccount } = useAuth();
++  const navigate = useNavigate();
++  const [activeTab, setActiveTab] = useState('membership');
++
++  // MOCK STATE
++  const [preferences, setPreferences] = useState({
++    matureContent: false,
++    autoPlay: true,
++    audioDescription: false,
++    closedCaptions: true,
++  });
++  
++  const [notifications, setNotifications] = useState({
++    deals: true,
++    newsletter: false,
++    updates: true,
++  });
++
++  const [requirePin, setRequirePin] = useState(false);
++
++  const handleLogout = async () => {
++    await logout();
++    navigate('/login');
++  };
++
++  const handlePasswordReset = async () => {
++    if (!user?.email) return;
++    try {
++      await sendPasswordResetEmail(auth, user.email);
++      toast.success(`Password reset email sent to ${user.email}`);
++    } catch (err) {
++      toast.error(err.message || 'Failed to send reset email.');
++    }
++  };
++
++  const handleEmailChange = async () => {
++    const newEmail = window.prompt("Enter your new email address:");
++    if (!newEmail || !newEmail.includes('@')) return;
++    
++    try {
++      await updateEmail(auth.currentUser, newEmail);
++      toast.success("Email address updated successfully!");
++    } catch (err) {
++      if (err.code === 'auth/requires-recent-login') {
++        toast.error('Security Alert: You must log out and log back in before changing your email.');
++      } else {
++        toast.error(err.message || 'Failed to update email.');
++      }
++    }
++  };
++
++  const handleDeleteAccount = async () => {
++    const confirmDelete = window.confirm("Are you sure you want to delete your entire account? This will permanently remove all your profiles, reels, comments, and data. This action cannot be undone.");
++    if (!confirmDelete) return;
++
++    try {
++      await deleteAccount();
++      toast.success("Account successfully deleted.");
++      navigate('/login');
++    } catch (err) {
++      if (err.code === 'auth/requires-recent-login') {
++        toast.error('Security Alert: You must log out and log back in before deleting your account.');
++      } else {
++        toast.error(err.message || 'Failed to delete account.');
++      }
++    }
++  };
++
++  const SIDEBAR_GROUPS = [
++    {
++      title: "General",
++      items: [
++        { id: 'membership', label: 'Membership Info' },
++        { id: 'preferences', label: 'Preferences' },
++        { id: 'pin', label: 'Profile PIN' },
++        { id: 'notifications', label: 'Email Notifications' },
++        { id: 'devices', label: 'Device Management' },
++      ]
++    },
++    {
++      title: "Account",
++      items: [
++        { id: 'email', label: 'Email' },
++        { id: 'password', label: 'Password' },
++      ]
++    },
++    {
++      title: "Purchase & Credit",
++      items: [
++        { id: 'payment', label: 'Manage Payment Methods' },
++        { id: 'billing', label: 'Billing History' },
++      ]
++    }
++  ];
++
++  const renderContent = () => {
++    switch (activeTab) {
++      case 'membership':
++        return (
++          <div className="space-y-6">
++            <h2 className="text-2xl font-bold text-white tracking-tight">Membership Info</h2>
++            <div className="bg-[#1c1c1c] rounded-xl border border-white/10 p-6 md:p-8">
++              <div className="flex items-center gap-5 mb-8">
++                <div className="w-14 h-14 bg-primary/10 rounded-full flex items-center justify-center">
++                  <BoxyCreditCard size={28} className="text-primary" />
++                </div>
++                <div>
++                  <h3 className="text-xl font-bold text-white">Community Plan</h3>
++                  <p className="text-white/60 text-sm mt-1">Free Tier ΓÇó Active</p>
++                </div>
++              </div>
++              <div className="space-y-4 mb-8">
++                <div className="flex items-start gap-3">
++                  <BoxyCheck size={20} className="text-primary flex-shrink-0 mt-0.5" />
++                  <p className="text-white/80 text-sm">Access to standard library anime up to 1080p</p>
++                </div>
++                <div className="flex items-start gap-3">
++                  <BoxyCheck size={20} className="text-primary flex-shrink-0 mt-0.5" />
++                  <p className="text-white/80 text-sm">Create up to 5 profiles per account</p>
++                </div>
++                <div className="flex items-start gap-3">
++                  <BoxyCheck size={20} className="text-white/20 flex-shrink-0 mt-0.5" />
++                  <p className="text-white/40 text-sm line-through">Ad-free viewing experience</p>
++                </div>
++                <div className="flex items-start gap-3">
++                  <BoxyCheck size={20} className="text-white/20 flex-shrink-0 mt-0.5" />
++                  <p className="text-white/40 text-sm line-through">Offline downloads</p>
++                </div>
++              </div>
++              <div className="flex flex-col sm:flex-row gap-4 pt-6 border-t border-white/10">
++                <button onClick={() => toast('Upgrade portal coming soon.')} className="bg-primary text-black font-bold py-3 px-6 rounded-lg hover:bg-primary/90 transition-all text-sm w-full sm:w-auto">Upgrade Plan</button>
++                <button onClick={() => toast('Cancel subscription portal.')} className="bg-white/5 text-white font-bold py-3 px-6 rounded-lg hover:bg-white/10 transition-all text-sm w-full sm:w-auto">Cancel Membership</button>
++              </div>
++            </div>
++          </div>
++        );
++
++      case 'preferences':
++        return (
++          <div className="space-y-6">
++            <h2 className="text-2xl font-bold text-white tracking-tight">Preferences</h2>
++            <div className="bg-[#1c1c1c] rounded-xl border border-white/10 p-6 md:p-8">
++              <h3 className="text-white font-bold mb-4">Display & Language</h3>
++              <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
++                <div>
++                  <label className="block text-[12px] font-bold text-white/50 uppercase tracking-widest mb-2">Display Language</label>
++                  <select className="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-3 text-white text-sm outline-none focus:border-primary">
++                    <option value="en">English (US)</option>
++                    <option value="es">Espa├▒ol</option>
++                    <option value="fr">Fran├ºais</option>
++                    <option value="jp">µùÑµ£¼Φ¬₧</option>
++                  </select>
++                </div>
++                <div>
++                  <label className="block text-[12px] font-bold text-white/50 uppercase tracking-widest mb-2">Audio Language</label>
++                  <select className="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-3 text-white text-sm outline-none focus:border-primary">
++                    <option value="jp">Japanese</option>
++                    <option value="en">English (Dub)</option>
++                  </select>
++                </div>
++              </div>
++
++              <h3 className="text-white font-bold mb-4 mt-8">Playback Settings</h3>
++              <div className="space-y-2">
++                <ToggleSwitch 
++                  label="Auto-Play Next Episode" 
++                  description="Automatically start the next episode when the current one finishes."
++                  checked={preferences.autoPlay} 
++                  onChange={() => setPreferences(p => ({...p, autoPlay: !p.autoPlay}))} 
++                />
++                <ToggleSwitch 
++                  label="Closed Captions (CC)" 
++                  description="Show closed captions by default when available."
++                  checked={preferences.closedCaptions} 
++                  onChange={() => setPreferences(p => ({...p, closedCaptions: !p.closedCaptions}))} 
++                />
++                <ToggleSwitch 
++                  label="Audio Description" 
++                  description="Enable descriptive audio for visually impaired users by default."
++                  checked={preferences.audioDescription} 
++                  onChange={() => setPreferences(p => ({...p, audioDescription: !p.audioDescription}))} 
++                />
++              </div>
++
++              <h3 className="text-white font-bold mb-4 mt-8">Content Restrictions</h3>
++              <div className="space-y-2">
++                <ToggleSwitch 
++                  label="Show Mature Content (18+)" 
++                  description="Allow display of mature rated anime in your feed and search results."
++                  checked={preferences.matureContent} 
++                  onChange={() => setPreferences(p => ({...p, matureContent: !p.matureContent}))} 
++                />
++              </div>
++            </div>
++          </div>
++        );
++
++      case 'pin':
++        return (
++          <div className="space-y-6">
++            <h2 className="text-2xl font-bold text-white tracking-tight">Profile PIN</h2>
++            <div className="bg-[#1c1c1c] rounded-xl border border-white/10 p-6 md:p-8">
++              <div className="flex items-start gap-4 mb-8">
++                <div className="w-12 h-12 bg-white/5 rounded-full flex items-center justify-center flex-shrink-0 mt-1">
++                  <BoxyShield size={24} className="text-white/80" />
++                </div>
++                <div>
++                  <h3 className="text-white font-bold text-lg mb-2">Secure Your Profile</h3>
++                  <p className="text-white/60 text-sm leading-relaxed">
++                    Require a 4-digit PIN to access your specific profile or change your maturity rating settings. This prevents other people on your account from viewing your watch history or messing with your recommendations.
++                  </p>
++                </div>
++              </div>
++              <ToggleSwitch 
++                label="Require PIN for this Profile" 
++                checked={requirePin} 
++                onChange={() => {
++                  setRequirePin(!requirePin);
++                  toast(requirePin ? 'PIN requirement disabled.' : 'Please set up a PIN in the modal.');
++                }} 
++              />
++            </div>
++          </div>
++        );
++
++      case 'notifications':
++        return (
++          <div className="space-y-6">
++            <h2 className="text-2xl font-bold text-white tracking-tight">Email Notifications</h2>
++            <div className="bg-[#1c1c1c] rounded-xl border border-white/10 p-6 md:p-8">
++              <h3 className="text-white font-bold mb-2">Manage Subscriptions</h3>
++              <p className="text-white/50 text-sm mb-6">Choose what you want to hear about at {user?.email || 'your email'}.</p>
++              
++              <div className="space-y-2">
++                <ToggleSwitch 
++                  label="Store Deals & Offers" 
++                  description="Exclusive discounts on premium memberships, cosmetics, and merch."
++                  checked={notifications.deals} 
++                  onChange={() => setNotifications(p => ({...p, deals: !p.deals}))} 
++                />
++                <ToggleSwitch 
++                  label="Weekly Newsletter" 
++                  description="A summary of the top trending anime and what to watch this weekend."
++                  checked={notifications.newsletter} 
++                  onChange={() => setNotifications(p => ({...p, newsletter: !p.newsletter}))} 
++                />
++                <ToggleSwitch 
++                  label="Product Updates" 
++                  description="Important announcements about new platform features and improvements."
++                  checked={notifications.updates} 
++                  onChange={() => setNotifications(p => ({...p, updates: !p.updates}))} 
++                />
++              </div>
++            </div>
++          </div>
++        );
++
++      case 'devices':
++        return (
++          <div className="space-y-6">
++            <h2 className="text-2xl font-bold text-white tracking-tight">Device Management</h2>
++            <div className="bg-[#1c1c1c] rounded-xl border border-white/10 p-6 md:p-8">
++              <div className="flex justify-between items-center mb-6">
++                <div>
++                  <h3 className="text-white font-bold mb-1">Active Devices</h3>
++                  <p className="text-white/50 text-sm">Devices recently active on this account.</p>
++                </div>
++                <button onClick={() => { toast.success('All sessions terminated.'); handleLogout(); }} className="text-[13px] font-bold text-white/50 hover:text-white transition-colors">Sign Out All</button>
++              </div>
++
++              <div className="space-y-4">
++                {/* Current Device */}
++                <div className="bg-white/5 border border-white/10 rounded-xl p-4 flex items-center justify-between">
++                  <div className="flex items-center gap-4">
++                    <BoxyTV size={24} className="text-primary" />
++                    <div>
++                      <p className="text-white font-bold text-sm">Chrome on Windows (Current)</p>
++                      <p className="text-white/50 text-[12px] mt-0.5">Manila, PH ΓÇó Active now</p>
++                    </div>
++                  </div>
++                  <span className="text-[11px] font-bold text-primary bg-primary/10 px-3 py-1 rounded-full uppercase tracking-widest">This Device</span>
++                </div>
++
++                {/* Mock Device */}
++                <div className="bg-transparent border border-white/10 rounded-xl p-4 flex items-center justify-between">
++                  <div className="flex items-center gap-4">
++                    <BoxyTV size={24} className="text-white/60" />
++                    <div>
++                      <p className="text-white font-bold text-sm">NeonToad iOS App on iPhone 16</p>
++                      <p className="text-white/50 text-[12px] mt-0.5">Tokyo, JP ΓÇó Active 2 days ago</p>
++                    </div>
++                  </div>
++                  <button onClick={() => toast.success('Device deactivated')} className="text-[13px] font-bold text-white/60 hover:text-white transition-colors bg-white/5 hover:bg-white/10 px-4 py-2 rounded-lg">Deactivate</button>
++                </div>
++              </div>
++            </div>
++          </div>
++        );
++
++      case 'email':
++        return (
++          <div className="space-y-6">
++            <h2 className="text-2xl font-bold text-white tracking-tight">Email Address</h2>
++            <div className="bg-[#1c1c1c] rounded-xl border border-white/10 p-6 md:p-8">
++              <div className="mb-8">
++                <label className="block text-[12px] font-bold text-white/50 uppercase tracking-widest mb-2">Current Email</label>
++                <div className="bg-white/5 border border-white/10 rounded-lg px-4 py-3 text-white/80 text-sm flex items-center justify-between">
++                  <span>{user?.email || 'Loading...'}</span>
++                  <BoxyCheck size={16} className="text-primary" />
++                </div>
++              </div>
++              <button onClick={handleEmailChange} className="bg-white text-black font-bold py-3 px-6 rounded-lg hover:bg-white/90 transition-all text-sm">Change Email Address</button>
++            </div>
++          </div>
++        );
++
++      case 'password':
++        return (
++          <div className="space-y-6">
++            <h2 className="text-2xl font-bold text-white tracking-tight">Password</h2>
++            <div className="bg-[#1c1c1c] rounded-xl border border-white/10 p-6 md:p-8">
++              <div className="flex items-start gap-4 mb-8">
++                <div className="w-12 h-12 bg-white/5 rounded-full flex items-center justify-center flex-shrink-0 mt-1">
++                  <BoxyKey size={24} className="text-white/80" />
++                </div>
++                <div>
++                  <h3 className="text-white font-bold text-lg mb-2">Reset Password</h3>
++                  <p className="text-white/60 text-sm leading-relaxed">
++                    We will send a password reset link to your email address. For security reasons, you may be required to log back in after changing your password on some devices.
++                  </p>
++                </div>
++              </div>
++              <button onClick={handlePasswordReset} className="bg-white text-black font-bold py-3 px-6 rounded-lg hover:bg-white/90 transition-all text-sm">Send Reset Email</button>
++            </div>
++          </div>
++        );
++
++      case 'payment':
++        return (
++          <div className="space-y-6">
++            <h2 className="text-2xl font-bold text-white tracking-tight">Payment Methods</h2>
++            <div className="bg-[#1c1c1c] rounded-xl border border-white/10 p-6 md:p-8">
++              <div className="bg-transparent border border-white/10 border-dashed rounded-xl p-8 flex flex-col items-center justify-center text-center">
++                <div className="w-16 h-16 bg-white/5 rounded-full flex items-center justify-center mb-4">
++                  <BoxyCreditCard size={32} className="text-white/50" />
++                </div>
++                <h3 className="text-white font-bold text-lg mb-2">No Payment Methods</h3>
++                <p className="text-white/50 text-sm max-w-sm mb-6">You currently have no saved credit cards or PayPal accounts linked to this profile.</p>
++                <button onClick={() => toast('Stripe integration pending')} className="bg-white/10 text-white font-bold py-3 px-6 rounded-lg hover:bg-white/20 transition-all text-sm">Add Payment Method</button>
++              </div>
++            </div>
++          </div>
++        );
++
++      case 'billing':
++        return (
++          <div className="space-y-6">
++            <h2 className="text-2xl font-bold text-white tracking-tight">Billing History</h2>
++            <div className="bg-[#1c1c1c] rounded-xl border border-white/10 overflow-hidden">
++              <div className="p-6 md:p-8 border-b border-white/10">
++                <h3 className="text-white font-bold">Past Invoices</h3>
++                <p className="text-white/50 text-sm mt-1">Review your recent transactions and membership charges.</p>
++              </div>
++              <div className="p-8 text-center bg-white/[0.02]">
++                <BoxyList size={32} className="text-white/30 mx-auto mb-4" />
++                <p className="text-white/50 text-sm">No billing history found.</p>
++              </div>
++            </div>
++          </div>
++        );
++
++      default:
++        return null;
++    }
++  };
++
++  return (
++    <div className="min-h-screen bg-transparent pt-24 md:pt-32 pb-20 px-6 md:px-16">
++      <div className="w-full max-w-6xl mx-auto flex flex-col md:flex-row gap-10">
++        
++        {/* Sidebar Navigation */}
++        <div className="w-full md:w-[280px] flex-shrink-0">
++          <h1 className="text-h3 md:text-h2 font-bold text-white mb-8 tracking-tight">Account Settings</h1>
++          
++          <div className="flex flex-row md:flex-col overflow-x-auto no-scrollbar gap-8 md:gap-6 pb-4 md:pb-0 border-b border-white/10 md:border-none">
++            {SIDEBAR_GROUPS.map((group, idx) => (
++              <div key={idx} className="flex-shrink-0">
++                <h4 className="text-[11px] font-bold text-white/40 uppercase tracking-widest mb-3 px-4 hidden md:block">{group.title}</h4>
++                <div className="flex flex-row md:flex-col gap-1">
++                  {group.items.map(item => {
++                    const isActive = activeTab === item.id;
++                    return (
++                      <button
++                        key={item.id}
++                        onClick={() => setActiveTab(item.id)}
++                        className={`text-left px-4 py-2.5 rounded-lg font-medium text-[14px] transition-all whitespace-nowrap ${
++                          isActive 
++                            ? 'bg-primary/10 text-primary font-bold' 
++                            : 'text-white/60 hover:text-white hover:bg-white/5'
++                        }`}
++                      >
++                        {item.label}
++                      </button>
++                    );
++                  })}
++                </div>
++              </div>
++            ))}
++          </div>
++          
++          <div className="mt-8 md:mt-12 pt-6 border-t border-white/10 hidden md:block px-4">
++            <button onClick={handleDeleteAccount} className="text-red-400 hover:text-red-300 font-bold text-sm transition-colors flex items-center gap-2">
++              <BoxyAlert size={16} /> Delete Account
++            </button>
++          </div>
++        </div>
++
++        {/* Main Content Area */}
++        <div className="flex-grow max-w-3xl min-w-0">
++          <AnimatePresence mode="wait">
++            <motion.div
++              key={activeTab}
++              initial={{ opacity: 0, y: 10 }}
++              animate={{ opacity: 1, y: 0 }}
++              exit={{ opacity: 0, y: -10 }}
++              transition={{ duration: 0.2 }}
++            >
++              {renderContent()}
++            </motion.div>
++          </AnimatePresence>
++          
++          {/* Mobile Delete Account */}
++          <div className="mt-12 pt-6 border-t border-white/10 md:hidden flex justify-center">
++            <button onClick={handleDeleteAccount} className="text-red-400 hover:text-red-300 font-bold text-sm transition-colors flex items-center gap-2">
++              <BoxyAlert size={16} /> Delete Account
++            </button>
++          </div>
++        </div>
++
++      </div>
++    </div>
++  );
+ };
+ 
+ export default Account;
+diff --git a/client/src/pages/AnimeDetail.jsx b/client/src/pages/AnimeDetail.jsx
+index 60e594b..2b15ad4 100644
+--- a/client/src/pages/AnimeDetail.jsx
++++ b/client/src/pages/AnimeDetail.jsx
+@@ -249,8 +249,8 @@ const AnimeDetail = () => {
+  }
+  }, 0);
+  }}
+- className="w-full sm:w-auto bg-primary text-black px-8 py-3 h-12 rounded-xl font-semibold flex items-center justify-center gap-3 hover:bg-primary/90 transition-all active:scale-95 shadow-[0_0_20px_rgba(134,233,92,0.2)] text-body tracking-tight disabled:opacity-70 disabled:cursor-wait"
+- >
++  className="w-full sm:w-auto btn-accent h-12 text-body tracking-tight active:scale-95 shadow-[0_0_20px_rgba(134,233,92,0.2)] disabled:opacity-70 disabled:cursor-wait"
++  >
+  {isNavigating ? (
+  <div className="w-5 h-5 border-2 border-black border-t-transparent rounded-full animate-spin" />
+  ) : (
+@@ -260,7 +260,7 @@ const AnimeDetail = () => {
+               
+               <button 
+                 onClick={handleFavorite} 
+-                className="bg-white/10 backdrop-blur-md rounded-xl text-primary h-12 w-12 rounded-xl hover:bg-neutral-700 hover:text-white transition-all flex items-center justify-center shadow-lg"
++                className="bg-white/10 backdrop-blur-md rounded-full text-white/90 h-12 w-12 hover:bg-white/20 hover:text-white transition-all flex items-center justify-center shadow-lg"
+                 title={isFavorite ? "Remove from List" : "Add to List"}
+               >
+                 <BoxyBookmark size={18} className={isFavorite ? 'fill-primary text-primary' : ''} />
+@@ -268,7 +268,7 @@ const AnimeDetail = () => {
+               
+               <button 
+                 onClick={handlePlus} 
+-                className="bg-white/10 backdrop-blur-md rounded-xl text-primary h-12 w-12 rounded-xl hover:bg-neutral-700 hover:text-white transition-all flex items-center justify-center shadow-lg"
++                className="bg-white/10 backdrop-blur-md rounded-full text-white/90 h-12 w-12 hover:bg-white/20 hover:text-white transition-all flex items-center justify-center shadow-lg"
+                 title="Add to Custom List"
+               >
+                 <BoxyPlus size={22} />
+@@ -276,7 +276,7 @@ const AnimeDetail = () => {
+               
+               <button 
+                 onClick={handleShare} 
+-                className="bg-white/10 backdrop-blur-md rounded-xl text-primary h-12 w-12 rounded-xl hover:bg-neutral-700 hover:text-white transition-all flex items-center justify-center shadow-lg"
++                className="bg-white/10 backdrop-blur-md rounded-full text-white/90 h-12 w-12 hover:bg-white/20 hover:text-white transition-all flex items-center justify-center shadow-lg"
+                 title="Share"
+               >
+                 <BoxyShare size={18} />
+diff --git a/client/tailwind.config.js b/client/tailwind.config.js
+index a38b512..cfb0fdf 100644
+--- a/client/tailwind.config.js
++++ b/client/tailwind.config.js
+@@ -34,6 +34,17 @@ export default {
+         'reading': '680px',
+         'ultrawide': '1600px',
+       },
++      borderRadius: {
++        'none': '0',
++        'sm': '2px',
++        DEFAULT: '4px',
++        'md': '4px',
++        'lg': '6px',
++        'xl': '6px',
++        '2xl': '8px',
++        '3xl': '12px',
++        'full': '9999px',
++      },
+     },
+   },
+   plugins: [],

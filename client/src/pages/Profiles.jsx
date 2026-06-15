@@ -6,10 +6,17 @@ import { BoxyPlus, BoxyEdit } from '../components/ui/BoxyIcons';
 import SkeletonProfile from '../components/SkeletonProfile';
 import { DEFAULT_AVATAR } from '../constants/avatars';
 import SafeImage from '../components/ui/SafeImage';
+import PinModal from '../components/ui/PinModal';
+import { apiRequest } from '../utils/api';
+import toast from 'react-hot-toast';
 
 const Profiles = () => {
  const { profiles, selectProfile, user, loading } = useAuth();
  const navigate = useNavigate();
+
+  const [pinModalOpen, setPinModalOpen] = React.useState(false);
+  const [selectedProfileForPin, setSelectedProfileForPin] = React.useState(null);
+  const [pinLoading, setPinLoading] = React.useState(false);
 
  React.useEffect(() => {
  // Wait for everything to be ready
@@ -23,10 +30,34 @@ const Profiles = () => {
  }
  }, [profiles, loading, user, navigate]);
 
- const handleSelect = (profile) => {
- selectProfile(profile);
- navigate('/');
- };
+  const handleSelect = (profile) => {
+    if (profile.hasPin) {
+      setSelectedProfileForPin(profile);
+      setPinModalOpen(true);
+    } else {
+      selectProfile(profile);
+      navigate('/');
+    }
+  };
+
+  const handlePinSubmit = async (pin) => {
+    if (!selectedProfileForPin) return;
+    setPinLoading(true);
+    try {
+      await apiRequest(`/profiles/${selectedProfileForPin.id}/verify-pin`, {
+        method: 'POST',
+        body: JSON.stringify({ pin })
+      });
+      // Verification successful
+      setPinModalOpen(false);
+      selectProfile(selectedProfileForPin);
+      navigate('/');
+    } catch (err) {
+      toast.error(err.message || 'Incorrect PIN');
+    } finally {
+      setPinLoading(false);
+    }
+  };
 
  return (
  <div className="min-h-screen bg-transparent flex flex-col items-center justify-center p-6 font-sans">
@@ -94,6 +125,18 @@ const Profiles = () => {
  Manage Profiles
  </Link>
  </motion.div>
+
+  <PinModal 
+    isOpen={pinModalOpen}
+    onClose={() => {
+      setPinModalOpen(false);
+      setSelectedProfileForPin(null);
+    }}
+    onSubmit={handlePinSubmit}
+    title="Profile Locked"
+    description={`Enter the 4-digit PIN for ${selectedProfileForPin?.name}.`}
+    loading={pinLoading}
+  />
  </div>
  );
 };
